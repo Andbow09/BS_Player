@@ -40,9 +40,9 @@ jobs:
         git clone https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/Andbow09/BS_Player_APK mobile-repo
         rm -rf mobile-repo/*
         cp out/app-release.apk mobile-repo/ || true
-    cd mobile-repo
-    git config user.name "github-actions[bot]"
-    git config user.email "github-actions[bot]@users.noreply.github.com"
-    git add .
-    git commit -m "Deploy Android build"
-    git push
+        cd mobile-repo
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy Android build"
+        git push
