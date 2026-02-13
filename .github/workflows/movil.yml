@@ -1,0 +1,48 @@
+name: Build Android APK and Deploy
+
+on:
+  push:
+    branches: ["flutterflow"]
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source repo
+      uses: actions/checkout@v4
+
+    - name: Setup Java (for Android)
+      uses: actions/setup-java@v4
+      with:
+        distribution: "temurin"
+        java-version: "17"
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        cache: true
+
+    - name: Get dependencies
+      run: flutter pub get
+
+    - name: Build APK (release)
+      run: flutter build apk --release
+
+    - name: Package outputs
+      run: |
+        mkdir -p out
+        cp build/app/outputs/flutter-apk/BS_Player.apk out/app-release.apk
+
+    - name: Deploy APK to releases repo
+      run: |
+        git clone https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/Andbow09/BS_Player_APK mobile-repo
+        rm -rf mobile-repo/*
+        cp out/app-release.apk mobile-repo/app-release-latest.apk
+        cd mobile-repo
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy Android APK (auto)" || echo "No changes"
+        git push
