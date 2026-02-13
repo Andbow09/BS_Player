@@ -55,13 +55,14 @@ Future<List<CancionStruct>> obtenerCanciones() async {
     }
 
     // Añadir a la lista de resultados
-    resultados.add(createCancionStruct(
+    var createCancionStruct2 = CancionStruct(
       titulo: song.title,
       ruta: song.data,
       duracion: song.duration ?? 0,
       id: song.id,
       artistas: artistList,
-    ));
+    );
+    resultados.add(createCancionStruct2);
   }
 
   // 5. ¡Importante! Devolver la lista final
