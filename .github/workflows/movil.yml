@@ -33,7 +33,7 @@ jobs:
     - name: Package outputs
       run: |
         mkdir -p out
-        cp build/app/outputs/flutter-apk/app-release.apk out/BS_Player.apk
+        cp build/app/outputs/flutter-apk/app-release.apk out/
 
     - name: Deploy APK to releases repo
       run: |
