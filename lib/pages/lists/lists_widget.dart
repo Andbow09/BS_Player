@@ -78,6 +78,7 @@ class _ListsWidgetState extends State<ListsWidget> {
 
                           return ListView.separated(
                             padding: EdgeInsets.zero,
+                            primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: lista.length,

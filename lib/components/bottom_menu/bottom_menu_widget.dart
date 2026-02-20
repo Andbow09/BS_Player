@@ -43,7 +43,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 85.0,
+      height: 70.0,
       decoration: BoxDecoration(
         color: Color(0xFFEEDDE9),
         borderRadius: BorderRadius.circular(50.0),
@@ -53,8 +53,8 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            width: 55.0,
-            height: 55.0,
+            width: 45.0,
+            height: 45.0,
             decoration: BoxDecoration(
               color:
                   widget.page == 'songs' ? Colors.white : Colors.transparent,
@@ -73,13 +73,13 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
               child: Icon(
                 Icons.music_note,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           ),
           Container(
-            width: 55.0,
-            height: 55.0,
+            width: 45.0,
+            height: 45.0,
             decoration: BoxDecoration(
               color:
                   widget.page == 'discs' ? Colors.white : Colors.transparent,
@@ -98,13 +98,13 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
               child: Icon(
                 Icons.album,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           ),
           Container(
-            width: 55.0,
-            height: 55.0,
+            width: 45.0,
+            height: 45.0,
             decoration: BoxDecoration(
               color:
                   widget.page == 'search' ? Colors.white : Colors.transparent,
@@ -123,13 +123,13 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
               child: Icon(
                 Icons.search,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           ),
           Container(
-            width: 55.0,
-            height: 55.0,
+            width: 45.0,
+            height: 45.0,
             decoration: BoxDecoration(
               color:
                   widget.page == 'lists' ? Colors.white : Colors.transparent,
@@ -150,14 +150,14 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                 child: Icon(
                   Icons.playlist_play_rounded,
                   color: FlutterFlowTheme.of(context).primaryText,
-                  size: 45.0,
+                  size: 35.0,
                 ),
               ),
             ),
           ),
           Container(
-            width: 55.0,
-            height: 55.0,
+            width: 45.0,
+            height: 45.0,
             decoration: BoxDecoration(
               color:
                   widget.page == 'artists' ? Colors.white : Colors.transparent,
@@ -176,7 +176,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
               child: Icon(
                 Icons.person_rounded,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           ),

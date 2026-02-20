@@ -30,21 +30,31 @@ class SongCover extends StatefulWidget {
 class _CaratulaCancionState extends State<SongCover> {
   @override
   Widget build(BuildContext context) {
+    // Si FF no manda tamaño, forzamos 50x50 para que no desaparezca
+    final double safeWidth = widget.width ?? 50.0;
+    final double safeHeight = widget.height ?? 50.0;
+
     return Container(
-      width: widget.width,
-      height: widget.height,
-      // Usamos el widget nativo de la librería
+      width: safeWidth,
+      height: safeHeight,
       child: QueryArtworkWidget(
         id: widget.cancionId,
-        type: ArtworkType.AUDIO,
-        keepOldArtwork: true,
-        // Imagen por defecto si la canción no tiene carátula
+        type: ArtworkType.AUDIO, // Tipo de archivo
+        artworkQuality: FilterQuality.low, // Carga más rápido en listas
+        artworkBorder:
+            BorderRadius.circular(8.0), // Bordes redondeados automáticos
+        // Qué mostrar si la canción no tiene carátula
         nullArtworkWidget: Container(
-          color: Colors.grey[800],
+          width: safeWidth,
+          height: safeHeight,
+          decoration: BoxDecoration(
+            color: Colors.grey[800],
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           child: Icon(
             Icons.music_note_rounded,
             color: Colors.white54,
-            size: (widget.width ?? 50) * 0.5,
+            size: safeWidth * 0.5,
           ),
         ),
       ),

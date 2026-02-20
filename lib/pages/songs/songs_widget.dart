@@ -79,6 +79,7 @@ class _SongsWidgetState extends State<SongsWidget> {
 
                           return ListView.separated(
                             padding: EdgeInsets.zero,
+                            primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: lista.length,
@@ -100,11 +101,11 @@ class _SongsWidgetState extends State<SongsWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10.0, 0.0, 0.0, 0.0),
                                       child: Container(
-                                        width: 50.0,
-                                        height: 50.0,
+                                        width: 40.0,
+                                        height: 40.0,
                                         child: custom_widgets.SongCover(
-                                          width: 50.0,
-                                          height: 50.0,
+                                          width: 40.0,
+                                          height: 40.0,
                                           cancionId: listaIndex,
                                         ),
                                       ),
