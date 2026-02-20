@@ -35,22 +35,37 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => HomePageWidget(),
+      errorBuilder: (context, state) => SongsWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomePageWidget(),
+          builder: (context, _) => SongsWidget(),
         ),
         FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => HomePageWidget(),
+          name: SongsWidget.routeName,
+          path: SongsWidget.routePath,
+          builder: (context, params) => SongsWidget(),
         ),
         FFRoute(
-          name: HeaderWidget.routeName,
-          path: HeaderWidget.routePath,
-          builder: (context, params) => HeaderWidget(),
+          name: DiscsWidget.routeName,
+          path: DiscsWidget.routePath,
+          builder: (context, params) => DiscsWidget(),
+        ),
+        FFRoute(
+          name: SearchWidget.routeName,
+          path: SearchWidget.routePath,
+          builder: (context, params) => SearchWidget(),
+        ),
+        FFRoute(
+          name: ListsWidget.routeName,
+          path: ListsWidget.routePath,
+          builder: (context, params) => ListsWidget(),
+        ),
+        FFRoute(
+          name: ArtistsWidget.routeName,
+          path: ArtistsWidget.routePath,
+          builder: (context, params) => ArtistsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

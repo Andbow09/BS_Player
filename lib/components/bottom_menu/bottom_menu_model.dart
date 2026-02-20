@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'headerr_widget.dart' show HeaderrWidget;
+import 'bottom_menu_widget.dart' show BottomMenuWidget;
 import 'package:flutter/material.dart';
 
-class HeaderrModel extends FlutterFlowModel<HeaderrWidget> {
+class BottomMenuModel extends FlutterFlowModel<BottomMenuWidget> {
   @override
   void initState(BuildContext context) {}
 

@@ -1,10 +1,11 @@
 import '/backend/schema/structs/index.dart';
-import '/components/top_menu_widget.dart';
+import '/components/bottom_menu/bottom_menu_widget.dart';
+import '/components/top_menu/top_menu_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'home_page_widget.dart' show HomePageWidget;
+import 'artists_widget.dart' show ArtistsWidget;
 import 'package:flutter/material.dart';
 
-class HomePageModel extends FlutterFlowModel<HomePageWidget> {
+class ArtistsModel extends FlutterFlowModel<ArtistsWidget> {
   ///  Local state fields for this page.
 
   List<CancionStruct> listaCanciones = [];
@@ -21,18 +22,22 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - obtenerCanciones] action in HomePage widget.
+  // Stores action output result for [Custom Action - obtenerCanciones] action in Artists widget.
   List<CancionStruct>? resultadoEscaneo;
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
+  // Model for bottomMenu component.
+  late BottomMenuModel bottomMenuModel;
 
   @override
   void initState(BuildContext context) {
     topMenuModel = createModel(context, () => TopMenuModel());
+    bottomMenuModel = createModel(context, () => BottomMenuModel());
   }
 
   @override
   void dispose() {
     topMenuModel.dispose();
+    bottomMenuModel.dispose();
   }
 }
