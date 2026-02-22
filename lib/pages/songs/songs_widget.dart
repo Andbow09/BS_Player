@@ -1,6 +1,5 @@
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/bottom_menu/bottom_menu_widget.dart';
-import '/components/list_empty_widget.dart';
 import '/components/top_menu/top_menu_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -109,15 +108,6 @@ class _SongsWidgetState extends State<SongsWidget> {
                                   );
                                 }
                                 final listViewListSongsRowList = snapshot.data!;
-                                if (listViewListSongsRowList.isEmpty) {
-                                  return Center(
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 30.0,
-                                      child: ListEmptyWidget(),
-                                    ),
-                                  );
-                                }
 
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
@@ -169,7 +159,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  listViewListSongsRow.nombre,
+                                                  listViewListSongsRow.titulo,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -199,7 +189,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                           -1.0, 0.0),
                                                   child: Text(
                                                     listViewListSongsRow
-                                                        .artistas,
+                                                        .artista,
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium

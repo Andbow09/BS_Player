@@ -50,11 +50,11 @@ class ListSongsRow extends SqliteRow {
   ListSongsRow(Map<String, dynamic> data) : super(data);
 
   int get id => data['id'] as int;
-  String get nombre => data['nombre'] as String;
+  String get titulo => data['titulo'] as String;
   int get duracion => data['duracion'] as int;
-  String get rutaArchivo => data['rutaArchivo'] as String;
-  String get nombreAlbum => data['nombreAlbum'] as String;
-  String get artistas => data['artistas'] as String;
+  String get ruta => data['ruta'] as String;
+  String get album => data['album'] as String;
+  String get artista => data['artista'] as String;
 }
 
 /// END LISTSONGS
