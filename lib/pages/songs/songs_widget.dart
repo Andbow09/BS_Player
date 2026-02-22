@@ -89,130 +89,169 @@ class _SongsWidgetState extends State<SongsWidget> {
                       Builder(
                         builder: (context) {
                           if (_model.estaCargando == false) {
-                            return FutureBuilder<List<ListSongsRow>>(
-                              future: SQLiteManager.instance.listSongs(),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  FFAppState().currentTitle,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
                                         ),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
                                       ),
-                                    ),
-                                  );
-                                }
-                                final listViewListSongsRowList = snapshot.data!;
-
-                                return ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: listViewListSongsRowList.length,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 5.0),
-                                  itemBuilder: (context, listViewIndex) {
-                                    final listViewListSongsRow =
-                                        listViewListSongsRowList[listViewIndex];
-                                    return Container(
-                                      width: 100.0,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius:
-                                            BorderRadius.circular(0.0),
-                                      ),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          FFAppState().currentTitle =
-                                              listViewListSongsRow.titulo;
-                                          FFAppState().currentId =
-                                              listViewListSongsRow.id;
-                                          FFAppState().currentArtist =
-                                              listViewListSongsRow.artista;
-                                          FFAppState().isPlaying = true;
-                                          safeSetState(() {});
-                                          await actions.audioController(
-                                            'play',
-                                            listViewListSongsRow.ruta,
-                                          );
-                                        },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 0.0, 0.0),
-                                              child: Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                child: custom_widgets.SongCover(
-                                                  width: 40.0,
-                                                  height: 40.0,
-                                                  cancionId:
-                                                      listViewListSongsRow.id,
-                                                ),
-                                              ),
+                                ),
+                                FutureBuilder<List<ListSongsRow>>(
+                                  future: SQLiteManager.instance.listSongs(),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 0.0, 0.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    listViewListSongsRow.titulo,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final listViewListSongsRowList =
+                                        snapshot.data!;
+
+                                    return ListView.separated(
+                                      padding: EdgeInsets.zero,
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount:
+                                          listViewListSongsRowList.length,
+                                      separatorBuilder: (_, __) =>
+                                          SizedBox(height: 5.0),
+                                      itemBuilder: (context, listViewIndex) {
+                                        final listViewListSongsRow =
+                                            listViewListSongsRowList[
+                                                listViewIndex];
+                                        return Container(
+                                          width: 100.0,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(0.0),
+                                          ),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              FFAppState().currentTitle =
+                                                  listViewListSongsRow.titulo;
+                                              FFAppState().currentId =
+                                                  listViewListSongsRow.id;
+                                              FFAppState().currentArtist =
+                                                  listViewListSongsRow.artista;
+                                              FFAppState().isPlaying = true;
+                                              safeSetState(() {});
+                                              await actions.audioController(
+                                                'play',
+                                                listViewListSongsRow.ruta,
+                                              );
+                                            },
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          10.0, 0.0, 0.0, 0.0),
+                                                  child: Container(
+                                                    width: 40.0,
+                                                    height: 40.0,
+                                                    child: custom_widgets
+                                                        .SongCover(
+                                                      width: 40.0,
+                                                      height: 40.0,
+                                                      cancionId:
+                                                          listViewListSongsRow
+                                                              .id,
+                                                    ),
                                                   ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Text(
-                                                      listViewListSongsRow
-                                                          .artista,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          10.0, 0.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        listViewListSongsRow
+                                                            .titulo,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font:
+                                                                      GoogleFonts
+                                                                          .inter(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                -1.0, 0.0),
+                                                        child: Text(
+                                                          listViewListSongsRow
+                                                              .artista,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
                                                               .bodyMedium
                                                               .override(
                                                                 font:
@@ -238,18 +277,20 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                               ),
-                                                    ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ),
+                                          ),
+                                        );
+                                      },
                                     );
                                   },
-                                );
-                              },
+                                ),
+                              ],
                             );
                           } else {
                             return Align(
