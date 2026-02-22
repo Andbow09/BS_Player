@@ -60,7 +60,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
 
     return Stack(
       children: [
-        if (widget.titulo != null && widget.titulo != '')
+        if (FFAppState().currentTitle != '')
           Container(
             width: double.infinity,
             height: 120.0,
