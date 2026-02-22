@@ -142,7 +142,6 @@ class _SongsWidgetState extends State<SongsWidget> {
                                             FFAppState().isPlaying = true;
                                             FFAppState().currentAlbum =
                                                 listViewListSongsRow.album;
-                                            safeSetState(() {});
                                             await actions.audioController(
                                               'play',
                                               listViewListSongsRow.ruta,
@@ -160,7 +159,9 @@ class _SongsWidgetState extends State<SongsWidget> {
                                             FFAppState().currentDarkColor =
                                                 (_model.pickedColor!
                                                     .elementAtOrNull(2))!;
-                                            safeSetState(() {});
+                                            FFAppState().currentTextColor =
+                                                (_model.pickedColor!
+                                                    .elementAtOrNull(3))!;
 
                                             safeSetState(() {});
                                           },

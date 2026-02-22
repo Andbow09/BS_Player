@@ -120,6 +120,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
+                                  color: FFAppState().currentTextColor,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FlutterFlowTheme.of(context)
@@ -142,6 +143,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                         .fontWeight,
                                     fontStyle: FontStyle.italic,
                                   ),
+                                  color: FFAppState().currentTextColor,
                                   letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -165,6 +167,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
+                                  color: FFAppState().currentTextColor,
                                   letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -202,7 +205,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                               },
                               child: Icon(
                                 Icons.pause_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: FFAppState().currentTextColor,
                                 size: 50.0,
                               ),
                             ),
@@ -222,7 +225,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                               },
                               child: Icon(
                                 Icons.play_arrow_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: FFAppState().currentTextColor,
                                 size: 50.0,
                               ),
                             ),
@@ -313,7 +316,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     },
                     child: Icon(
                       Icons.music_note,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: FFAppState().currentTextColor,
                       size: 30.0,
                     ),
                   ),
@@ -339,7 +342,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     },
                     child: Icon(
                       Icons.album,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: FFAppState().currentTextColor,
                       size: 30.0,
                     ),
                   ),
@@ -365,7 +368,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     },
                     child: Icon(
                       Icons.search,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: FFAppState().currentTextColor,
                       size: 30.0,
                     ),
                   ),
@@ -393,7 +396,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                       },
                       child: Icon(
                         Icons.playlist_play_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: FFAppState().currentTextColor,
                         size: 35.0,
                       ),
                     ),
@@ -420,7 +423,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     },
                     child: Icon(
                       Icons.person_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: FFAppState().currentTextColor,
                       size: 30.0,
                     ),
                   ),

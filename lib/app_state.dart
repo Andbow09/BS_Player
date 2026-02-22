@@ -67,6 +67,12 @@ class FFAppState extends ChangeNotifier {
   set currentDarkColor(Color value) {
     _currentDarkColor = value;
   }
+
+  Color _currentTextColor = Color(4278190080);
+  Color get currentTextColor => _currentTextColor;
+  set currentTextColor(Color value) {
+    _currentTextColor = value;
+  }
 }
 
 Color? _colorFromIntValue(int? val) {

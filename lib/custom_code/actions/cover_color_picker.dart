@@ -13,15 +13,12 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 Future<List<Color>> coverColorPicker(int cancionId) async {
-  // Colores por defecto de seguridad
-  Color colorGenDefecto = const Color(0xFFF5E6E8);
+  Color colorGenDefecto = const Color(0xFFF5E6E8); // Tu rosa clarito original
   Color colorClaroDefecto = const Color(0xFFFFFFFF);
   Color colorOscuroDefecto = const Color(0xFF222222);
 
   try {
     final OnAudioQuery audioQuery = OnAudioQuery();
-
-    // 1. Pedimos la foto
     final Uint8List? artworkBytes = await audioQuery.queryArtwork(
       cancionId,
       ArtworkType.AUDIO,
@@ -30,36 +27,44 @@ Future<List<Color>> coverColorPicker(int cancionId) async {
 
     if (artworkBytes != null && artworkBytes.isNotEmpty) {
       final ImageProvider imageProvider = MemoryImage(artworkBytes);
-
-      // 2. Extraemos la paleta completa
       final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
         imageProvider,
         maximumColorCount: 16,
       );
 
-      // 3. Seleccionamos los 3 tonos
-      // General (Dominante)
-      Color general = palette.dominantColor?.color ??
-          palette.vibrantColor?.color ??
+      // 1. Cogemos el color base (priorizando colores vivos o dominantes)
+      Color colorBase = palette.vibrantColor?.color ??
+          palette.dominantColor?.color ??
           colorGenDefecto;
 
-      // Claro (Vibrante claro o Muted claro)
+      // 2. EL FILTRO PASTEL MÁGICO ✨
+      // Mezclamos el color base con un 70% (0.7) de Blanco Puro.
+      // Si quieres que sea aún más blanquecino, sube a 0.8. Si lo quieres más colorido, baja a 0.5.
+      Color generalPastel =
+          Color.lerp(colorBase, Colors.white, 0.6) ?? colorGenDefecto;
+
       Color claro = palette.lightVibrantColor?.color ??
           palette.lightMutedColor?.color ??
-          general.withOpacity(0.7);
-
-      // Oscuro (Vibrante oscuro o Muted oscuro)
+          colorClaroDefecto;
       Color oscuro = palette.darkVibrantColor?.color ??
           palette.darkMutedColor?.color ??
-          general.withOpacity(0.3);
+          colorOscuroDefecto;
 
-      // Devolvemos la lista exactamente en este orden: [0] General, [1] Claro, [2] Oscuro
-      return [general, claro, oscuro];
+      // 3. Como el fondo AHORA SIEMPRE ES PASTEL (claro), el texto siempre puede ser oscuro.
+      // Usamos un negro suave (Colors.black87) que queda mucho más elegante que el negro puro.
+      Color colorTexto = Colors.black87;
+
+      // Devolvemos: [0] General (ahora pastel), [1] Claro, [2] Oscuro, [3] Color de Texto
+      return [generalPastel, claro, oscuro, colorTexto];
     }
   } catch (e) {
     print("Error extrayendo paleta: $e");
   }
 
-  // Si no hay foto o da error, devolvemos los 3 por defecto
-  return [colorGenDefecto, colorClaroDefecto, colorOscuroDefecto];
+  return [
+    colorGenDefecto,
+    colorClaroDefecto,
+    colorOscuroDefecto,
+    Colors.black87
+  ];
 }
