@@ -52,9 +52,8 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
     _model = createModel(context, () => BottomMenuModel());
 
     animationsMap.addAll({
-      'containerOnActionTriggerAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           VisibilityEffect(duration: 1.ms),
           MoveEffect(
@@ -74,12 +73,6 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
         ],
       ),
     });
-    setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
-      this,
-    );
   }
 
   @override
@@ -256,9 +249,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
                 ),
               ],
             ),
-          ).animateOnActionTrigger(
-            animationsMap['containerOnActionTriggerAnimation']!,
-          ),
+          ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 90.0, 0.0, 0.0),
           child: Container(

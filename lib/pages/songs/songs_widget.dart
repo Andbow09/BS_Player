@@ -136,7 +136,10 @@ class _SongsWidgetState extends State<SongsWidget> {
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           FFAppState().currentTitle =
-                                              listViewListSongsRow.titulo;
+                                              valueOrDefault<String>(
+                                            listViewListSongsRow.titulo,
+                                            'titulo',
+                                          );
                                           FFAppState().currentId =
                                               listViewListSongsRow.id;
                                           FFAppState().currentArtist =
