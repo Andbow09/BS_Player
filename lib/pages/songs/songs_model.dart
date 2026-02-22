@@ -22,8 +22,6 @@ class SongsModel extends FlutterFlowModel<SongsWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - obtenerCanciones] action in Songs widget.
-  List<CancionStruct>? resultadoEscaneo;
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
   // Model for bottomMenu component.

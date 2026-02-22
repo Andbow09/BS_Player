@@ -187,7 +187,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                     model: _model.bottomMenuModel,
                     updateCallback: () => safeSetState(() {}),
                     child: BottomMenuWidget(
-                      page: 'albums',
+                      page: 'discs',
                     ),
                   ),
                 ),

@@ -1,11 +1,10 @@
-import '/backend/schema/structs/index.dart';
+import '/backend/sqlite/sqlite_manager.dart';
 import '/components/bottom_menu/bottom_menu_widget.dart';
 import '/components/top_menu/top_menu_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,10 +33,7 @@ class _SongsWidgetState extends State<SongsWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.resultadoEscaneo = await actions.obtenerCanciones();
-      _model.listaCanciones =
-          _model.resultadoEscaneo!.toList().cast<CancionStruct>();
-      safeSetState(() {});
+      await actions.librarySync();
     });
   }
 
@@ -73,19 +69,35 @@ class _SongsWidgetState extends State<SongsWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Builder(
-                        builder: (context) {
-                          final lista = _model.listaCanciones.toList();
+                      FutureBuilder<List<ListSongsRow>>(
+                        future: SQLiteManager.instance.listSongs(),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          final listViewListSongsRowList = snapshot.data!;
 
                           return ListView.separated(
                             padding: EdgeInsets.zero,
                             primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: lista.length,
+                            itemCount: listViewListSongsRowList.length,
                             separatorBuilder: (_, __) => SizedBox(height: 5.0),
-                            itemBuilder: (context, listaIndex) {
-                              final listaItem = lista[listaIndex];
+                            itemBuilder: (context, listViewIndex) {
+                              final listViewListSongsRow =
+                                  listViewListSongsRowList[listViewIndex];
                               return Container(
                                 width: 100.0,
                                 height: 50.0,
@@ -106,7 +118,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                         child: custom_widgets.SongCover(
                                           width: 40.0,
                                           height: 40.0,
-                                          cancionId: listaIndex,
+                                          cancionId: listViewListSongsRow.id,
                                         ),
                                       ),
                                     ),
@@ -121,7 +133,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            listaItem.titulo,
+                                            listViewListSongsRow.nombre,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -146,8 +158,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                             alignment:
                                                 AlignmentDirectional(-1.0, 0.0),
                                             child: Text(
-                                              functions.listaATexto(
-                                                  listaItem.artistas.toList()),
+                                              listViewListSongsRow.artistas,
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium

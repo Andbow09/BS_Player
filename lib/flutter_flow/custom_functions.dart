@@ -9,6 +9,7 @@ import 'lat_lng.dart';
 import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/schema/structs/index.dart';
+import '/backend/sqlite/sqlite_manager.dart';
 
 String listaATexto(List<String>? listaEntrada) {
   if (listaEntrada == null || listaEntrada.isEmpty) {
