@@ -54,4 +54,10 @@ class FFAppState extends ChangeNotifier {
   set currentArtist(String value) {
     _currentArtist = value;
   }
+
+  String _currentAlbum = '';
+  String get currentAlbum => _currentAlbum;
+  set currentAlbum(String value) {
+    _currentAlbum = value;
+  }
 }

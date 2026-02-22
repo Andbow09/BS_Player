@@ -1,5 +1,4 @@
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -60,9 +59,13 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
 
     return Stack(
       children: [
-        Container(
+        AnimatedContainer(
+          duration: Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
           width: double.infinity,
-          height: 120.0,
+          height: FFAppState().currentTitle != ''
+              ? 120.0
+              : 0.0,
           decoration: BoxDecoration(
             color: Color(0xFFEEDDE9),
             borderRadius: BorderRadius.only(
@@ -90,7 +93,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                         width: 70.0,
                         height: 70.0,
                         cancionId: valueOrDefault<int>(
-                          widget.id,
+                          FFAppState().currentId,
                           0,
                         ),
                       ),
@@ -126,10 +129,11 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                       .bodyMedium
                                       .fontStyle,
                                 ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             valueOrDefault<String>(
-                              widget.artista,
+                              FFAppState().currentArtist,
                               'artista',
                             ),
                             style: FlutterFlowTheme.of(context)
@@ -150,7 +154,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                           ),
                           Text(
                             valueOrDefault<String>(
-                              widget.album,
+                              FFAppState().currentAlbum,
                               'album',
                             ),
                             style: FlutterFlowTheme.of(context)
@@ -182,38 +186,52 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                       alignment: AlignmentDirectional(1.0, 0.0),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 20.0, 10.0, 0.0),
-                        child: ToggleIcon(
-                          onPressed: () async {
-                            safeSetState(() => FFAppState().isPlaying =
-                                !FFAppState().isPlaying);
-                            if (FFAppState().isPlaying == true) {
-                              await actions.audioController(
-                                'pause',
-                                '',
-                              );
-                              FFAppState().isPlaying = false;
-                              safeSetState(() {});
-                            } else {
-                              await actions.audioController(
-                                'resume',
-                                '',
-                              );
-                              FFAppState().isPlaying = true;
-                              safeSetState(() {});
-                            }
-                          },
-                          value: FFAppState().isPlaying,
-                          onIcon: Icon(
-                            Icons.pause_rounded,
-                            color: Colors.black,
-                            size: 50.0,
-                          ),
-                          offIcon: Icon(
-                            Icons.play_arrow_rounded,
-                            color: Colors.black,
-                            size: 50.0,
-                          ),
+                            0.0, 15.0, 20.0, 0.0),
+                        child: Stack(
+                          children: [
+                            if (FFAppState().isPlaying == true)
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  await actions.audioController(
+                                    'pause',
+                                    '',
+                                  );
+                                  FFAppState().isPlaying = false;
+                                  safeSetState(() {});
+                                },
+                                child: Icon(
+                                  Icons.pause_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 50.0,
+                                ),
+                              ),
+                            if (FFAppState().isPlaying == false)
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  await actions.audioController(
+                                    'resume',
+                                    '',
+                                  );
+                                  FFAppState().isPlaying = true;
+                                  safeSetState(() {});
+                                },
+                                child: Icon(
+                                  Icons.play_arrow_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 50.0,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
@@ -225,12 +243,39 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
         ),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 90.0, 0.0, 0.0),
-          child: Container(
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
             width: double.infinity,
             height: 70.0,
             decoration: BoxDecoration(
               color: Color(0xFFEEDDE9),
-              borderRadius: BorderRadius.circular(50.0),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(valueOrDefault<double>(
+                  FFAppState().currentTitle != ''
+                      ? 35.0
+                      : 50.0,
+                  0.0,
+                )),
+                bottomRight: Radius.circular(valueOrDefault<double>(
+                  FFAppState().currentTitle != ''
+                      ? 35.0
+                      : 50.0,
+                  0.0,
+                )),
+                topLeft: Radius.circular(valueOrDefault<double>(
+                  FFAppState().currentTitle != ''
+                      ? 0.0
+                      : 50.0,
+                  0.0,
+                )),
+                topRight: Radius.circular(valueOrDefault<double>(
+                  FFAppState().currentTitle != ''
+                      ? 0.0
+                      : 50.0,
+                  0.0,
+                )),
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.max,

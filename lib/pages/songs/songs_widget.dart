@@ -92,30 +92,6 @@ class _SongsWidgetState extends State<SongsWidget> {
                             return Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(
-                                  FFAppState().currentTitle,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
                                 FutureBuilder<List<ListSongsRow>>(
                                   future: SQLiteManager.instance.listSongs(),
                                   builder: (context, snapshot) {
@@ -173,6 +149,8 @@ class _SongsWidgetState extends State<SongsWidget> {
                                               FFAppState().currentArtist =
                                                   listViewListSongsRow.artista;
                                               FFAppState().isPlaying = true;
+                                              FFAppState().currentAlbum =
+                                                  listViewListSongsRow.album;
                                               safeSetState(() {});
                                               await actions.audioController(
                                                 'play',
