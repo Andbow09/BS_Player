@@ -1,4 +1,3 @@
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,7 +5,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_menu_model.dart';
@@ -34,11 +32,8 @@ class BottomMenuWidget extends StatefulWidget {
   State<BottomMenuWidget> createState() => _BottomMenuWidgetState();
 }
 
-class _BottomMenuWidgetState extends State<BottomMenuWidget>
-    with TickerProviderStateMixin {
+class _BottomMenuWidgetState extends State<BottomMenuWidget> {
   late BottomMenuModel _model;
-
-  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -50,29 +45,6 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => BottomMenuModel());
-
-    animationsMap.addAll({
-      'containerOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          VisibilityEffect(duration: 1.ms),
-          MoveEffect(
-            curve: Curves.easeInOutQuint,
-            delay: 0.0.ms,
-            duration: 500.0.ms,
-            begin: Offset(0.0, 100.0),
-            end: Offset(0.0, 0.0),
-          ),
-          FadeEffect(
-            curve: Curves.linear,
-            delay: 250.0.ms,
-            duration: 500.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-    });
   }
 
   @override
@@ -249,7 +221,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
                 ),
               ],
             ),
-          ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),
+          ),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 90.0, 0.0, 0.0),
           child: Container(
