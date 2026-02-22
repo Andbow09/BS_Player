@@ -73,6 +73,12 @@ class FFAppState extends ChangeNotifier {
   set currentTextColor(Color value) {
     _currentTextColor = value;
   }
+
+  String _currentPage = '';
+  String get currentPage => _currentPage;
+  set currentPage(String value) {
+    _currentPage = value;
+  }
 }
 
 Color? _colorFromIntValue(int? val) {
