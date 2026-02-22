@@ -36,4 +36,22 @@ class FFAppState extends ChangeNotifier {
   set isPlaying(bool value) {
     _isPlaying = value;
   }
+
+  String _currentTitle = '';
+  String get currentTitle => _currentTitle;
+  set currentTitle(String value) {
+    _currentTitle = value;
+  }
+
+  int _currentId = 0;
+  int get currentId => _currentId;
+  set currentId(int value) {
+    _currentId = value;
+  }
+
+  String _currentArtist = '';
+  String get currentArtist => _currentArtist;
+  set currentArtist(String value) {
+    _currentArtist = value;
+  }
 }

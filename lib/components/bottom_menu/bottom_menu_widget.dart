@@ -1,7 +1,8 @@
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,19 @@ class BottomMenuWidget extends StatefulWidget {
   const BottomMenuWidget({
     super.key,
     String? page,
-    this.song,
+    this.titulo,
+    this.artista,
+    this.id,
+    this.album,
+    this.ruta,
   }) : this.page = page ?? 'Canciones';
 
   final String page;
-  final CancionStruct? song;
+  final String? titulo;
+  final String? artista;
+  final int? id;
+  final String? album;
+  final String? ruta;
 
   @override
   State<BottomMenuWidget> createState() => _BottomMenuWidgetState();
@@ -108,44 +117,134 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(18.0, 18.0, 0.0, 0.0),
                     child: Container(
                       width: 70.0,
                       height: 70.0,
                       child: custom_widgets.SongCover(
                         width: 70.0,
                         height: 70.0,
-                        cancionId: widget.song!.id,
+                        cancionId: widget.id!,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 15.0, 0.0, 0.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          FFAppState().currentSong.titulo,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                font: GoogleFonts.inter(
+                  Align(
+                    alignment: AlignmentDirectional(0.0, 0.0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          10.0, 20.0, 0.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            FFAppState().currentTitle,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .fontStyle,
                                 ),
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
+                          ),
+                          Text(
+                            valueOrDefault<String>(
+                              widget.artista,
+                              'artista',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontWeight,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                          ),
+                          Text(
+                            valueOrDefault<String>(
+                              widget.album,
+                              'album',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional(1.0, 0.0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 10.0, 0.0),
+                        child: ToggleIcon(
+                          onPressed: () async {
+                            safeSetState(() => FFAppState().isPlaying =
+                                !FFAppState().isPlaying);
+                            if (FFAppState().isPlaying == true) {
+                              await actions.audioController(
+                                'pause',
+                                '',
+                              );
+                              FFAppState().isPlaying = false;
+                              safeSetState(() {});
+                            } else {
+                              await actions.audioController(
+                                'resume',
+                                '',
+                              );
+                              FFAppState().isPlaying = true;
+                              safeSetState(() {});
+                            }
+                          },
+                          value: FFAppState().isPlaying,
+                          onIcon: Icon(
+                            Icons.pause_rounded,
+                            color: FlutterFlowTheme.of(context).primary,
+                            size: 50.0,
+                          ),
+                          offIcon: Icon(
+                            Icons.play_arrow_rounded,
+                            color: Colors.black,
+                            size: 50.0,
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
