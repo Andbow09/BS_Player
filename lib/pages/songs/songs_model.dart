@@ -20,6 +20,8 @@ class SongsModel extends FlutterFlowModel<SongsWidget> {
           int index, Function(CancionStruct) updateFn) =>
       listaCanciones[index] = updateFn(listaCanciones[index]);
 
+  bool estaCargando = true;
+
   ///  State fields for stateful widgets in this page.
 
   // Model for topMenu component.
