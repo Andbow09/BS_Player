@@ -206,43 +206,41 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget>
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional(1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 20.0, 10.0, 0.0),
-                        child: ToggleIcon(
-                          onPressed: () async {
-                            safeSetState(() => FFAppState().isPlaying =
-                                !FFAppState().isPlaying);
-                            if (FFAppState().isPlaying == true) {
-                              await actions.audioController(
-                                'pause',
-                                '',
-                              );
-                              FFAppState().isPlaying = false;
-                              safeSetState(() {});
-                            } else {
-                              await actions.audioController(
-                                'resume',
-                                '',
-                              );
-                              FFAppState().isPlaying = true;
-                              safeSetState(() {});
-                            }
-                          },
-                          value: FFAppState().isPlaying,
-                          onIcon: Icon(
-                            Icons.pause_rounded,
-                            color: FlutterFlowTheme.of(context).primary,
-                            size: 50.0,
-                          ),
-                          offIcon: Icon(
-                            Icons.play_arrow_rounded,
-                            color: Colors.black,
-                            size: 50.0,
-                          ),
+                  Align(
+                    alignment: AlignmentDirectional(1.0, 0.0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          100.0, 20.0, 10.0, 0.0),
+                      child: ToggleIcon(
+                        onPressed: () async {
+                          safeSetState(() => FFAppState().isPlaying =
+                              !FFAppState().isPlaying);
+                          if (FFAppState().isPlaying == true) {
+                            await actions.audioController(
+                              'pause',
+                              '',
+                            );
+                            FFAppState().isPlaying = false;
+                            safeSetState(() {});
+                          } else {
+                            await actions.audioController(
+                              'resume',
+                              '',
+                            );
+                            FFAppState().isPlaying = true;
+                            safeSetState(() {});
+                          }
+                        },
+                        value: FFAppState().isPlaying,
+                        onIcon: Icon(
+                          Icons.pause_rounded,
+                          color: FlutterFlowTheme.of(context).primary,
+                          size: 50.0,
+                        ),
+                        offIcon: Icon(
+                          Icons.play_arrow_rounded,
+                          color: Colors.black,
+                          size: 50.0,
                         ),
                       ),
                     ),
