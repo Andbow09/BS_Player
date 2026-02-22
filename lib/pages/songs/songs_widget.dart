@@ -127,36 +127,53 @@ class _SongsWidgetState extends State<SongsWidget> {
                                         final listViewListSongsRow =
                                             listViewListSongsRowList[
                                                 listViewIndex];
-                                        return Container(
-                                          width: 100.0,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                          ),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              FFAppState().currentTitle =
-                                                  listViewListSongsRow.titulo;
-                                              FFAppState().currentId =
-                                                  listViewListSongsRow.id;
-                                              FFAppState().currentArtist =
-                                                  listViewListSongsRow.artista;
-                                              FFAppState().isPlaying = true;
-                                              FFAppState().currentAlbum =
-                                                  listViewListSongsRow.album;
-                                              safeSetState(() {});
-                                              await actions.audioController(
-                                                'play',
-                                                listViewListSongsRow.ruta,
-                                              );
-                                            },
+                                        return InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            FFAppState().currentTitle =
+                                                listViewListSongsRow.titulo;
+                                            FFAppState().currentId =
+                                                listViewListSongsRow.id;
+                                            FFAppState().currentArtist =
+                                                listViewListSongsRow.artista;
+                                            FFAppState().isPlaying = true;
+                                            FFAppState().currentAlbum =
+                                                listViewListSongsRow.album;
+                                            safeSetState(() {});
+                                            await actions.audioController(
+                                              'play',
+                                              listViewListSongsRow.ruta,
+                                            );
+                                            _model.pickedColor =
+                                                await actions.coverColorPicker(
+                                              listViewListSongsRow.id,
+                                            );
+                                            FFAppState().currentColor = (_model
+                                                .pickedColor!
+                                                .elementAtOrNull(0))!;
+                                            FFAppState().currentLightColor =
+                                                (_model.pickedColor!
+                                                    .elementAtOrNull(1))!;
+                                            FFAppState().currentDarkColor =
+                                                (_model.pickedColor!
+                                                    .elementAtOrNull(2))!;
+                                            safeSetState(() {});
+
+                                            safeSetState(() {});
+                                          },
+                                          child: Container(
+                                            width: 100.0,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(0.0),
+                                            ),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [

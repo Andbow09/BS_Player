@@ -26,6 +26,8 @@ class SongsModel extends FlutterFlowModel<SongsWidget> {
 
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
+  // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
+  List<Color>? pickedColor;
   // Model for bottomMenu component.
   late BottomMenuModel bottomMenuModel;
 

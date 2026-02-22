@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '/backend/schema/structs/index.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -19,16 +18,6 @@ class FFAppState extends ChangeNotifier {
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
-  }
-
-  CancionStruct _currentSong = CancionStruct();
-  CancionStruct get currentSong => _currentSong;
-  set currentSong(CancionStruct value) {
-    _currentSong = value;
-  }
-
-  void updateCurrentSongStruct(Function(CancionStruct) updateFn) {
-    updateFn(_currentSong);
   }
 
   bool _isPlaying = false;
@@ -60,4 +49,29 @@ class FFAppState extends ChangeNotifier {
   set currentAlbum(String value) {
     _currentAlbum = value;
   }
+
+  Color _currentColor = Color(4293844457);
+  Color get currentColor => _currentColor;
+  set currentColor(Color value) {
+    _currentColor = value;
+  }
+
+  Color _currentLightColor = Colors.transparent;
+  Color get currentLightColor => _currentLightColor;
+  set currentLightColor(Color value) {
+    _currentLightColor = value;
+  }
+
+  Color _currentDarkColor = Colors.transparent;
+  Color get currentDarkColor => _currentDarkColor;
+  set currentDarkColor(Color value) {
+    _currentDarkColor = value;
+  }
+}
+
+Color? _colorFromIntValue(int? val) {
+  if (val == null) {
+    return null;
+  }
+  return Color(val);
 }

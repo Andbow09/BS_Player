@@ -61,13 +61,13 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
       children: [
         AnimatedContainer(
           duration: Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
+          curve: Curves.easeIn,
           width: double.infinity,
           height: FFAppState().currentTitle != ''
-              ? 120.0
+              ? 130.0
               : 0.0,
           decoration: BoxDecoration(
-            color: Color(0xFFEEDDE9),
+            color: FFAppState().currentColor,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(0.0),
               bottomRight: Radius.circular(0.0),
@@ -78,20 +78,17 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Stack(
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(18.0, 18.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 20.0),
                     child: Container(
-                      width: 70.0,
-                      height: 70.0,
+                      width: 65.0,
+                      height: 65.0,
                       child: custom_widgets.SongCover(
-                        width: 70.0,
-                        height: 70.0,
+                        width: 65.0,
+                        height: 65.0,
                         cancionId: valueOrDefault<int>(
                           FFAppState().currentId,
                           0,
@@ -100,10 +97,10 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(90.0, 27.0, 0.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -181,57 +178,71 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional(1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 15.0, 20.0, 0.0),
-                        child: Stack(
-                          children: [
-                            if (FFAppState().isPlaying == true)
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await actions.audioController(
-                                    'pause',
-                                    '',
-                                  );
-                                  FFAppState().isPlaying = false;
-                                  safeSetState(() {});
-                                },
-                                child: Icon(
-                                  Icons.pause_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 50.0,
-                                ),
+                  Align(
+                    alignment: AlignmentDirectional(1.0, 0.0),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 28.0, 18.0, 0.0),
+                      child: Stack(
+                        alignment: AlignmentDirectional(1.0, 0.0),
+                        children: [
+                          if (FFAppState().isPlaying == true)
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await actions.audioController(
+                                  'pause',
+                                  '',
+                                );
+                                FFAppState().isPlaying = false;
+                                safeSetState(() {});
+                              },
+                              child: Icon(
+                                Icons.pause_rounded,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 50.0,
                               ),
-                            if (FFAppState().isPlaying == false)
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await actions.audioController(
-                                    'resume',
-                                    '',
-                                  );
-                                  FFAppState().isPlaying = true;
-                                  safeSetState(() {});
-                                },
-                                child: Icon(
-                                  Icons.play_arrow_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 50.0,
-                                ),
+                            ),
+                          if (FFAppState().isPlaying == false)
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await actions.audioController(
+                                  'resume',
+                                  '',
+                                );
+                                FFAppState().isPlaying = true;
+                                safeSetState(() {});
+                              },
+                              child: Icon(
+                                Icons.play_arrow_rounded,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 50.0,
                               ),
-                          ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.0, 1.0),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(20.0, 85.0, 20.0, 0.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 20.0,
+                        child: custom_widgets.MiniBar(
+                          width: double.infinity,
+                          height: 20.0,
+                          colorActivo: FFAppState().currentDarkColor,
+                          colorFondo: FFAppState().currentLightColor,
                         ),
                       ),
                     ),
@@ -242,14 +253,14 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 90.0, 0.0, 0.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 400),
             curve: Curves.easeInOut,
             width: double.infinity,
             height: 70.0,
             decoration: BoxDecoration(
-              color: Color(0xFFEEDDE9),
+              color: FFAppState().currentColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(valueOrDefault<double>(
                   FFAppState().currentTitle != ''
