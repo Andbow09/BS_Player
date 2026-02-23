@@ -1,17 +1,13 @@
-import '/backend/schema/structs/index.dart';
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/bottom_menu/bottom_menu_widget.dart';
 import '/components/top_menu/top_menu_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'songs_model.dart';
 export 'songs_model.dart';
 
@@ -235,6 +231,9 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
                                                       children: [
                                                         Padding(
                                                           padding:
@@ -247,9 +246,8 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                           child: Container(
                                                             width: 40.0,
                                                             height: 40.0,
-                                                            child:
-                                                                custom_widgets
-                                                                    .SongCover(
+                                                            child: custom_widgets
+                                                                .MiniSongCover(
                                                               width: 40.0,
                                                               height: 40.0,
                                                               cancionId:
