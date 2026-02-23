@@ -91,7 +91,6 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
-                                enableDrag: false,
                                 context: context,
                                 builder: (context) {
                                   return Padding(
@@ -244,13 +243,32 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 0.0),
-                      child: Container(
-                        width: 55.0,
-                        height: 55.0,
-                        child: custom_widgets.MiniSongCover(
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: MainPlayerWidget(),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+                        },
+                        child: Container(
                           width: 55.0,
                           height: 55.0,
-                          cancionId: FFAppState().currentId,
+                          child: custom_widgets.MiniSongCover(
+                            width: 55.0,
+                            height: 55.0,
+                            cancionId: FFAppState().currentId,
+                          ),
                         ),
                       ),
                     ),

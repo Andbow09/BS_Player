@@ -17,3 +17,18 @@ String listaATexto(List<String>? listaEntrada) {
   }
   return listaEntrada.join(", ");
 }
+
+List<int> queueIndexGenerator(
+  int currentIndex,
+  int songTotal,
+) {
+  // Creamos una lista vacía
+  List<int> indicesRestantes = [];
+
+  // Llenamos la lista solo desde la canción actual hasta el final
+  for (int i = currentIndex; i < songTotal; i++) {
+    indicesRestantes.add(i);
+  }
+
+  return indicesRestantes;
+}
