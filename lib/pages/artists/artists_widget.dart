@@ -187,7 +187,7 @@ class _ArtistsWidgetState extends State<ArtistsWidget> {
                     model: _model.bottomMenuModel,
                     updateCallback: () => safeSetState(() {}),
                     child: BottomMenuWidget(
-                      page: 'artists',
+                      page: 'songs',
                     ),
                   ),
                 ),

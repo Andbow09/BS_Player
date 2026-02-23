@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 
-class SongCover extends StatefulWidget {
-  const SongCover({
+class MiniSongCover extends StatefulWidget {
+  const MiniSongCover({
     Key? key,
     this.width,
     this.height,
@@ -25,10 +25,10 @@ class SongCover extends StatefulWidget {
   final int cancionId;
 
   @override
-  State<SongCover> createState() => _CaratulaCancionState();
+  State<MiniSongCover> createState() => _CaratulaCancionState();
 }
 
-class _CaratulaCancionState extends State<SongCover> {
+class _CaratulaCancionState extends State<MiniSongCover> {
   @override
   Widget build(BuildContext context) {
     // Si FF no manda tamaño, forzamos 50x50 para que no desaparezca

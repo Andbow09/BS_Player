@@ -1,6 +1,6 @@
-import '/components/bottom_menu/bottom_menu_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,50 +61,49 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
       ),
       child: Stack(
         children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                  child: Container(
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(30.0, 80.0, 30.0, 0.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 310.0,
+                  child: custom_widgets.BigSongCover(
                     width: double.infinity,
-                    height: 250.0,
-                    child: custom_widgets.SongCover(
-                      width: double.infinity,
-                      height: 250.0,
-                      cancionId: FFAppState().currentId,
-                    ),
+                    height: 310.0,
+                    cancionId: FFAppState().currentId,
                   ),
                 ),
-                Align(
-                  alignment: AlignmentDirectional(-1.0, 0.0),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                    child: Text(
-                      FFAppState().currentTitle,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.golosText(
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
+              ),
+              Align(
+                alignment: AlignmentDirectional(-1.0, 0.0),
+                child: Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(30.0, 10.0, 30.0, 0.0),
+                  child: Text(
+                    FFAppState().currentTitle,
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.golosText(
                             fontWeight: FontWeight.w500,
                             fontStyle: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .fontStyle,
                           ),
-                    ),
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w500,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
                   ),
                 ),
-                Align(
-                  alignment: AlignmentDirectional(-1.0, 0.0),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-1.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
                   child: Text(
                     FFAppState().currentArtist,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -123,143 +122,248 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                         ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                  child: Container(
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 50.0,
+                  child: custom_widgets.MiniBar(
                     width: double.infinity,
                     height: 50.0,
-                    child: custom_widgets.MiniBar(
-                      width: double.infinity,
-                      height: 50.0,
-                    ),
+                    colorActivo: FFAppState().currentDarkColor,
+                    colorFondo: FFAppState().currentLightColor,
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                child: Stack(
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   children: [
-                    Stack(
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.repeat_rounded,
-                          color: Colors.white,
-                          size: 30.0,
+                        Stack(
+                          children: [
+                            Icon(
+                              Icons.repeat_rounded,
+                              color: Colors.white,
+                              size: 40.0,
+                            ),
+                            Icon(
+                              Icons.repeat_one_rounded,
+                              color: Colors.white,
+                              size: 40.0,
+                            ),
+                            Icon(
+                              Icons.repeat_rounded,
+                              color: Color(0xFF808080),
+                              size: 40.0,
+                            ),
+                          ],
                         ),
-                        Icon(
-                          Icons.repeat_one_rounded,
-                          color: Colors.white,
-                          size: 30.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            if (FFAppState().isPlaying == true) {
+                              await actions.audioController(
+                                'pause',
+                                '',
+                              );
+                              FFAppState().isPlaying = false;
+                              safeSetState(() {});
+                            } else {
+                              await actions.audioController(
+                                'resume',
+                                '',
+                              );
+                              FFAppState().isPlaying = true;
+                              safeSetState(() {});
+                            }
+                          },
+                          child: Container(
+                            width: 65.0,
+                            height: 65.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Stack(
+                              children: [
+                                if (FFAppState().isPlaying == false)
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Icon(
+                                      Icons.play_arrow_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 55.0,
+                                    ),
+                                  ),
+                                if (FFAppState().isPlaying == true)
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Icon(
+                                      Icons.pause_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 55.0,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
                         ),
-                        Icon(
-                          Icons.repeat_rounded,
-                          color: Color(0xFF808080),
-                          size: 30.0,
+                        Stack(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.random,
+                              color: Color(0xFF808080),
+                              size: 35.0,
+                            ),
+                            FaIcon(
+                              FontAwesomeIcons.random,
+                              color: Colors.white,
+                              size: 35.0,
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Container(
-                      width: 50.0,
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Icon(
-                              Icons.play_arrow_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 40.0,
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Icon(
-                              Icons.pause_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 40.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Stack(
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        FaIcon(
-                          FontAwesomeIcons.random,
-                          color: Color(0xFF808080),
-                          size: 24.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            if (FFAppState().currentIndex > 0) {
+                              FFAppState().currentIndex =
+                                  FFAppState().currentIndex + -1;
+                              FFAppState().currentTitle = FFAppState()
+                                  .colaTitulos
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentId = FFAppState()
+                                  .colaIds
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentArtist = FFAppState()
+                                  .colaArtistas
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentAlbum = FFAppState()
+                                  .currentAlbums
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              safeSetState(() {});
+                              await actions.audioController(
+                                'play',
+                                FFAppState()
+                                    .colaRutas
+                                    .elementAtOrNull(FFAppState().currentIndex),
+                              );
+                            }
+                          },
+                          child: Icon(
+                            Icons.skip_previous_rounded,
+                            color: Colors.white,
+                            size: 45.0,
+                          ),
                         ),
-                        FaIcon(
-                          FontAwesomeIcons.random,
-                          color: Colors.white,
-                          size: 24.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            if (FFAppState().currentIndex <
+                                FFAppState().colaRutas.length) {
+                              FFAppState().currentIndex =
+                                  FFAppState().currentIndex + 1;
+                              FFAppState().currentTitle = FFAppState()
+                                  .colaTitulos
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentId = FFAppState()
+                                  .colaIds
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentArtist = FFAppState()
+                                  .colaArtistas
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentAlbum = FFAppState()
+                                  .currentAlbums
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              safeSetState(() {});
+                              await actions.audioController(
+                                'play',
+                                FFAppState()
+                                    .colaRutas
+                                    .elementAtOrNull(FFAppState().currentIndex),
+                              );
+                            }
+                          },
+                          child: Icon(
+                            Icons.skip_next_rounded,
+                            color: Colors.white,
+                            size: 45.0,
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.playlist_play_rounded,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                          Stack(
-                            children: [
-                              Icon(
-                                Icons.favorite_border_rounded,
-                                color: Colors.white,
-                                size: 30.0,
-                              ),
-                              Icon(
-                                Icons.favorite_rounded,
-                                color: Colors.white,
-                                size: 30.0,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional(0.0, 1.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 55.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.playlist_play_rounded,
+                          color: Colors.white,
+                          size: 40.0,
+                        ),
+                        Stack(
+                          children: [
+                            Icon(
+                              Icons.favorite_border_rounded,
+                              color: Colors.white,
+                              size: 35.0,
+                            ),
+                            Icon(
+                              Icons.favorite_rounded,
+                              color: Colors.white,
+                              size: 35.0,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 7.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(10.0, 37.0, 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                await showModalBottomSheet(
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: MediaQuery.viewInsetsOf(context),
-                      child: BottomMenuWidget(
-                        page: FFAppState().currentPage,
-                      ),
-                    );
-                  },
-                ).then((value) => safeSetState(() {}));
+                Navigator.pop(context);
               },
               child: Icon(
                 Icons.keyboard_arrow_down_rounded,
@@ -270,20 +374,32 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
           ),
           Align(
             alignment: AlignmentDirectional(0.0, -1.0),
-            child: Container(
-              width: 200.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                color: Color(0x00FFFFFF),
-              ),
-              child: Align(
-                alignment: AlignmentDirectional(0.0, -1.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: Text(
-                    'Hello World',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.golosText(
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+              child: Container(
+                width: 200.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  color: Color(0x00FFFFFF),
+                ),
+                child: Align(
+                  alignment: AlignmentDirectional(0.0, -1.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                    child: Text(
+                      FFAppState().currentAlbum,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            font: GoogleFonts.golosText(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                            color: Colors.white,
+                            letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .fontWeight,
@@ -291,14 +407,8 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                                 .bodyMedium
                                 .fontStyle,
                           ),
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),

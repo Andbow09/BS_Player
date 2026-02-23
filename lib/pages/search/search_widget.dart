@@ -187,7 +187,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                     model: _model.bottomMenuModel,
                     updateCallback: () => safeSetState(() {}),
                     child: BottomMenuWidget(
-                      page: 'search',
+                      page: 'songs',
                     ),
                   ),
                 ),

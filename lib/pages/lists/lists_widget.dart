@@ -187,7 +187,7 @@ class _ListsWidgetState extends State<ListsWidget> {
                     model: _model.bottomMenuModel,
                     updateCallback: () => safeSetState(() {}),
                     child: BottomMenuWidget(
-                      page: 'lists',
+                      page: 'songs',
                     ),
                   ),
                 ),
