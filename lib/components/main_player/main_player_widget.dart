@@ -1,8 +1,11 @@
+import '/components/playlist/playlist_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +19,11 @@ class MainPlayerWidget extends StatefulWidget {
   State<MainPlayerWidget> createState() => _MainPlayerWidgetState();
 }
 
-class _MainPlayerWidgetState extends State<MainPlayerWidget> {
+class _MainPlayerWidgetState extends State<MainPlayerWidget>
+    with TickerProviderStateMixin {
   late MainPlayerModel _model;
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -29,6 +35,28 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MainPlayerModel());
+
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeIn,
+            delay: 0.0.ms,
+            duration: 400.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeOut,
+            delay: 0.0.ms,
+            duration: 400.0.ms,
+            begin: Offset(0.0, 100.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -344,10 +372,29 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Icon(
-                          Icons.playlist_play_rounded,
-                          color: Colors.white,
-                          size: 40.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: PlaylistWidget(),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+                          },
+                          child: Icon(
+                            Icons.playlist_play_rounded,
+                            color: Colors.white,
+                            size: 40.0,
+                          ),
                         ),
                         Stack(
                           children: [
@@ -431,6 +478,6 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
           ),
         ],
       ),
-    );
+    ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!);
   }
 }
