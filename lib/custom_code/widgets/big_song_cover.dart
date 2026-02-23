@@ -41,7 +41,7 @@ class _CaratulaCancionState extends State<BigSongCover> {
       child: QueryArtworkWidget(
         id: widget.cancionId,
         type: ArtworkType.AUDIO, // Tipo de archivo
-        size: 1500, // <-- EL SECRETO: Le pedimos resolución de 1500x1500
+        size: 1750, // <-- EL SECRETO: Le pedimos resolución de 1500x1500
         artworkQuality: FilterQuality
             .high, // <-- Le pedimos la máxima calidad de renderizado
         artworkBorder:

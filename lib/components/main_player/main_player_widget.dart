@@ -65,13 +65,13 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 80.0, 30.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(30.0, 90.0, 30.0, 0.0),
                 child: Container(
                   width: double.infinity,
-                  height: 310.0,
+                  height: 325.0,
                   child: custom_widgets.BigSongCover(
                     width: double.infinity,
-                    height: 310.0,
+                    height: 325.0,
                     cancionId: FFAppState().currentId,
                   ),
                 ),
@@ -80,7 +80,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 10.0, 30.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(30.0, 15.0, 30.0, 0.0),
                   child: Text(
                     FFAppState().currentTitle,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -97,13 +97,14 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                           fontStyle:
                               FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                         ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
               Align(
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(30.0, 5.0, 30.0, 0.0),
                   child: Text(
                     FFAppState().currentArtist,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -124,7 +125,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 50.0,
@@ -137,7 +138,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(30.0, 10.0, 30.0, 0.0),
                 child: Stack(
                   alignment: AlignmentDirectional(0.0, 0.0),
                   children: [
@@ -150,17 +151,17 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                             Icon(
                               Icons.repeat_rounded,
                               color: Colors.white,
-                              size: 40.0,
+                              size: 35.0,
                             ),
                             Icon(
                               Icons.repeat_one_rounded,
                               color: Colors.white,
-                              size: 40.0,
+                              size: 35.0,
                             ),
                             Icon(
                               Icons.repeat_rounded,
                               color: Color(0xFF808080),
-                              size: 40.0,
+                              size: 35.0,
                             ),
                           ],
                         ),
@@ -225,12 +226,12 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                             FaIcon(
                               FontAwesomeIcons.random,
                               color: Color(0xFF808080),
-                              size: 35.0,
+                              size: 30.0,
                             ),
                             FaIcon(
                               FontAwesomeIcons.random,
                               color: Colors.white,
-                              size: 35.0,
+                              size: 30.0,
                             ),
                           ],
                         ),
@@ -298,6 +299,18 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                               FFAppState().currentAlbum = FFAppState()
                                   .currentAlbums
                                   .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentColor = Color(0x00000000);
+                              safeSetState(() {});
+                              _model.colorPicked =
+                                  await actions.coverColorPicker(
+                                FFAppState().currentId,
+                              );
+                              FFAppState().currentColor =
+                                  (_model.colorPicked!.elementAtOrNull(0))!;
+                              FFAppState().currentLightColor =
+                                  (_model.colorPicked!.elementAtOrNull(1))!;
+                              FFAppState().currentDarkColor =
+                                  (_model.colorPicked!.elementAtOrNull(2))!;
                               safeSetState(() {});
                               await actions.audioController(
                                 'play',
@@ -306,6 +319,8 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                                     .elementAtOrNull(FFAppState().currentIndex),
                               );
                             }
+
+                            safeSetState(() {});
                           },
                           child: Icon(
                             Icons.skip_next_rounded,
@@ -323,7 +338,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget> {
                   alignment: AlignmentDirectional(0.0, 1.0),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 55.0),
+                        EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 75.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

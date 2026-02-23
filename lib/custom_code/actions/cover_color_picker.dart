@@ -32,30 +32,30 @@ Future<List<Color>> coverColorPicker(int cancionId) async {
         maximumColorCount: 16,
       );
 
-      // 1. Cogemos el color base (priorizando colores vivos o dominantes)
-      Color colorBase = palette.vibrantColor?.color ??
-          palette.dominantColor?.color ??
+      // 1. EL CAMBIO CLAVE: Priorizamos el color Dominante (el que más abunda, ej. el fondo amarillo)
+      Color colorBase = palette.dominantColor?.color ??
+          palette.vibrantColor?.color ??
           colorGenDefecto;
 
-      // 2. EL FILTRO PASTEL MÁGICO ✨
-      // Mezclamos el color base con un 70% (0.7) de Blanco Puro.
-      // Si quieres que sea aún más blanquecino, sube a 0.8. Si lo quieres más colorido, baja a 0.5.
-      Color generalPastel =
-          Color.lerp(colorBase, Colors.white, 0.6) ?? colorGenDefecto;
+      // 2. CREAMOS LA ESCALA MONOCROMÁTICA MATEMÁTICAMENTE:
 
-      Color claro = palette.lightVibrantColor?.color ??
-          palette.lightMutedColor?.color ??
-          colorClaroDefecto;
-      Color oscuro = palette.darkVibrantColor?.color ??
-          palette.darkMutedColor?.color ??
-          colorOscuroDefecto;
+      // [0] Fondo de la app: Muy clarito (Mezclamos el base con 80% de blanco)
+      Color fondoPastel =
+          Color.lerp(colorBase, Colors.white, 0.4) ?? colorGenDefecto;
+
+      // [1] Barra de fondo (Inactiva): Un poco más oscura que el fondo (Mezclamos con 40% de blanco)
+      Color barraInactiva =
+          Color.lerp(colorBase, Colors.white, 0.2) ?? colorBase;
+
+      // [2] Barra Activa: El color puro o un pelín más oscuro (Mezclamos con 10% de negro para darle fuerza)
+      Color barraActiva = Color.lerp(colorBase, Colors.black, 0.1) ?? colorBase;
 
       // 3. Como el fondo AHORA SIEMPRE ES PASTEL (claro), el texto siempre puede ser oscuro.
       // Usamos un negro suave (Colors.black87) que queda mucho más elegante que el negro puro.
       Color colorTexto = Colors.black87;
 
       // Devolvemos: [0] General (ahora pastel), [1] Claro, [2] Oscuro, [3] Color de Texto
-      return [generalPastel, claro, oscuro, colorTexto];
+      return [fondoPastel, barraInactiva, barraActiva, colorTexto];
     }
   } catch (e) {
     print("Error extrayendo paleta: $e");
