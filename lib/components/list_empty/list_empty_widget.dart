@@ -40,7 +40,7 @@ class _ListEmptyWidgetState extends State<ListEmptyWidget> {
       width: 160.23,
       height: 100.0,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
+        color: Color(0xBF161616),
       ),
       child: Align(
         alignment: AlignmentDirectional(0.0, 0.0),

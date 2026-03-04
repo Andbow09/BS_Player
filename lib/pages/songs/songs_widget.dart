@@ -66,7 +66,7 @@ class _SongsWidgetState extends State<SongsWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xBF161616),
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -89,7 +89,7 @@ class _SongsWidgetState extends State<SongsWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xBF161616),
             body: SafeArea(
               top: true,
               child: Stack(
@@ -221,9 +221,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                     width: 100.0,
                                                     height: 50.0,
                                                     decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
+                                                      color: Color(0xBF161616),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               0.0),
@@ -285,16 +283,18 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                       font: GoogleFonts
                                                                           .inter(
                                                                         fontWeight:
-                                                                            FontWeight.bold,
+                                                                            FontWeight.w500,
                                                                         fontStyle: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .fontStyle,
                                                                       ),
+                                                                      color: Colors
+                                                                          .white,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .bold,
+                                                                              .w500,
                                                                       fontStyle: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -322,6 +322,8 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                               .bodyMedium
                                                                               .fontStyle,
                                                                         ),
+                                                                        color: Colors
+                                                                            .white,
                                                                         letterSpacing:
                                                                             0.0,
                                                                         fontWeight: FlutterFlowTheme.of(context)

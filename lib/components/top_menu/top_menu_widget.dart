@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'top_menu_model.dart';
 export 'top_menu_model.dart';
@@ -40,7 +41,7 @@ class _TopMenuWidgetState extends State<TopMenuWidget> {
       width: double.infinity,
       height: 50.0,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
+        color: Color(0xBF161616),
       ),
       child: Stack(
         children: [
@@ -50,7 +51,7 @@ class _TopMenuWidgetState extends State<TopMenuWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
               child: Icon(
                 Icons.menu_rounded,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: Colors.white,
                 size: 24.0,
               ),
             ),
@@ -63,8 +64,8 @@ class _TopMenuWidgetState extends State<TopMenuWidget> {
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    'assets/images/BS_Player_Logo.png',
+                  child: SvgPicture.asset(
+                    'assets/images/image.png',
                     width: 20.0,
                     height: 20.0,
                     fit: BoxFit.cover,
@@ -75,12 +76,13 @@ class _TopMenuWidgetState extends State<TopMenuWidget> {
                 'BS PLAYER',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontStyle:
                             FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
+                      color: Colors.white,
                       letterSpacing: 0.0,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       fontStyle:
                           FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                     ),
