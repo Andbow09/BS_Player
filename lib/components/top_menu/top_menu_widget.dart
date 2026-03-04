@@ -1,7 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'top_menu_model.dart';
 export 'top_menu_model.dart';
@@ -64,7 +63,7 @@ class _TopMenuWidgetState extends State<TopMenuWidget> {
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: SvgPicture.asset(
+                  child: Image.asset(
                     'assets/images/image.png',
                     width: 20.0,
                     height: 20.0,

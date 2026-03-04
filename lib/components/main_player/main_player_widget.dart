@@ -80,7 +80,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
               FFAppState().currentColor,
               FlutterFlowTheme.of(context).secondary,
             ),
-            Color(0xBF161616)
+            Color(0xFF161616)
           ],
           stops: [0.0, 1.0],
           begin: AlignmentDirectional(0.0, -1.0),
@@ -153,7 +153,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(12.0, 20.0, 12.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 50.0,
@@ -418,7 +418,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
             ],
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 37.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(10.0, 44.0, 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -448,7 +448,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                   alignment: AlignmentDirectional(0.0, -1.0),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Text(
                       FFAppState().currentAlbum,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

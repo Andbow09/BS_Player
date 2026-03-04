@@ -66,7 +66,7 @@ class _SongsWidgetState extends State<SongsWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xBF161616),
+            backgroundColor: Color(0xFF161616),
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -89,7 +89,7 @@ class _SongsWidgetState extends State<SongsWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Color(0xBF161616),
+            backgroundColor: Color(0xFF161616),
             body: SafeArea(
               top: true,
               child: Stack(
@@ -221,7 +221,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                     width: 100.0,
                                                     height: 50.0,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xBF161616),
+                                                      color: Color(0xFF161616),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               0.0),
@@ -300,6 +300,9 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                           .bodyMedium
                                                                           .fontStyle,
                                                                     ),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
                                                               ),
                                                               Align(
                                                                 alignment:
@@ -371,6 +374,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                             .bodyMedium
                                                             .fontStyle,
                                                   ),
+                                                  color: Colors.white,
                                                   letterSpacing: 0.0,
                                                   fontWeight:
                                                       FlutterFlowTheme.of(

@@ -276,14 +276,17 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                 ),
                 Align(
                   alignment: AlignmentDirectional(0.0, 1.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 23.0,
-                    child: custom_widgets.MiniBar(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
+                    child: Container(
                       width: double.infinity,
-                      height: 23.0,
-                      colorActivo: FFAppState().currentDarkColor,
-                      colorFondo: FFAppState().currentLightColor,
+                      height: 20.0,
+                      child: custom_widgets.MiniBar(
+                        width: double.infinity,
+                        height: 20.0,
+                        colorActivo: FFAppState().currentDarkColor,
+                        colorFondo: FFAppState().currentLightColor,
+                      ),
                     ),
                   ),
                 ),
