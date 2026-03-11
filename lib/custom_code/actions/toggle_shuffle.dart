@@ -25,8 +25,8 @@ Future<void> toggleShuffle() async {
     state.colaTitulosOg = List.from(state.colaTitulos);
     state.colaRutasOg = List.from(state.colaRutas);
     state.colaColoresOg = List.from(state.colaColores);
-    state.colaAlbumsOg = List.from(state.colaNombresAlbum);
-    state.colaArtistasOg = List.from(state.colaNombresArtista);
+    state.colaAlbumsOg = List.from(state.colaAlbums);
+    state.colaArtistasOg = List.from(state.colaArtistas);
 
     int currentIndex = state.currentIndex;
     if (currentIndex < 0 || currentIndex >= state.colaIds.length) return;
@@ -36,8 +36,8 @@ Future<void> toggleShuffle() async {
     String curTitulo = state.colaTitulos[currentIndex];
     String curRuta = state.colaRutas[currentIndex];
     int curColor = state.colaColores[currentIndex];
-    String curAlbum = state.colaNombresAlbum[currentIndex];
-    String curArtista = state.colaNombresArtista[currentIndex];
+    String curAlbum = state.colaAlbums[currentIndex];
+    String curArtista = state.colaArtistas[currentIndex];
 
     // 3. Metemos el RESTO de canciones en "paquetes" para que no se mezclen los datos
     List<Map<String, dynamic>> restoCanciones = [];
@@ -48,8 +48,8 @@ Future<void> toggleShuffle() async {
         'titulo': state.colaTitulos[i],
         'ruta': state.colaRutas[i],
         'color': state.colaColores[i],
-        'album': state.colaNombresAlbum[i],
-        'artista': state.colaNombresArtista[i],
+        'album': state.colaAlbums[i],
+        'artista': state.colaArtists[i],
       });
     }
 
@@ -70,11 +70,11 @@ Future<void> toggleShuffle() async {
       curColor,
       ...restoCanciones.map((e) => e['color'] as int)
     ];
-    state.colaNombresAlbum = [
+    state.colaAlbums = [
       curAlbum,
       ...restoCanciones.map((e) => e['album'] as String)
     ];
-    state.colaNombresArtista = [
+    state.colaArtistas = [
       curArtista,
       ...restoCanciones.map((e) => e['artista'] as String)
     ];
@@ -96,8 +96,8 @@ Future<void> toggleShuffle() async {
     state.colaTitulos = List.from(state.colaTitulosOg);
     state.colaRutas = List.from(state.colaRutasOg);
     state.colaColores = List.from(state.colaColoresOg);
-    state.colaNombresAlbum = List.from(state.colaAlbumsOg);
-    state.colaNombresArtista = List.from(state.colaArtistasOg);
+    state.colaAlbums = List.from(state.colaAlbumsOg);
+    state.colaArtistas = List.from(state.colaArtistasOg);
 
     // 3. Buscamos dónde estaba esa canción en la lista original y actualizamos el currentIndex
     int nuevoIndice = state.colaIds.indexOf(cancionSonandoId);
