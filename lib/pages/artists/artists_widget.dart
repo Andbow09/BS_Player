@@ -56,7 +56,7 @@ class _ArtistsWidgetState extends State<ArtistsWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF161616),
         body: SafeArea(
           top: true,
           child: Stack(
@@ -187,7 +187,7 @@ class _ArtistsWidgetState extends State<ArtistsWidget> {
                     model: _model.bottomMenuModel,
                     updateCallback: () => safeSetState(() {}),
                     child: BottomMenuWidget(
-                      page: 'songs',
+                      page: 'artists',
                     ),
                   ),
                 ),

@@ -1,7 +1,9 @@
 import '/backend/schema/structs/index.dart';
+import '/backend/sqlite/sqlite_manager.dart';
 import '/components/bottom_menu/bottom_menu_widget.dart';
 import '/components/top_menu/top_menu_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'songs_widget.dart' show SongsWidget;
 import 'package:flutter/material.dart';
 
@@ -26,8 +28,15 @@ class SongsModel extends FlutterFlowModel<SongsWidget> {
 
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
+  // State field(s) for DropDown widget.
+  String? dropDownValue;
+  FormFieldController<String>? dropDownValueController;
   // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
   List<Color>? pickedColor;
+  // Stores action output result for [Backend Call - SQLite (getRandomSong)] action in Container widget.
+  List<GetRandomSongRow>? fullyRandomizedPlaylist;
+  // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
+  List<Color>? fullyRandomizedPickedColor;
   // Model for bottomMenu component.
   late BottomMenuModel bottomMenuModel;
 

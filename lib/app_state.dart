@@ -196,33 +196,62 @@ class FFAppState extends ChangeNotifier {
     colaRutas.insert(index, value);
   }
 
-  List<String> _currentAlbums = [];
-  List<String> get currentAlbums => _currentAlbums;
-  set currentAlbums(List<String> value) {
-    _currentAlbums = value;
+  List<int> _colaColores = [];
+  List<int> get colaColores => _colaColores;
+  set colaColores(List<int> value) {
+    _colaColores = value;
   }
 
-  void addToCurrentAlbums(String value) {
-    currentAlbums.add(value);
+  void addToColaColores(int value) {
+    colaColores.add(value);
   }
 
-  void removeFromCurrentAlbums(String value) {
-    currentAlbums.remove(value);
+  void removeFromColaColores(int value) {
+    colaColores.remove(value);
   }
 
-  void removeAtIndexFromCurrentAlbums(int index) {
-    currentAlbums.removeAt(index);
+  void removeAtIndexFromColaColores(int index) {
+    colaColores.removeAt(index);
   }
 
-  void updateCurrentAlbumsAtIndex(
+  void updateColaColoresAtIndex(
+    int index,
+    int Function(int) updateFn,
+  ) {
+    colaColores[index] = updateFn(_colaColores[index]);
+  }
+
+  void insertAtIndexInColaColores(int index, int value) {
+    colaColores.insert(index, value);
+  }
+
+  List<String> _colaAlbums = [];
+  List<String> get colaAlbums => _colaAlbums;
+  set colaAlbums(List<String> value) {
+    _colaAlbums = value;
+  }
+
+  void addToColaAlbums(String value) {
+    colaAlbums.add(value);
+  }
+
+  void removeFromColaAlbums(String value) {
+    colaAlbums.remove(value);
+  }
+
+  void removeAtIndexFromColaAlbums(int index) {
+    colaAlbums.removeAt(index);
+  }
+
+  void updateColaAlbumsAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    currentAlbums[index] = updateFn(_currentAlbums[index]);
+    colaAlbums[index] = updateFn(_colaAlbums[index]);
   }
 
-  void insertAtIndexInCurrentAlbums(int index, String value) {
-    currentAlbums.insert(index, value);
+  void insertAtIndexInColaAlbums(int index, String value) {
+    colaAlbums.insert(index, value);
   }
 
   int _currentIndex = 0;

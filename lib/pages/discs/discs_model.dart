@@ -2,6 +2,7 @@ import '/backend/schema/structs/index.dart';
 import '/components/bottom_menu/bottom_menu_widget.dart';
 import '/components/top_menu/top_menu_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'discs_widget.dart' show DiscsWidget;
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,9 @@ class DiscsModel extends FlutterFlowModel<DiscsWidget> {
   late TopMenuModel topMenuModel;
   // Model for bottomMenu component.
   late BottomMenuModel bottomMenuModel;
+  // State field(s) for DropDown widget.
+  String? dropDownValue;
+  FormFieldController<String>? dropDownValueController;
 
   @override
   void initState(BuildContext context) {

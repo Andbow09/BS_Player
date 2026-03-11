@@ -1,9 +1,11 @@
+import '/backend/sqlite/sqlite_manager.dart';
 import '/components/playlist/playlist_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -80,7 +82,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
               FFAppState().currentColor,
               FlutterFlowTheme.of(context).secondary,
             ),
-            Color(0xFF161616)
+            Color(0xFF080808)
           ],
           stops: [0.0, 1.0],
           begin: AlignmentDirectional(0.0, -1.0),
@@ -93,7 +95,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 90.0, 30.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(30.0, 100.0, 30.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 320.0,
@@ -108,7 +110,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 25.0, 30.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 0.0),
                   child: Text(
                     FFAppState().currentTitle,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -142,7 +144,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                 .fontWeight,
                             fontStyle: FontStyle.italic,
                           ),
-                          color: Colors.white,
+                          color: Color(0xFFCACACA),
                           letterSpacing: 0.0,
                           fontWeight: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -161,7 +163,65 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                     width: double.infinity,
                     height: 50.0,
                     colorActivo: Colors.white,
-                    colorFondo: Color(0x80808080),
+                    colorFondo: Color(0x40808080),
+                    onSongEnding: () async {
+                      if (FFAppState().currentIndex <
+                          FFAppState().colaRutas.length) {
+                        FFAppState().currentIndex =
+                            FFAppState().currentIndex + 1;
+                        FFAppState().currentTitle = FFAppState()
+                            .colaTitulos
+                            .elementAtOrNull(FFAppState().currentIndex)!;
+                        FFAppState().currentId = FFAppState()
+                            .colaIds
+                            .elementAtOrNull(FFAppState().currentIndex)!;
+                        FFAppState().currentArtist = FFAppState()
+                            .colaArtistas
+                            .elementAtOrNull(FFAppState().currentIndex)!;
+                        FFAppState().currentAlbum = FFAppState()
+                            .colaAlbums
+                            .elementAtOrNull(FFAppState().currentIndex)!;
+                        safeSetState(() {});
+                        _model.colorPickedCopy = await actions.coverColorPicker(
+                          FFAppState().currentId,
+                          FFAppState()
+                              .colaColores
+                              .elementAtOrNull(FFAppState().currentIndex),
+                        );
+                        FFAppState().currentColor =
+                            (_model.colorPicked!.elementAtOrNull(0))!;
+                        safeSetState(() {});
+                        await Future.delayed(
+                          Duration(
+                            milliseconds: 125,
+                          ),
+                        );
+                        await actions.audioController(
+                          'play',
+                          FFAppState()
+                              .colaRutas
+                              .elementAtOrNull(FFAppState().currentIndex),
+                        );
+                        if (FFAppState()
+                                .colaColores
+                                .elementAtOrNull(FFAppState().currentIndex) ==
+                            0) {
+                          await SQLiteManager.instance.updateColor(
+                            color: functions.colorToInt(
+                                (_model.colorPickedCopy!.elementAtOrNull(0))!),
+                            id: FFAppState().currentId,
+                          );
+                          FFAppState().updateColaColoresAtIndex(
+                            FFAppState().currentIndex,
+                            (_) => functions.colorToInt(
+                                (_model.colorPickedCopy!.elementAtOrNull(0))!),
+                          );
+                          safeSetState(() {});
+                        }
+                      }
+
+                      safeSetState(() {});
+                    },
                   ),
                 ),
               ),
@@ -188,7 +248,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                             ),
                             Icon(
                               Icons.repeat_rounded,
-                              color: Color(0xFF808080),
+                              color: Color(0x40808080),
                               size: 30.0,
                             ),
                           ],
@@ -253,7 +313,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                           children: [
                             FaIcon(
                               FontAwesomeIcons.random,
-                              color: Color(0xFF808080),
+                              color: Color(0x40808080),
                               size: 25.0,
                             ),
                             FaIcon(
@@ -288,8 +348,19 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                   .colaArtistas
                                   .elementAtOrNull(FFAppState().currentIndex)!;
                               FFAppState().currentAlbum = FFAppState()
-                                  .currentAlbums
+                                  .colaAlbums
                                   .elementAtOrNull(FFAppState().currentIndex)!;
+                              safeSetState(() {});
+                              _model.colorPickedPrevious =
+                                  await actions.coverColorPicker(
+                                FFAppState().currentId,
+                                FFAppState()
+                                    .colaColores
+                                    .elementAtOrNull(FFAppState().currentIndex),
+                              );
+                              FFAppState().currentColor = (_model
+                                  .colorPickedPrevious!
+                                  .elementAtOrNull(0))!;
                               safeSetState(() {});
                               await actions.audioController(
                                 'play',
@@ -297,7 +368,26 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                     .colaRutas
                                     .elementAtOrNull(FFAppState().currentIndex),
                               );
+                              if (FFAppState().colaColores.elementAtOrNull(
+                                      FFAppState().currentIndex) ==
+                                  0) {
+                                await SQLiteManager.instance.updateColor(
+                                  color: functions.colorToInt((_model
+                                      .colorPickedPrevious!
+                                      .elementAtOrNull(0))!),
+                                  id: FFAppState().currentId,
+                                );
+                                FFAppState().updateColaColoresAtIndex(
+                                  FFAppState().currentIndex,
+                                  (_) => functions.colorToInt((_model
+                                      .colorPickedPrevious!
+                                      .elementAtOrNull(0))!),
+                                );
+                                safeSetState(() {});
+                              }
                             }
+
+                            safeSetState(() {});
                           },
                           child: Icon(
                             Icons.skip_previous_rounded,
@@ -325,13 +415,15 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                   .colaArtistas
                                   .elementAtOrNull(FFAppState().currentIndex)!;
                               FFAppState().currentAlbum = FFAppState()
-                                  .currentAlbums
+                                  .colaAlbums
                                   .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentColor = Color(0x00000000);
                               safeSetState(() {});
                               _model.colorPicked =
                                   await actions.coverColorPicker(
                                 FFAppState().currentId,
+                                FFAppState()
+                                    .colaColores
+                                    .elementAtOrNull(FFAppState().currentIndex),
                               );
                               FFAppState().currentColor =
                                   (_model.colorPicked!.elementAtOrNull(0))!;
@@ -346,6 +438,23 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                     .colaRutas
                                     .elementAtOrNull(FFAppState().currentIndex),
                               );
+                              if (FFAppState().colaColores.elementAtOrNull(
+                                      FFAppState().currentIndex) ==
+                                  0) {
+                                await SQLiteManager.instance.updateColor(
+                                  color: functions.colorToInt((_model
+                                      .colorPicked!
+                                      .elementAtOrNull(0))!),
+                                  id: FFAppState().currentId,
+                                );
+                                FFAppState().updateColaColoresAtIndex(
+                                  FFAppState().currentIndex,
+                                  (_) => functions.colorToInt((_model
+                                      .colorPicked!
+                                      .elementAtOrNull(0))!),
+                                );
+                                safeSetState(() {});
+                              }
                             }
 
                             safeSetState(() {});

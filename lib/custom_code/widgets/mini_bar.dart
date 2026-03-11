@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'dart:async';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import '../actions/audio_controller.dart';
@@ -21,12 +22,14 @@ class MiniBar extends StatefulWidget {
     this.height,
     this.colorActivo,
     this.colorFondo,
+    this.onSongEnding,
   }) : super(key: key);
 
   final double? width;
   final double? height;
   final Color? colorActivo;
   final Color? colorFondo;
+  final Future<dynamic> Function()? onSongEnding;
 
   @override
   _MiniBarState createState() => _MiniBarState();
@@ -35,6 +38,41 @@ class MiniBar extends StatefulWidget {
 class _MiniBarState extends State<MiniBar> {
   // Obtenemos el cerebro del audio que creaste en tu Custom Action
   final _player = ReproductorMaestro().player;
+
+  // Variable para guardar la suscripción y evitar fugas de memoria
+  StreamSubscription<PlayerState>? _playerStateSubscription;
+
+  static bool _songEnded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // ESCUCHAMOS EL ESTADO DEL REPRODUCTOR
+    _playerStateSubscription = _player.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        if (!_songEnded) {
+          _songEnded = true;
+
+          // ¡La canción llegó al final! Disparamos la acción de FlutterFlow
+          if (widget.onSongEnding != null) {
+            widget.onSongEnding!.call();
+          }
+
+          Future.delayed(const Duration(seconds: 2), () {
+            _songEnded = false;
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Limpiamos el oído cuando el widget se destruye
+    _playerStateSubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

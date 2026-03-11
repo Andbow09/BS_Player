@@ -23,7 +23,7 @@ class SQLiteManager {
     }
     _database = await initializeDatabaseFromDbFile(
       'b_s_player',
-      'SQLite.db',
+      'SQLite_(1).db',
     );
   }
 
@@ -34,6 +34,14 @@ class SQLiteManager {
       );
 
   Future<List<ListSongsRow>> listSongs() => performListSongs(
+        _database,
+      );
+
+  Future<List<ListAlbumsRow>> listAlbums() => performListAlbums(
+        _database,
+      );
+
+  Future<List<GetRandomSongRow>> getRandomSong() => performGetRandomSong(
         _database,
       );
 
@@ -55,6 +63,16 @@ class SQLiteManager {
         artista: artista,
         ruta: ruta,
         duracion: duracion,
+      );
+
+  Future updateColor({
+    int? color,
+    int? id,
+  }) =>
+      performUpdateColor(
+        _database,
+        color: color,
+        id: id,
       );
 
   /// END UPDATE QUERY CALLS

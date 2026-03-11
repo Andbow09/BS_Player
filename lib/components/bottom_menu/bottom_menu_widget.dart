@@ -1,8 +1,10 @@
+import '/backend/sqlite/sqlite_manager.dart';
 import '/components/main_player/main_player_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +78,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            95.0, 22.0, 70.0, 0.0),
+                            90.0, 22.0, 70.0, 0.0),
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -120,7 +122,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        color: FFAppState().currentTextColor,
+                                        color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         fontStyle: FlutterFlowTheme.of(context)
@@ -144,7 +146,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                                   .fontWeight,
                                           fontStyle: FontStyle.italic,
                                         ),
-                                        color: FFAppState().currentTextColor,
+                                        color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -171,7 +173,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        color: FFAppState().currentTextColor,
+                                        color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -212,7 +214,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                 },
                                 child: Icon(
                                   Icons.pause_rounded,
-                                  color: FFAppState().currentTextColor,
+                                  color: Colors.white,
                                   size: 50.0,
                                 ),
                               ),
@@ -232,7 +234,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                 },
                                 child: Icon(
                                   Icons.play_arrow_rounded,
-                                  color: FFAppState().currentTextColor,
+                                  color: Colors.white,
                                   size: 50.0,
                                 ),
                               ),
@@ -277,15 +279,68 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                 Align(
                   alignment: AlignmentDirectional(0.0, 1.0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(3.0, 10.0, 3.0, 0.0),
                     child: Container(
                       width: double.infinity,
-                      height: 20.0,
+                      height: 15.0,
                       child: custom_widgets.MiniBar(
                         width: double.infinity,
-                        height: 20.0,
-                        colorActivo: FFAppState().currentDarkColor,
-                        colorFondo: FFAppState().currentLightColor,
+                        height: 15.0,
+                        colorActivo: Colors.white,
+                        colorFondo: Color(0x40808080),
+                        onSongEnding: () async {
+                          if (FFAppState().currentIndex <
+                              FFAppState().colaRutas.length) {
+                            FFAppState().currentIndex =
+                                FFAppState().currentIndex + 1;
+                            FFAppState().currentTitle = FFAppState()
+                                .colaTitulos
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            FFAppState().currentId = FFAppState()
+                                .colaIds
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            FFAppState().currentArtist = FFAppState()
+                                .colaArtistas
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            FFAppState().currentAlbum = FFAppState()
+                                .colaAlbums
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            safeSetState(() {});
+                            _model.colorPicked = await actions.coverColorPicker(
+                              FFAppState().currentId,
+                              FFAppState()
+                                  .colaColores
+                                  .elementAtOrNull(FFAppState().currentIndex),
+                            );
+                            FFAppState().currentColor =
+                                (_model.colorPicked!.elementAtOrNull(0))!;
+                            safeSetState(() {});
+                            await actions.audioController(
+                              'play',
+                              FFAppState()
+                                  .colaRutas
+                                  .elementAtOrNull(FFAppState().currentIndex),
+                            );
+                            if (FFAppState().colaColores.elementAtOrNull(
+                                    FFAppState().currentIndex) ==
+                                0) {
+                              await SQLiteManager.instance.updateColor(
+                                color: functions.colorToInt(
+                                    (_model.colorPicked!.elementAtOrNull(0))!),
+                                id: FFAppState().currentId,
+                              );
+                              FFAppState().updateColaColoresAtIndex(
+                                FFAppState().currentIndex,
+                                (_) => functions.colorToInt(
+                                    (_model.colorPicked!.elementAtOrNull(0))!),
+                              );
+                              safeSetState(() {});
+                            }
+                          }
+
+                          safeSetState(() {});
+                        },
                       ),
                     ),
                   ),
@@ -353,7 +408,9 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                   },
                   child: Icon(
                     Icons.music_note,
-                    color: FFAppState().currentTextColor,
+                    color: widget.page == 'songs'
+                        ? FFAppState().currentTextColor
+                        : Colors.white,
                     size: 30.0,
                   ),
                 ),
@@ -382,7 +439,9 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                   },
                   child: Icon(
                     Icons.album,
-                    color: FFAppState().currentTextColor,
+                    color: widget.page == 'discs'
+                        ? FFAppState().currentTextColor
+                        : Colors.white,
                     size: 30.0,
                   ),
                 ),
@@ -411,7 +470,9 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                   },
                   child: Icon(
                     Icons.search,
-                    color: FFAppState().currentTextColor,
+                    color: widget.page == 'search'
+                        ? FFAppState().currentTextColor
+                        : Colors.white,
                     size: 30.0,
                   ),
                 ),
@@ -442,7 +503,9 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     },
                     child: Icon(
                       Icons.playlist_play_rounded,
-                      color: FFAppState().currentTextColor,
+                      color: widget.page == 'lists'
+                          ? FFAppState().currentTextColor
+                          : Colors.white,
                       size: 35.0,
                     ),
                   ),
@@ -472,7 +535,9 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                   },
                   child: Icon(
                     Icons.person_rounded,
-                    color: FFAppState().currentTextColor,
+                    color: widget.page == 'artists'
+                        ? FFAppState().currentTextColor
+                        : Colors.white,
                     size: 30.0,
                   ),
                 ),

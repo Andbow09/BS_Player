@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 class MainPlayerModel extends FlutterFlowModel<MainPlayerWidget> {
   ///  State fields for stateful widgets in this component.
 
+  // Stores action output result for [Custom Action - coverColorPicker] action in MiniBar widget.
+  List<Color>? colorPickedCopy;
+  // Stores action output result for [Custom Action - coverColorPicker] action in Icon widget.
+  List<Color>? colorPickedPrevious;
   // Stores action output result for [Custom Action - coverColorPicker] action in Icon widget.
   List<Color>? colorPicked;
 

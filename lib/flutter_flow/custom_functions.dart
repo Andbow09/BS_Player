@@ -32,3 +32,7 @@ List<int> queueIndexGenerator(
 
   return indicesRestantes;
 }
+
+int colorToInt(Color color) {
+  return color.value;
+}

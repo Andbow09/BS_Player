@@ -17,3 +17,17 @@ VALUES (${id}, '${titulo}', '${artista}', '${ruta}', ${duracion})
 }
 
 /// END INSERTSONG
+
+/// BEGIN UPDATECOLOR
+Future performUpdateColor(
+  Database database, {
+  int? color,
+  int? id,
+}) {
+  final query = '''
+UPDATE cancion SET color = ? WHERE id = ?
+''';
+  return database.rawQuery(query);
+}
+
+/// END UPDATECOLOR

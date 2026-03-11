@@ -12,59 +12,73 @@ import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:palette_generator/palette_generator.dart';
 
-Future<List<Color>> coverColorPicker(int cancionId) async {
-  Color colorGenDefecto = const Color(0xFFF5E6E8); // Tu rosa clarito original
-  Color colorClaroDefecto = const Color(0xFFFFFFFF);
-  Color colorOscuroDefecto = const Color(0xFF222222);
+Future<List<Color>> coverColorPicker(
+  int cancionId,
+  int? colorGuardado,
+) async {
+  Color colorBase;
+  Color colorGenDefecto = const Color.fromARGB(255, 83, 176, 226);
 
   try {
+    // 1. SISTEMA DE CACHÉ (LAZY LOADING)
+    if (colorGuardado != null && colorGuardado != 0) {
+      Color colorBase = Color(colorGuardado);
+      return _generarPaleta(colorBase, colorGenDefecto);
+    }
+
+    // 2. EXTRACCIÓN OPTIMIZADA (Solo ocurre la 1ª vez que se escucha la canción)
     final OnAudioQuery audioQuery = OnAudioQuery();
+
     final Uint8List? artworkBytes = await audioQuery.queryArtwork(
       cancionId,
       ArtworkType.AUDIO,
-      size: 200,
+      size: 50, // ¡CLAVE PARA QUE NO HAYA LAG!
     );
 
     if (artworkBytes != null && artworkBytes.isNotEmpty) {
-      final ImageProvider imageProvider = MemoryImage(artworkBytes);
-      final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
-        imageProvider,
-        maximumColorCount: 16,
-      );
+      return await Future.microtask(() async {
+        final ImageProvider imageProvider = MemoryImage(artworkBytes);
+        final PaletteGenerator palette =
+            await PaletteGenerator.fromImageProvider(
+          imageProvider,
+          maximumColorCount: 8,
+        );
 
-      // 1. EL CAMBIO CLAVE: Priorizamos el color Dominante (el que más abunda, ej. el fondo amarillo)
-      Color colorBase = palette.dominantColor?.color ??
-          palette.vibrantColor?.color ??
-          colorGenDefecto;
+        PaletteColor? mejorCandidato;
+        double maxScore = -1.0;
 
-      // 2. CREAMOS LA ESCALA MONOCROMÁTICA MATEMÁTICAMENTE:
+        for (var pColor in palette.paletteColors) {
+          HSLColor hsl = HSLColor.fromColor(pColor.color);
+          if (hsl.lightness < 0.15 ||
+              hsl.lightness > 0.85 ||
+              hsl.saturation < 0.15) continue;
 
-      // [0] Fondo de la app: Muy clarito (Mezclamos el base con 80% de blanco)
-      Color fondoPastel =
-          Color.lerp(colorBase, Colors.white, 0.4) ?? colorGenDefecto;
+          double score = pColor.population.toDouble() * hsl.saturation;
+          if (score > maxScore) {
+            maxScore = score;
+            mejorCandidato = pColor;
+          }
+        }
 
-      // [1] Barra de fondo (Inactiva): Un poco más oscura que el fondo (Mezclamos con 40% de blanco)
-      Color barraInactiva =
-          Color.lerp(colorBase, Colors.white, 0.2) ?? colorBase;
-
-      // [2] Barra Activa: El color puro o un pelín más oscuro (Mezclamos con 10% de negro para darle fuerza)
-      Color barraActiva = Color.lerp(colorBase, Colors.black, 0.1) ?? colorBase;
-
-      // 3. Como el fondo AHORA SIEMPRE ES PASTEL (claro), el texto siempre puede ser oscuro.
-      // Usamos un negro suave (Colors.black87) que queda mucho más elegante que el negro puro.
-      Color colorTexto = Colors.black87;
-
-      // Devolvemos: [0] General (ahora pastel), [1] Claro, [2] Oscuro, [3] Color de Texto
-      return [fondoPastel, barraInactiva, barraActiva, colorTexto];
+        Color colorBase = mejorCandidato?.color ??
+            palette.dominantColor?.color ??
+            palette.vibrantColor?.color ??
+            colorGenDefecto;
+        return _generarPaleta(colorBase, colorGenDefecto);
+      });
+    } else {
+      return _generarPaleta(colorGenDefecto, colorGenDefecto);
     }
   } catch (e) {
     print("Error extrayendo paleta: $e");
+    return _generarPaleta(colorGenDefecto, colorGenDefecto);
   }
+}
 
-  return [
-    colorGenDefecto,
-    colorClaroDefecto,
-    colorOscuroDefecto,
-    Colors.black87
-  ];
+// Función auxiliar para crear todos los tonos de la UI
+List<Color> _generarPaleta(Color base, Color defecto) {
+  Color fondoPastel = Color.lerp(base, Colors.white, 0.85) ?? defecto;
+  Color barraInactiva = Color.lerp(base, Colors.white, 0.45) ?? base;
+  Color barraActiva = Color.lerp(base, Colors.black, 0.15) ?? base;
+  return [base, fondoPastel, barraInactiva, barraActiva, Colors.black87];
 }

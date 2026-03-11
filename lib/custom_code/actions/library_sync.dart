@@ -29,7 +29,7 @@ Future<bool> librarySync() async {
 
   // Filtrar audios cortos (basura de WhatsApp, notificaciones...)
   List<SongModel> audiosValidos =
-      songs.where((s) => (s.duration ?? 0) > 15000).toList();
+      songs.where((s) => (s.duration ?? 0) > 10000).toList();
 
   if (audiosValidos.isEmpty) return true;
 
@@ -69,12 +69,12 @@ Future<bool> librarySync() async {
         );
       }
 
-      // C. Insertar la CANCIÓN (Forzando el ID del móvil para las carátulas)
+      // C. Insertar la CANCIÓN (Añadidos 'favorita' y 'color' iniciados a 0)
       String titulo = song.title;
       int duracion = song.duration ?? 0;
 
       await txn.rawInsert(
-        'INSERT INTO cancion (id, nombre, duracion, ruta_archivo, id_album) VALUES (?, ?, ?, ?, ?)',
+        'INSERT INTO cancion (id, nombre, duracion, ruta_archivo, id_album, favorita, color) VALUES (?, ?, ?, ?, ?, 0, 0)',
         [idOriginal, titulo, duracion, ruta, idAlbum],
       );
 
@@ -106,9 +106,17 @@ Future<bool> librarySync() async {
         }
 
         // E. Crear la relación en la tabla intermedia (CANCION_ARTISTA)
+        // Usamos INSERT OR IGNORE para que no dé error si la relación ya existía
         await txn.rawInsert(
-          'INSERT INTO cancion_artista (id_cancion, id_artista) VALUES (?, ?)',
+          'INSERT OR IGNORE INTO cancion_artista (id_cancion, id_artista) VALUES (?, ?)',
           [idOriginal, idArtista],
+        );
+
+        // F. ¡NUEVO! Crear la relación en la tabla intermedia (ALBUM_ARTISTA)
+        // Vital para que la página de Álbumes pueda mostrar quién hizo el disco
+        await txn.rawInsert(
+          'INSERT OR IGNORE INTO album_artista (id_album, id_artista) VALUES (?, ?)',
+          [idAlbum, idArtista],
         );
       }
     }

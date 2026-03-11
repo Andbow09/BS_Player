@@ -73,13 +73,7 @@ class _PlaylistWidgetState extends State<PlaylistWidget>
       height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            valueOrDefault<Color>(
-              FFAppState().currentColor,
-              Color(0xFFC66565),
-            ),
-            Color(0xFF101C1A)
-          ],
+          colors: [Color(0xFF161616), Color(0xFF161616)],
           stops: [0.0, 1.0],
           begin: AlignmentDirectional(0.0, -1.0),
           end: AlignmentDirectional(0, 1.0),
@@ -185,11 +179,12 @@ class _PlaylistWidgetState extends State<PlaylistWidget>
                               .colaArtistas
                               .elementAtOrNull(queueRealIndexItem)!;
                           FFAppState().currentAlbum = FFAppState()
-                              .currentAlbums
+                              .colaAlbums
                               .elementAtOrNull(queueRealIndexItem)!;
                           safeSetState(() {});
                           _model.pickedColor = await actions.coverColorPicker(
                             FFAppState().currentId,
+                            0,
                           );
                           FFAppState().currentColor =
                               (_model.pickedColor!.elementAtOrNull(0))!;

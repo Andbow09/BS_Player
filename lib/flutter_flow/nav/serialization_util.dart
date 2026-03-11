@@ -226,6 +226,10 @@ dynamic deserializeParam<T>(
             return LeerCancionesRow(data);
           case ListSongsRow:
             return ListSongsRow(data);
+          case ListAlbumsRow:
+            return ListAlbumsRow(data);
+          case GetRandomSongRow:
+            return GetRandomSongRow(data);
           default:
             return null;
         }
