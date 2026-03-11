@@ -49,7 +49,7 @@ Future<void> toggleShuffle() async {
         'ruta': state.colaRutas[i],
         'color': state.colaColores[i],
         'album': state.colaAlbums[i],
-        'artista': state.colaArtists[i],
+        'artista': state.colaArtistas[i],
       });
     }
 
