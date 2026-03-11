@@ -91,20 +91,6 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                     updateCallback: () => safeSetState(() {}),
                     child: TopMenuWidget(),
                   ),
-                  Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 20.0),
-                      child: wrapWithModel(
-                        model: _model.bottomMenuModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: BottomMenuWidget(
-                          page: 'discs',
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 55.0, 0.0, 0.0),
@@ -273,6 +259,20 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.0, 1.0),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 20.0),
+                      child: wrapWithModel(
+                        model: _model.bottomMenuModel,
+                        updateCallback: () => safeSetState(() {}),
+                        child: BottomMenuWidget(
+                          page: 'discs',
+                        ),
+                      ),
                     ),
                   ),
                 ],

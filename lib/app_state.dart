@@ -50,7 +50,7 @@ class FFAppState extends ChangeNotifier {
     _currentAlbum = value;
   }
 
-  Color _currentColor = Color(4293844457);
+  Color _currentColor = Color(4282478757);
   Color get currentColor => _currentColor;
   set currentColor(Color value) {
     _currentColor = value;
@@ -258,6 +258,192 @@ class FFAppState extends ChangeNotifier {
   int get currentIndex => _currentIndex;
   set currentIndex(int value) {
     _currentIndex = value;
+  }
+
+  bool _isShuffleOn = false;
+  bool get isShuffleOn => _isShuffleOn;
+  set isShuffleOn(bool value) {
+    _isShuffleOn = value;
+  }
+
+  List<int> _colaIdsOg = [];
+  List<int> get colaIdsOg => _colaIdsOg;
+  set colaIdsOg(List<int> value) {
+    _colaIdsOg = value;
+  }
+
+  void addToColaIdsOg(int value) {
+    colaIdsOg.add(value);
+  }
+
+  void removeFromColaIdsOg(int value) {
+    colaIdsOg.remove(value);
+  }
+
+  void removeAtIndexFromColaIdsOg(int index) {
+    colaIdsOg.removeAt(index);
+  }
+
+  void updateColaIdsOgAtIndex(
+    int index,
+    int Function(int) updateFn,
+  ) {
+    colaIdsOg[index] = updateFn(_colaIdsOg[index]);
+  }
+
+  void insertAtIndexInColaIdsOg(int index, int value) {
+    colaIdsOg.insert(index, value);
+  }
+
+  List<String> _colaTitulosOg = [];
+  List<String> get colaTitulosOg => _colaTitulosOg;
+  set colaTitulosOg(List<String> value) {
+    _colaTitulosOg = value;
+  }
+
+  void addToColaTitulosOg(String value) {
+    colaTitulosOg.add(value);
+  }
+
+  void removeFromColaTitulosOg(String value) {
+    colaTitulosOg.remove(value);
+  }
+
+  void removeAtIndexFromColaTitulosOg(int index) {
+    colaTitulosOg.removeAt(index);
+  }
+
+  void updateColaTitulosOgAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    colaTitulosOg[index] = updateFn(_colaTitulosOg[index]);
+  }
+
+  void insertAtIndexInColaTitulosOg(int index, String value) {
+    colaTitulosOg.insert(index, value);
+  }
+
+  List<String> _colaRutasOg = [];
+  List<String> get colaRutasOg => _colaRutasOg;
+  set colaRutasOg(List<String> value) {
+    _colaRutasOg = value;
+  }
+
+  void addToColaRutasOg(String value) {
+    colaRutasOg.add(value);
+  }
+
+  void removeFromColaRutasOg(String value) {
+    colaRutasOg.remove(value);
+  }
+
+  void removeAtIndexFromColaRutasOg(int index) {
+    colaRutasOg.removeAt(index);
+  }
+
+  void updateColaRutasOgAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    colaRutasOg[index] = updateFn(_colaRutasOg[index]);
+  }
+
+  void insertAtIndexInColaRutasOg(int index, String value) {
+    colaRutasOg.insert(index, value);
+  }
+
+  List<int> _colaColoresOg = [];
+  List<int> get colaColoresOg => _colaColoresOg;
+  set colaColoresOg(List<int> value) {
+    _colaColoresOg = value;
+  }
+
+  void addToColaColoresOg(int value) {
+    colaColoresOg.add(value);
+  }
+
+  void removeFromColaColoresOg(int value) {
+    colaColoresOg.remove(value);
+  }
+
+  void removeAtIndexFromColaColoresOg(int index) {
+    colaColoresOg.removeAt(index);
+  }
+
+  void updateColaColoresOgAtIndex(
+    int index,
+    int Function(int) updateFn,
+  ) {
+    colaColoresOg[index] = updateFn(_colaColoresOg[index]);
+  }
+
+  void insertAtIndexInColaColoresOg(int index, int value) {
+    colaColoresOg.insert(index, value);
+  }
+
+  List<String> _colaAlbumsOg = [];
+  List<String> get colaAlbumsOg => _colaAlbumsOg;
+  set colaAlbumsOg(List<String> value) {
+    _colaAlbumsOg = value;
+  }
+
+  void addToColaAlbumsOg(String value) {
+    colaAlbumsOg.add(value);
+  }
+
+  void removeFromColaAlbumsOg(String value) {
+    colaAlbumsOg.remove(value);
+  }
+
+  void removeAtIndexFromColaAlbumsOg(int index) {
+    colaAlbumsOg.removeAt(index);
+  }
+
+  void updateColaAlbumsOgAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    colaAlbumsOg[index] = updateFn(_colaAlbumsOg[index]);
+  }
+
+  void insertAtIndexInColaAlbumsOg(int index, String value) {
+    colaAlbumsOg.insert(index, value);
+  }
+
+  List<String> _colaArtistasOg = [];
+  List<String> get colaArtistasOg => _colaArtistasOg;
+  set colaArtistasOg(List<String> value) {
+    _colaArtistasOg = value;
+  }
+
+  void addToColaArtistasOg(String value) {
+    colaArtistasOg.add(value);
+  }
+
+  void removeFromColaArtistasOg(String value) {
+    colaArtistasOg.remove(value);
+  }
+
+  void removeAtIndexFromColaArtistasOg(int index) {
+    colaArtistasOg.removeAt(index);
+  }
+
+  void updateColaArtistasOgAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    colaArtistasOg[index] = updateFn(_colaArtistasOg[index]);
+  }
+
+  void insertAtIndexInColaArtistasOg(int index, String value) {
+    colaArtistasOg.insert(index, value);
+  }
+
+  int _loopMode = 0;
+  int get loopMode => _loopMode;
+  set loopMode(int value) {
+    _loopMode = value;
   }
 }
 

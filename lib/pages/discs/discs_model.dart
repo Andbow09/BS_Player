@@ -27,11 +27,11 @@ class DiscsModel extends FlutterFlowModel<DiscsWidget> {
   List<CancionStruct>? resultadoEscaneo;
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
-  // Model for bottomMenu component.
-  late BottomMenuModel bottomMenuModel;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
+  // Model for bottomMenu component.
+  late BottomMenuModel bottomMenuModel;
 
   @override
   void initState(BuildContext context) {
