@@ -361,23 +361,11 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                         .elementAtOrNull(
                                                                             0))!;
                                                                 FFAppState()
-                                                                        .currentLightColor =
-                                                                    (_model
-                                                                        .pickedColor!
-                                                                        .elementAtOrNull(
-                                                                            1))!;
-                                                                FFAppState()
                                                                         .currentDarkColor =
                                                                     (_model
                                                                         .pickedColor!
                                                                         .elementAtOrNull(
-                                                                            2))!;
-                                                                FFAppState()
-                                                                        .currentTextColor =
-                                                                    (_model
-                                                                        .pickedColor!
-                                                                        .elementAtOrNull(
-                                                                            3))!;
+                                                                            1))!;
                                                                 safeSetState(
                                                                     () {});
                                                                 if (listSongsItem
@@ -648,6 +636,9 @@ class _SongsWidgetState extends State<SongsWidget> {
                                 FFAppState().currentColor = (_model
                                     .fullyRandomizedPickedColor!
                                     .elementAtOrNull(0))!;
+                                FFAppState().currentDarkColor = (_model
+                                    .fullyRandomizedPickedColor!
+                                    .elementAtOrNull(1))!;
                                 safeSetState(() {});
                                 if (FFAppState()
                                         .colaColores

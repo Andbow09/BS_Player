@@ -208,6 +208,11 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                 .colaColores
                                 .elementAtOrNull(FFAppState().currentIndex),
                           );
+                          FFAppState().currentColor =
+                              (_model.colorPicked!.elementAtOrNull(0))!;
+                          FFAppState().currentDarkColor =
+                              (_model.colorPicked!.elementAtOrNull(1))!;
+                          safeSetState(() {});
                           if (FFAppState()
                                   .colaColores
                                   .elementAtOrNull(FFAppState().currentIndex) ==
@@ -261,6 +266,11 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                   .colaColores
                                   .elementAtOrNull(FFAppState().currentIndex),
                             );
+                            FFAppState().currentColor =
+                                (_model.colorPicked!.elementAtOrNull(0))!;
+                            FFAppState().currentDarkColor =
+                                (_model.colorPicked!.elementAtOrNull(1))!;
+                            safeSetState(() {});
                             if (FFAppState().colaColores.elementAtOrNull(
                                     FFAppState().currentIndex) ==
                                 0) {
@@ -463,6 +473,9 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                               FFAppState().currentColor = (_model
                                   .colorPickedPrevious!
                                   .elementAtOrNull(0))!;
+                              FFAppState().currentDarkColor = (_model
+                                  .colorPickedPrevious!
+                                  .elementAtOrNull(1))!;
                               safeSetState(() {});
                               await actions.audioController(
                                 'play',
@@ -529,10 +542,8 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                               );
                               FFAppState().currentColor =
                                   (_model.colorPicked!.elementAtOrNull(0))!;
-                              FFAppState().currentLightColor =
-                                  (_model.colorPicked!.elementAtOrNull(1))!;
                               FFAppState().currentDarkColor =
-                                  (_model.colorPicked!.elementAtOrNull(2))!;
+                                  (_model.colorPicked!.elementAtOrNull(1))!;
                               safeSetState(() {});
                               await actions.audioController(
                                 'play',

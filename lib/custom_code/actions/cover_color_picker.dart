@@ -79,6 +79,6 @@ Future<List<Color>> coverColorPicker(
 List<Color> _generarPaleta(Color base, Color defecto) {
   Color fondoPastel = Color.lerp(base, Colors.white, 0.85) ?? defecto;
   Color barraInactiva = Color.lerp(base, Colors.white, 0.45) ?? base;
-  Color barraActiva = Color.lerp(base, Colors.black, 0.15) ?? base;
+  Color barraActiva = Color.lerp(base, Colors.black, 0.30) ?? base;
   return [base, fondoPastel, barraInactiva, barraActiva, Colors.black87];
 }
