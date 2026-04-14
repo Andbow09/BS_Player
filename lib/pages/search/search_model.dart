@@ -26,18 +26,22 @@ class SearchModel extends FlutterFlowModel<SearchWidget> {
   List<CancionStruct>? resultadoEscaneo;
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
+  // State field(s) for Column widget.
+  ScrollController? columnController;
   // Model for bottomMenu component.
   late BottomMenuModel bottomMenuModel;
 
   @override
   void initState(BuildContext context) {
     topMenuModel = createModel(context, () => TopMenuModel());
+    columnController = ScrollController();
     bottomMenuModel = createModel(context, () => BottomMenuModel());
   }
 
   @override
   void dispose() {
     topMenuModel.dispose();
+    columnController?.dispose();
     bottomMenuModel.dispose();
   }
 }

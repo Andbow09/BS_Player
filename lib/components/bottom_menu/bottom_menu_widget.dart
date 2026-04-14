@@ -55,227 +55,196 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         if (FFAppState().currentTitle != '')
-          AnimatedContainer(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-            width: double.infinity,
-            height: 110.0,
-            decoration: BoxDecoration(
-              color: FFAppState().currentColor,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(0.0),
-                bottomRight: Radius.circular(0.0),
-                topLeft: Radius.circular(35.0),
-                topRight: Radius.circular(35.0),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              if (FFAppState().currentTitle != '')
                 Stack(
                   children: [
-                    Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            90.0, 22.0, 70.0, 0.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                          ),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: MainPlayerWidget(),
-                                  );
+                    if (FFAppState().currentTitle != '')
+                      Align(
+                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              90.0, 30.0, 70.0, 0.0),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                            ),
+                            child: Visibility(
+                              visible: FFAppState().currentTitle != '',
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: MainPlayerWidget(),
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(() {}));
                                 },
-                              ).then((value) => safeSetState(() {}));
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  valueOrDefault<String>(
-                                    FFAppState().currentTitle,
-                                    'titulo',
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.golosText(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (FFAppState().currentTitle != '')
+                                      Text(
+                                        valueOrDefault<String>(
+                                          FFAppState().currentTitle,
+                                          'titulo',
                                         ),
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FlutterFlowTheme.of(context)
+                                        style: FlutterFlowTheme.of(context)
                                             .bodyMedium
-                                            .fontStyle,
+                                            .override(
+                                              font: GoogleFonts.golosText(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color: Colors.white,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(
-                                  valueOrDefault<String>(
-                                    FFAppState().currentArtist,
-                                    'artista',
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.golosText(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FontStyle.italic,
+                                    Text(
+                                      valueOrDefault<String>(
+                                        FFAppState().currentArtist,
+                                        'artista',
                                       ),
-                                  overflow: TextOverflow.ellipsis,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.golosText(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  valueOrDefault<String>(
-                                    FFAppState().currentAlbum,
-                                    'album',
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.golosText(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(1.0, 0.0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 21.0, 20.0, 0.0),
-                        child: Stack(
-                          alignment: AlignmentDirectional(1.0, 0.0),
-                          children: [
-                            if (FFAppState().isPlaying == true)
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await actions.audioController(
-                                    'pause',
-                                    '',
-                                  );
-                                  FFAppState().isPlaying = false;
-                                  safeSetState(() {});
-                                },
-                                child: Icon(
-                                  Icons.pause_rounded,
-                                  color: Colors.white,
-                                  size: 50.0,
+                    if (FFAppState().currentTitle != '')
+                      Align(
+                        alignment: AlignmentDirectional(1.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 21.0, 20.0, 0.0),
+                          child: Stack(
+                            alignment: AlignmentDirectional(1.0, 0.0),
+                            children: [
+                              if (FFAppState().isPlaying == true)
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await actions.audioController(
+                                      'pause',
+                                      '',
+                                    );
+                                    FFAppState().isPlaying = false;
+                                    safeSetState(() {});
+                                  },
+                                  child: Icon(
+                                    Icons.pause_rounded,
+                                    color: Colors.white,
+                                    size: 50.0,
+                                  ),
                                 ),
-                              ),
-                            if (FFAppState().isPlaying == false)
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await actions.audioController(
-                                    'resume',
-                                    '',
-                                  );
-                                  FFAppState().isPlaying = true;
-                                  safeSetState(() {});
-                                },
-                                child: Icon(
-                                  Icons.play_arrow_rounded,
-                                  color: Colors.white,
-                                  size: 50.0,
+                              if (FFAppState().isPlaying == false)
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await actions.audioController(
+                                      'resume',
+                                      '',
+                                    );
+                                    FFAppState().isPlaying = true;
+                                    safeSetState(() {});
+                                  },
+                                  child: Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: Colors.white,
+                                    size: 50.0,
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 0.0),
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.viewInsetsOf(context),
-                                child: MainPlayerWidget(),
-                              );
-                            },
-                          ).then((value) => safeSetState(() {}));
-                        },
-                        child: Container(
-                          width: 55.0,
-                          height: 55.0,
-                          child: custom_widgets.MiniSongCover(
-                            width: 55.0,
-                            height: 55.0,
-                            cancionId: FFAppState().currentId,
+                            ],
                           ),
                         ),
                       ),
-                    ),
+                    if (FFAppState().currentTitle != '')
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 20.0, 0.0, 0.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: MainPlayerWidget(),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+                          },
+                          child: Container(
+                            width: 55.0,
+                            height: 55.0,
+                            child: custom_widgets.MiniSongCover(
+                              width: 55.0,
+                              height: 55.0,
+                              cancionId: FFAppState().currentId,
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
+              if (FFAppState().currentTitle != '')
                 Align(
                   alignment: AlignmentDirectional(0.0, 1.0),
                   child: Padding(
@@ -283,10 +252,10 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                         EdgeInsetsDirectional.fromSTEB(3.0, 10.0, 3.0, 0.0),
                     child: Container(
                       width: double.infinity,
-                      height: 15.0,
+                      height: 10.0,
                       child: custom_widgets.MiniBar(
                         width: double.infinity,
-                        height: 15.0,
+                        height: 10.0,
                         colorActivo: Colors.white,
                         colorFondo: Color(0x40808080),
                         onSongEnding: () async {
@@ -345,39 +314,58 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     ),
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
         Container(
           width: double.infinity,
-          height: 70.0,
+          height: FFAppState().currentTitle != ''
+              ? 180.0
+              : 70.0,
           decoration: BoxDecoration(
-            color: FFAppState().currentColor,
+            gradient: RadialGradient(
+              colors: [
+                Color(0xE620272A),
+                valueOrDefault<Color>(
+                  FFAppState().currentDarkColor,
+                  Color(0xFF344145),
+                ),
+                valueOrDefault<Color>(
+                  FFAppState().currentColor,
+                  Color(0xFF6C7F87),
+                )
+              ],
+              stops: [0.0, 0.3, 1.0],
+              center: Alignment(-1.0, -1.0),
+              radius: 15.0,
+            ),
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(valueOrDefault<double>(
-                FFAppState().currentTitle != ''
-                    ? 35.0
-                    : 50.0,
-                0.0,
-              )),
-              bottomRight: Radius.circular(valueOrDefault<double>(
-                FFAppState().currentTitle != ''
-                    ? 35.0
-                    : 50.0,
-                0.0,
-              )),
               topLeft: Radius.circular(valueOrDefault<double>(
                 FFAppState().currentTitle != ''
                     ? 0.0
-                    : 50.0,
+                    : 29.0,
                 0.0,
               )),
               topRight: Radius.circular(valueOrDefault<double>(
                 FFAppState().currentTitle != ''
                     ? 0.0
-                    : 50.0,
+                    : 29.0,
                 0.0,
               )),
+              bottomLeft: Radius.circular(valueOrDefault<double>(
+                FFAppState().currentTitle != ''
+                    ? 20.0
+                    : 29.0,
+                0.0,
+              )),
+              bottomRight: Radius.circular(valueOrDefault<double>(
+                FFAppState().currentTitle != ''
+                    ? 20.0
+                    : 29.0,
+                0.0,
+              )),
+            ),
+            border: Border.all(
+              color: Color(0x848A8A8A),
             ),
           ),
           child: Row(

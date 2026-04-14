@@ -50,7 +50,7 @@ class FFAppState extends ChangeNotifier {
     _currentAlbum = value;
   }
 
-  Color _currentColor = Color(4282478757);
+  Color _currentColor = Color(4285300615);
   Color get currentColor => _currentColor;
   set currentColor(Color value) {
     _currentColor = value;
@@ -62,7 +62,7 @@ class FFAppState extends ChangeNotifier {
     _currentLightColor = value;
   }
 
-  Color _currentDarkColor = Colors.transparent;
+  Color _currentDarkColor = Color(4281614661);
   Color get currentDarkColor => _currentDarkColor;
   set currentDarkColor(Color value) {
     _currentDarkColor = value;

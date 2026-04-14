@@ -28,6 +28,8 @@ class SongsModel extends FlutterFlowModel<SongsWidget> {
 
   // Model for topMenu component.
   late TopMenuModel topMenuModel;
+  // State field(s) for Column widget.
+  ScrollController? columnController;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
@@ -43,12 +45,14 @@ class SongsModel extends FlutterFlowModel<SongsWidget> {
   @override
   void initState(BuildContext context) {
     topMenuModel = createModel(context, () => TopMenuModel());
+    columnController = ScrollController();
     bottomMenuModel = createModel(context, () => BottomMenuModel());
   }
 
   @override
   void dispose() {
     topMenuModel.dispose();
+    columnController?.dispose();
     bottomMenuModel.dispose();
   }
 }

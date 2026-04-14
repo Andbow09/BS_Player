@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
@@ -166,41 +167,64 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                 final listAlbums =
                                     discsListAlbumsRowList.toList();
 
-                                return GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 30.0,
-                                    mainAxisSpacing: 60.0,
-                                    childAspectRatio: 1.0,
+                                return ScrollConfiguration(
+                                  behavior:
+                                      ScrollConfiguration.of(context).copyWith(
+                                    scrollbars: true,
+                                    dragDevices: {
+                                      PointerDeviceKind.mouse,
+                                      PointerDeviceKind.touch,
+                                      PointerDeviceKind.stylus,
+                                      PointerDeviceKind.unknown,
+                                    },
                                   ),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: listAlbums.length,
-                                  itemBuilder: (context, listAlbumsIndex) {
-                                    final listAlbumsItem =
-                                        listAlbums[listAlbumsIndex];
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: double.infinity,
-                                          height: 170.0,
-                                          child: custom_widgets.BigSongCover(
+                                  child: Scrollbar(
+                                      child: GridView.builder(
+                                    padding: EdgeInsets.zero,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 30.0,
+                                      mainAxisSpacing: 60.0,
+                                      childAspectRatio: 1.0,
+                                    ),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: listAlbums.length,
+                                    itemBuilder: (context, listAlbumsIndex) {
+                                      final listAlbumsItem =
+                                          listAlbums[listAlbumsIndex];
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
                                             width: double.infinity,
                                             height: 170.0,
-                                            cancionId: listAlbumsItem.cancionId,
+                                            child: custom_widgets.BigSongCover(
+                                              width: double.infinity,
+                                              height: 170.0,
+                                              cancionId:
+                                                  listAlbumsItem.cancionId,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          listAlbumsItem.tituloAlbum,
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
+                                          Text(
+                                            listAlbumsItem.tituloAlbum,
+                                            textAlign: TextAlign.center,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.white,
+                                                  fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
@@ -208,24 +232,28 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                                           .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                                color: Colors.white,
-                                                fontSize: 15.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          listAlbumsItem.nombreArtista,
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            listAlbumsItem.nombreArtista,
+                                            textAlign: TextAlign.center,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.white,
+                                                  letterSpacing: 0.0,
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -237,22 +265,12 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                                           .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                                color: Colors.white,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )),
                                 );
                               },
                             ),
