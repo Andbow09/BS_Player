@@ -85,11 +85,11 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
               FFAppState().currentDarkColor,
               Color(0xFF1B4B47),
             ),
-            Color(0xFF141414)
+            Colors.black
           ],
-          stops: [0.0, 0.3, 1.0],
-          center: Alignment(0.0, -1.0),
-          radius: 2.4,
+          stops: [0.0, 0.4, 1.0],
+          center: Alignment(0.0, -0.34),
+          radius: 2.0,
         ),
       ),
       child: Stack(
@@ -113,7 +113,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 25.0, 30.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(30.0, 35.0, 30.0, 0.0),
                   child: Text(
                     valueOrDefault<String>(
                       FFAppState().currentTitle,
@@ -149,7 +149,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(14.0, 15.0, 14.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 50.0,
@@ -687,18 +687,11 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                         'Pokémon: Black/White',
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Metropolis 2',
-                        color: Colors.white,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.normal,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black,
-                            offset: Offset(0.0, 0.0),
-                            blurRadius: 10.0,
-                          )
-                        ],
-                      ),
+                            fontFamily: 'Metropolis 2',
+                            color: Colors.white,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.normal,
+                          ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

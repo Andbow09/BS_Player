@@ -40,7 +40,7 @@ class _TopMenuWidgetState extends State<TopMenuWidget> {
       width: double.infinity,
       height: 50.0,
       decoration: BoxDecoration(
-        color: Color(0xFF161616),
+        color: Colors.black,
       ),
       child: Stack(
         children: [

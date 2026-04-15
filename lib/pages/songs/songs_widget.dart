@@ -74,7 +74,7 @@ class _SongsWidgetState extends State<SongsWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xFF161616),
+            backgroundColor: Colors.black,
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -97,7 +97,7 @@ class _SongsWidgetState extends State<SongsWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Color(0xFF161616),
+            backgroundColor: Colors.black,
             body: SafeArea(
               top: true,
               child: Stack(
@@ -391,8 +391,8 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                 height: 50.0,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Color(
-                                                                      0xFF161616),
+                                                                  color: Colors
+                                                                      .transparent,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
@@ -447,14 +447,10 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                           Text(
                                                                             listSongsItem.titulo,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  font: GoogleFonts.inter(
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
+                                                                                  fontFamily: 'Metropolis 2',
                                                                                   color: Colors.white,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                 ),
                                                                             overflow:
                                                                                 TextOverflow.ellipsis,
@@ -466,14 +462,9 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                                 Text(
                                                                               listSongsItem.artista,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    font: GoogleFonts.inter(
-                                                                                      fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                    ),
+                                                                                    fontFamily: 'Metropolis 2',
                                                                                     color: Colors.white,
                                                                                     letterSpacing: 0.0,
-                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                   ),
                                                                             ),
                                                                           ),

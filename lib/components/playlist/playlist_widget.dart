@@ -84,8 +84,8 @@ class _PlaylistWidgetState extends State<PlaylistWidget>
             Colors.black
           ],
           stops: [0.0, 0.4, 1.0],
-          center: Alignment(0.0, 0.0),
-          radius: 2.0,
+          center: Alignment(0.5, 0.6),
+          radius: 3.0,
         ),
       ),
       child: Padding(

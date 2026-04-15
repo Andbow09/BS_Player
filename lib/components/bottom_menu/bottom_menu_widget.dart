@@ -56,23 +56,24 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
         Container(
           width: double.infinity,
           height: FFAppState().currentTitle != ''
-              ? 165.0
+              ? 180.0
               : 70.0,
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: [
                 valueOrDefault<Color>(
+                  FFAppState().currentColor,
+                  Color(0xFF6C7F87),
+                ),
+                valueOrDefault<Color>(
                   FFAppState().currentDarkColor,
                   Color(0xFF253031),
                 ),
-                valueOrDefault<Color>(
-                  FFAppState().currentColor,
-                  Color(0xFF6C7F87),
-                )
+                Colors.black
               ],
-              stops: [0.0, 1.0],
-              center: Alignment(-1.0, -1.0),
-              radius: 15.0,
+              stops: [0.0, 0.3, 1.0],
+              center: Alignment(1.0, 1.0),
+              radius: 9.0,
             ),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(valueOrDefault<double>(
@@ -276,84 +277,30 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                       ),
                   ],
                 ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 10.0,
-                  child: custom_widgets.MiniBar(
+              if (FFAppState().currentTitle != '')
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(4.0, 10.0, 4.0, 0.0),
+                  child: Container(
                     width: double.infinity,
                     height: 10.0,
-                    colorActivo: Colors.white,
-                    colorFondo: Color(0x827B7B7B),
-                    onSongEnding: () async {
-                      if (FFAppState().loopMode == 2) {
-                        await actions.audioController(
-                          'play',
-                          FFAppState()
-                              .colaRutas
-                              .elementAtOrNull(FFAppState().currentIndex),
-                        );
-                      } else {
-                        if (FFAppState().currentIndex <
-                            (FFAppState().colaIds.length - 1)) {
-                          FFAppState().currentIndex =
-                              FFAppState().currentIndex + 1;
-                          safeSetState(() {});
-                          FFAppState().currentId = FFAppState()
-                              .colaIds
-                              .elementAtOrNull(FFAppState().currentIndex)!;
-                          FFAppState().currentTitle = FFAppState()
-                              .colaTitulos
-                              .elementAtOrNull(FFAppState().currentIndex)!;
-                          FFAppState().currentArtist = FFAppState()
-                              .colaArtistas
-                              .elementAtOrNull(FFAppState().currentIndex)!;
-                          FFAppState().currentAlbum = FFAppState()
-                              .colaAlbums
-                              .elementAtOrNull(FFAppState().currentIndex)!;
-                          safeSetState(() {});
-                          await Future.delayed(
-                            Duration(
-                              milliseconds: 100,
-                            ),
-                          );
+                    child: custom_widgets.MiniBar(
+                      width: double.infinity,
+                      height: 10.0,
+                      colorActivo: Colors.white,
+                      colorFondo: Color(0x827B7B7B),
+                      onSongEnding: () async {
+                        if (FFAppState().loopMode == 2) {
                           await actions.audioController(
                             'play',
                             FFAppState()
                                 .colaRutas
                                 .elementAtOrNull(FFAppState().currentIndex),
                           );
-                          _model.pickedColor = await actions.coverColorPicker(
-                            FFAppState().currentId,
-                            FFAppState()
-                                .colaColores
-                                .elementAtOrNull(FFAppState().currentIndex),
-                          );
-                          FFAppState().currentColor =
-                              (_model.pickedColor!.elementAtOrNull(0))!;
-                          FFAppState().currentDarkColor =
-                              (_model.pickedColor!.elementAtOrNull(1))!;
-                          safeSetState(() {});
-                          if (FFAppState()
-                                  .colaColores
-                                  .elementAtOrNull(FFAppState().currentIndex) ==
-                              0) {
-                            await SQLiteManager.instance.updateColor(
-                              color: functions.colorToInt(
-                                  (_model.pickedColor!.elementAtOrNull(0))!),
-                              id: FFAppState().currentId,
-                            );
-                            FFAppState().updateColaColoresAtIndex(
-                              FFAppState().currentIndex,
-                              (_) => functions.colorToInt(
-                                  (_model.pickedColor!.elementAtOrNull(0))!),
-                            );
-                            safeSetState(() {});
-                          }
                         } else {
-                          if (FFAppState().loopMode == 1) {
-                            FFAppState().currentIndex = 0;
+                          if (FFAppState().currentIndex <
+                              (FFAppState().colaIds.length - 1)) {
+                            FFAppState().currentIndex =
+                                FFAppState().currentIndex + 1;
                             safeSetState(() {});
                             FFAppState().currentId = FFAppState()
                                 .colaIds
@@ -379,42 +326,98 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                   .colaRutas
                                   .elementAtOrNull(FFAppState().currentIndex),
                             );
-                            _model.pickedColor2 =
-                                await actions.coverColorPicker(
+                            _model.pickedColor = await actions.coverColorPicker(
                               FFAppState().currentId,
                               FFAppState()
                                   .colaColores
                                   .elementAtOrNull(FFAppState().currentIndex),
                             );
                             FFAppState().currentColor =
-                                (_model.pickedColor2!.elementAtOrNull(0))!;
+                                (_model.pickedColor!.elementAtOrNull(0))!;
                             FFAppState().currentDarkColor =
-                                (_model.pickedColor2!.elementAtOrNull(1))!;
+                                (_model.pickedColor!.elementAtOrNull(1))!;
                             safeSetState(() {});
                             if (FFAppState().colaColores.elementAtOrNull(
                                     FFAppState().currentIndex) ==
                                 0) {
                               await SQLiteManager.instance.updateColor(
                                 color: functions.colorToInt(
-                                    (_model.pickedColor2!.elementAtOrNull(0))!),
+                                    (_model.pickedColor!.elementAtOrNull(0))!),
                                 id: FFAppState().currentId,
                               );
                               FFAppState().updateColaColoresAtIndex(
                                 FFAppState().currentIndex,
                                 (_) => functions.colorToInt(
-                                    (_model.pickedColor2!.elementAtOrNull(0))!),
+                                    (_model.pickedColor!.elementAtOrNull(0))!),
                               );
                               safeSetState(() {});
                             }
+                          } else {
+                            if (FFAppState().loopMode == 1) {
+                              FFAppState().currentIndex = 0;
+                              safeSetState(() {});
+                              FFAppState().currentId = FFAppState()
+                                  .colaIds
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentTitle = FFAppState()
+                                  .colaTitulos
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentArtist = FFAppState()
+                                  .colaArtistas
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              FFAppState().currentAlbum = FFAppState()
+                                  .colaAlbums
+                                  .elementAtOrNull(FFAppState().currentIndex)!;
+                              safeSetState(() {});
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 100,
+                                ),
+                              );
+                              await actions.audioController(
+                                'play',
+                                FFAppState()
+                                    .colaRutas
+                                    .elementAtOrNull(FFAppState().currentIndex),
+                              );
+                              _model.pickedColor2 =
+                                  await actions.coverColorPicker(
+                                FFAppState().currentId,
+                                FFAppState()
+                                    .colaColores
+                                    .elementAtOrNull(FFAppState().currentIndex),
+                              );
+                              FFAppState().currentColor =
+                                  (_model.pickedColor2!.elementAtOrNull(0))!;
+                              FFAppState().currentDarkColor =
+                                  (_model.pickedColor2!.elementAtOrNull(1))!;
+                              safeSetState(() {});
+                              if (FFAppState().colaColores.elementAtOrNull(
+                                      FFAppState().currentIndex) ==
+                                  0) {
+                                await SQLiteManager.instance.updateColor(
+                                  color: functions.colorToInt((_model
+                                      .pickedColor2!
+                                      .elementAtOrNull(0))!),
+                                  id: FFAppState().currentId,
+                                );
+                                FFAppState().updateColaColoresAtIndex(
+                                  FFAppState().currentIndex,
+                                  (_) => functions.colorToInt((_model
+                                      .pickedColor2!
+                                      .elementAtOrNull(0))!),
+                                );
+                                safeSetState(() {});
+                              }
+                            }
                           }
                         }
-                      }
 
-                      safeSetState(() {});
-                    },
+                        safeSetState(() {});
+                      },
+                    ),
                   ),
                 ),
-              ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                 child: Stack(
