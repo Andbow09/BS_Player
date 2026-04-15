@@ -5,7 +5,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'playlist_model.dart';
 export 'playlist_model.dart';
@@ -72,11 +71,21 @@ class _PlaylistWidgetState extends State<PlaylistWidget>
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF161616), Color(0xFF161616)],
-          stops: [0.0, 1.0],
-          begin: AlignmentDirectional(0.0, -1.0),
-          end: AlignmentDirectional(0, 1.0),
+        gradient: RadialGradient(
+          colors: [
+            valueOrDefault<Color>(
+              FFAppState().currentColor,
+              Color(0xFF9D3636),
+            ),
+            valueOrDefault<Color>(
+              FFAppState().currentDarkColor,
+              Color(0xFF521D1D),
+            ),
+            Colors.black
+          ],
+          stops: [0.0, 0.4, 1.0],
+          center: Alignment(0.0, 0.0),
+          radius: 2.0,
         ),
       ),
       child: Padding(
@@ -116,26 +125,13 @@ class _PlaylistWidgetState extends State<PlaylistWidget>
                       child: Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Text(
-                          'Lista de Reproducción',
+                          'Cola de Reproducción',
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.golosText(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
+                                    fontFamily: 'Metropolis 2',
                                     color: Colors.white,
                                     letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
                                   ),
                         ),
                       ),
@@ -153,129 +149,110 @@ class _PlaylistWidgetState extends State<PlaylistWidget>
                           FFAppState().colaIds.length)
                       .toList();
 
-                  return ListView.separated(
+                  return ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemCount: queueRealIndex.length,
-                    separatorBuilder: (_, __) => SizedBox(height: 5.0),
                     itemBuilder: (context, queueRealIndexIndex) {
                       final queueRealIndexItem =
                           queueRealIndex[queueRealIndexIndex];
-                      return InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          FFAppState().currentIndex = queueRealIndexItem;
-                          FFAppState().currentTitle = FFAppState()
-                              .colaTitulos
-                              .elementAtOrNull(queueRealIndexItem)!;
-                          FFAppState().currentId = FFAppState()
-                              .colaIds
-                              .elementAtOrNull(queueRealIndexItem)!;
-                          FFAppState().currentArtist = FFAppState()
-                              .colaArtistas
-                              .elementAtOrNull(queueRealIndexItem)!;
-                          FFAppState().currentAlbum = FFAppState()
-                              .colaAlbums
-                              .elementAtOrNull(queueRealIndexItem)!;
-                          safeSetState(() {});
-                          _model.pickedColor = await actions.coverColorPicker(
-                            FFAppState().currentId,
-                            0,
-                          );
-                          FFAppState().currentColor =
-                              (_model.pickedColor!.elementAtOrNull(0))!;
-                          FFAppState().currentLightColor =
-                              (_model.pickedColor!.elementAtOrNull(1))!;
-                          FFAppState().currentDarkColor =
-                              (_model.pickedColor!.elementAtOrNull(2))!;
-                          safeSetState(() {});
-                          await actions.audioController(
-                            'play',
-                            FFAppState()
-                                .colaRutas
-                                .elementAtOrNull(queueRealIndexItem),
-                          );
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            FFAppState().currentIndex = queueRealIndexItem;
+                            FFAppState().currentTitle = FFAppState()
+                                .colaTitulos
+                                .elementAtOrNull(queueRealIndexItem)!;
+                            FFAppState().currentId = FFAppState()
+                                .colaIds
+                                .elementAtOrNull(queueRealIndexItem)!;
+                            FFAppState().currentArtist = FFAppState()
+                                .colaArtistas
+                                .elementAtOrNull(queueRealIndexItem)!;
+                            FFAppState().currentAlbum = FFAppState()
+                                .colaAlbums
+                                .elementAtOrNull(queueRealIndexItem)!;
+                            safeSetState(() {});
+                            _model.pickedColor = await actions.coverColorPicker(
+                              FFAppState().currentId,
+                              0,
+                            );
+                            FFAppState().currentColor =
+                                (_model.pickedColor!.elementAtOrNull(0))!;
+                            FFAppState().currentLightColor =
+                                (_model.pickedColor!.elementAtOrNull(1))!;
+                            FFAppState().currentDarkColor =
+                                (_model.pickedColor!.elementAtOrNull(2))!;
+                            safeSetState(() {});
+                            await actions.audioController(
+                              'play',
+                              FFAppState()
+                                  .colaRutas
+                                  .elementAtOrNull(queueRealIndexItem),
+                            );
 
-                          safeSetState(() {});
-                        },
-                        child: Container(
-                          width: 100.0,
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                            color:
-                                queueRealIndexIndex == FFAppState().currentIndex
-                                    ? Color(0x40000000)
-                                    : Colors.transparent,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 0.0, 10.0, 0.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  valueOrDefault<String>(
-                                    FFAppState()
-                                        .colaTitulos
-                                        .elementAtOrNull(queueRealIndexItem),
-                                    '0',
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.golosText(
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                            safeSetState(() {});
+                          },
+                          child: Container(
+                            width: 100.0,
+                            height: 60.0,
+                            decoration: BoxDecoration(
+                              color: queueRealIndexIndex ==
+                                      FFAppState().currentIndex
+                                  ? Color(0x40000000)
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    valueOrDefault<String>(
+                                      FFAppState()
+                                          .colaTitulos
+                                          .elementAtOrNull(queueRealIndexItem),
+                                      'Título de canción correspondiente',
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Metropolis 2',
+                                          color: Colors.white,
+                                          fontSize: 15.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(
-                                  valueOrDefault<String>(
-                                    FFAppState()
-                                        .colaArtistas
-                                        .elementAtOrNull(queueRealIndexItem),
-                                    '0',
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.golosText(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                  Text(
+                                    valueOrDefault<String>(
+                                      FFAppState()
+                                          .colaArtistas
+                                          .elementAtOrNull(queueRealIndexItem),
+                                      'Artista asignado',
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Metropolis 2',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
                                         ),
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ],
+                                  ),
+                                ].divide(SizedBox(height: 5.0)),
+                              ),
                             ),
                           ),
                         ),

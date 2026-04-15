@@ -16,7 +16,6 @@ Future<List<Color>> coverColorPicker(
   int cancionId,
   int? colorGuardado,
 ) async {
-  Color colorBase;
   Color colorGenDefecto = const Color.fromARGB(255, 83, 176, 226);
 
   try {
@@ -26,13 +25,13 @@ Future<List<Color>> coverColorPicker(
       return _generarPaleta(colorBase, colorGenDefecto);
     }
 
-    // 2. EXTRACCIÓN OPTIMIZADA (Solo ocurre la 1ª vez que se escucha la canción)
+    // 2. EXTRACCIÓN OPTIMIZADA
     final OnAudioQuery audioQuery = OnAudioQuery();
 
     final Uint8List? artworkBytes = await audioQuery.queryArtwork(
       cancionId,
       ArtworkType.AUDIO,
-      size: 50, // ¡CLAVE PARA QUE NO HAYA LAG!
+      size: 50, // Mantenemos tamaño pequeño para 0 lag
     );
 
     if (artworkBytes != null && artworkBytes.isNotEmpty) {
@@ -44,26 +43,27 @@ Future<List<Color>> coverColorPicker(
           maximumColorCount: 8,
         );
 
-        PaletteColor? mejorCandidato;
+        // Buscamos el color más dominante/vibrante, descartando blancos y negros puros
+        Color? colorBase;
         double maxScore = -1.0;
 
         for (var pColor in palette.paletteColors) {
           HSLColor hsl = HSLColor.fromColor(pColor.color);
-          if (hsl.lightness < 0.15 ||
-              hsl.lightness > 0.85 ||
-              hsl.saturation < 0.15) continue;
+
+          if (hsl.lightness < 0.10 || hsl.lightness > 0.90) continue;
 
           double score = pColor.population.toDouble() * hsl.saturation;
           if (score > maxScore) {
             maxScore = score;
-            mejorCandidato = pColor;
+            colorBase = pColor.color;
           }
         }
 
-        Color colorBase = mejorCandidato?.color ??
-            palette.dominantColor?.color ??
+        // Si falla, coge un color por defecto de la librería o el nuestro
+        colorBase ??= palette.dominantColor?.color ??
             palette.vibrantColor?.color ??
             colorGenDefecto;
+
         return _generarPaleta(colorBase, colorGenDefecto);
       });
     } else {
@@ -75,10 +75,24 @@ Future<List<Color>> coverColorPicker(
   }
 }
 
-// Función auxiliar para crear todos los tonos de la UI
+// LA MAGIA MATEMÁTICA ESTÁ AQUÍ
 List<Color> _generarPaleta(Color base, Color defecto) {
-  Color fondoPastel = Color.lerp(base, Colors.white, 0.85) ?? defecto;
-  Color barraInactiva = Color.lerp(base, Colors.white, 0.45) ?? base;
-  Color barraActiva = Color.lerp(base, Colors.black, 0.30) ?? base;
-  return [base, fondoPastel, barraInactiva, barraActiva, Colors.black87];
+  HSLColor hsl = HSLColor.fromColor(base);
+
+  // 1. COLOR PRINCIPAL (Para la MiniBar y la parte superior del Big Player)
+  // Forzamos la luminosidad entre 20% y 38%. Esto asegura 100% que los
+  // iconos blancos se vean nítidos y no se vea "exageradamente blanco".
+  // También aseguramos un mínimo de 40% de saturación para que no se vea gris.
+  double safeLightness = hsl.lightness.clamp(0.20, 0.38);
+  double safeSaturation = hsl.saturation.clamp(0.40, 1.0);
+
+  Color colorPrincipal =
+      hsl.withLightness(safeLightness).withSaturation(safeSaturation).toColor();
+
+  // 2. COLOR OSCURO (Para la parte inferior del degradado)
+  // Mezclamos el color principal con un 40% de negro
+  Color colorOscuro = Color.lerp(colorPrincipal, Colors.black, 0.40) ?? defecto;
+
+  // Retornamos [Principal, Oscuro]
+  return [colorPrincipal, colorOscuro];
 }

@@ -9,7 +9,6 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'main_player_model.dart';
 export 'main_player_model.dart';
@@ -76,17 +75,21 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: RadialGradient(
           colors: [
             valueOrDefault<Color>(
               FFAppState().currentColor,
               FlutterFlowTheme.of(context).secondary,
             ),
-            Color(0xFF080808)
+            valueOrDefault<Color>(
+              FFAppState().currentDarkColor,
+              Color(0xFF1B4B47),
+            ),
+            Color(0xFF141414)
           ],
-          stops: [0.0, 1.0],
-          begin: AlignmentDirectional(0.0, -1.0),
-          end: AlignmentDirectional(0, 1.0),
+          stops: [0.0, 0.3, 1.0],
+          center: Alignment(0.0, -1.0),
+          radius: 2.4,
         ),
       ),
       child: Stack(
@@ -110,22 +113,18 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(30.0, 25.0, 30.0, 0.0),
                   child: Text(
-                    FFAppState().currentTitle,
+                    valueOrDefault<String>(
+                      FFAppState().currentTitle,
+                      'Battle! VS Pokémon Trainer',
+                    ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.golosText(
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                          fontFamily: 'Metropolis 2',
                           color: Colors.white,
                           fontSize: 20.0,
                           letterSpacing: 0.0,
-                          fontWeight: FontWeight.w500,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                          fontWeight: FontWeight.w600,
                         ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -136,26 +135,21 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(30.0, 5.0, 30.0, 0.0),
                   child: Text(
-                    FFAppState().currentArtist,
+                    valueOrDefault<String>(
+                      FFAppState().currentArtist,
+                      'Game Freak',
+                    ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.golosText(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FontStyle.italic,
-                          ),
-                          color: Color(0xFFCACACA),
+                          fontFamily: 'Metropolis 2',
+                          color: Color(0xFFD7D7D7),
                           letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
                         ),
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 20.0, 12.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 50.0,
@@ -322,7 +316,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                 child: Icon(
                                   Icons.repeat_rounded,
                                   color: Color(0x40808080),
-                                  size: 30.0,
+                                  size: 35.0,
                                 ),
                               ),
                             if (FFAppState().loopMode == 1)
@@ -339,7 +333,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                 child: Icon(
                                   Icons.repeat_rounded,
                                   color: Colors.white,
-                                  size: 30.0,
+                                  size: 35.0,
                                 ),
                               ),
                             if (FFAppState().loopMode == 2)
@@ -356,7 +350,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                 child: Icon(
                                   Icons.repeat_one_rounded,
                                   color: Colors.white,
-                                  size: 30.0,
+                                  size: 35.0,
                                 ),
                               ),
                           ],
@@ -417,165 +411,181 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                             ),
                           ),
                         ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            await actions.toggleShuffle();
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 2.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await actions.toggleShuffle();
 
-                            safeSetState(() {});
-                          },
-                          child: FaIcon(
-                            FontAwesomeIcons.random,
-                            color: FFAppState().isShuffleOn == true
-                                ? Colors.white
-                                : Color(0x40808080),
-                            size: 25.0,
+                              safeSetState(() {});
+                            },
+                            child: FaIcon(
+                              FontAwesomeIcons.random,
+                              color: FFAppState().isShuffleOn == true
+                                  ? Colors.white
+                                  : Color(0x40808080),
+                              size: 30.0,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            if (FFAppState().currentIndex > 0) {
-                              FFAppState().currentIndex =
-                                  FFAppState().currentIndex + -1;
-                              FFAppState().currentTitle = FFAppState()
-                                  .colaTitulos
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentId = FFAppState()
-                                  .colaIds
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentArtist = FFAppState()
-                                  .colaArtistas
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentAlbum = FFAppState()
-                                  .colaAlbums
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              safeSetState(() {});
-                              _model.colorPickedPrevious =
-                                  await actions.coverColorPicker(
-                                FFAppState().currentId,
-                                FFAppState()
-                                    .colaColores
-                                    .elementAtOrNull(FFAppState().currentIndex),
-                              );
-                              FFAppState().currentColor = (_model
-                                  .colorPickedPrevious!
-                                  .elementAtOrNull(0))!;
-                              FFAppState().currentDarkColor = (_model
-                                  .colorPickedPrevious!
-                                  .elementAtOrNull(1))!;
-                              safeSetState(() {});
-                              await actions.audioController(
-                                'play',
-                                FFAppState()
-                                    .colaRutas
-                                    .elementAtOrNull(FFAppState().currentIndex),
-                              );
-                              if (FFAppState().colaColores.elementAtOrNull(
-                                      FFAppState().currentIndex) ==
-                                  0) {
-                                await SQLiteManager.instance.updateColor(
-                                  color: functions.colorToInt((_model
-                                      .colorPickedPrevious!
-                                      .elementAtOrNull(0))!),
-                                  id: FFAppState().currentId,
-                                );
-                                FFAppState().updateColaColoresAtIndex(
-                                  FFAppState().currentIndex,
-                                  (_) => functions.colorToInt((_model
-                                      .colorPickedPrevious!
-                                      .elementAtOrNull(0))!),
-                                );
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 50.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              if (FFAppState().currentIndex > 0) {
+                                FFAppState().currentIndex =
+                                    FFAppState().currentIndex + -1;
+                                FFAppState().currentTitle = FFAppState()
+                                    .colaTitulos
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
+                                FFAppState().currentId = FFAppState()
+                                    .colaIds
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
+                                FFAppState().currentArtist = FFAppState()
+                                    .colaArtistas
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
+                                FFAppState().currentAlbum = FFAppState()
+                                    .colaAlbums
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
                                 safeSetState(() {});
+                                _model.colorPickedPrevious =
+                                    await actions.coverColorPicker(
+                                  FFAppState().currentId,
+                                  FFAppState().colaColores.elementAtOrNull(
+                                      FFAppState().currentIndex),
+                                );
+                                FFAppState().currentColor = (_model
+                                    .colorPickedPrevious!
+                                    .elementAtOrNull(0))!;
+                                FFAppState().currentDarkColor = (_model
+                                    .colorPickedPrevious!
+                                    .elementAtOrNull(1))!;
+                                safeSetState(() {});
+                                await actions.audioController(
+                                  'play',
+                                  FFAppState().colaRutas.elementAtOrNull(
+                                      FFAppState().currentIndex),
+                                );
+                                if (FFAppState().colaColores.elementAtOrNull(
+                                        FFAppState().currentIndex) ==
+                                    0) {
+                                  await SQLiteManager.instance.updateColor(
+                                    color: functions.colorToInt((_model
+                                        .colorPickedPrevious!
+                                        .elementAtOrNull(0))!),
+                                    id: FFAppState().currentId,
+                                  );
+                                  FFAppState().updateColaColoresAtIndex(
+                                    FFAppState().currentIndex,
+                                    (_) => functions.colorToInt((_model
+                                        .colorPickedPrevious!
+                                        .elementAtOrNull(0))!),
+                                  );
+                                  safeSetState(() {});
+                                }
                               }
-                            }
 
-                            safeSetState(() {});
-                          },
-                          child: Icon(
-                            Icons.skip_previous_rounded,
-                            color: Colors.white,
-                            size: 40.0,
+                              safeSetState(() {});
+                            },
+                            child: Icon(
+                              Icons.skip_previous_rounded,
+                              color: Colors.white,
+                              size: 40.0,
+                            ),
                           ),
                         ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            if (FFAppState().currentIndex <
-                                FFAppState().colaRutas.length) {
-                              FFAppState().currentIndex =
-                                  FFAppState().currentIndex + 1;
-                              FFAppState().currentTitle = FFAppState()
-                                  .colaTitulos
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentId = FFAppState()
-                                  .colaIds
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentArtist = FFAppState()
-                                  .colaArtistas
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              FFAppState().currentAlbum = FFAppState()
-                                  .colaAlbums
-                                  .elementAtOrNull(FFAppState().currentIndex)!;
-                              safeSetState(() {});
-                              _model.colorPicked =
-                                  await actions.coverColorPicker(
-                                FFAppState().currentId,
-                                FFAppState()
-                                    .colaColores
-                                    .elementAtOrNull(FFAppState().currentIndex),
-                              );
-                              FFAppState().currentColor =
-                                  (_model.colorPicked!.elementAtOrNull(0))!;
-                              FFAppState().currentDarkColor =
-                                  (_model.colorPicked!.elementAtOrNull(1))!;
-                              safeSetState(() {});
-                              await actions.audioController(
-                                'play',
-                                FFAppState()
-                                    .colaRutas
-                                    .elementAtOrNull(FFAppState().currentIndex),
-                              );
-                              if (FFAppState().colaColores.elementAtOrNull(
-                                      FFAppState().currentIndex) ==
-                                  0) {
-                                await SQLiteManager.instance.updateColor(
-                                  color: functions.colorToInt((_model
-                                      .colorPicked!
-                                      .elementAtOrNull(0))!),
-                                  id: FFAppState().currentId,
-                                );
-                                FFAppState().updateColaColoresAtIndex(
-                                  FFAppState().currentIndex,
-                                  (_) => functions.colorToInt((_model
-                                      .colorPicked!
-                                      .elementAtOrNull(0))!),
-                                );
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              50.0, 0.0, 0.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              if (FFAppState().currentIndex <
+                                  FFAppState().colaRutas.length) {
+                                FFAppState().currentIndex =
+                                    FFAppState().currentIndex + 1;
+                                FFAppState().currentTitle = FFAppState()
+                                    .colaTitulos
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
+                                FFAppState().currentId = FFAppState()
+                                    .colaIds
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
+                                FFAppState().currentArtist = FFAppState()
+                                    .colaArtistas
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
+                                FFAppState().currentAlbum = FFAppState()
+                                    .colaAlbums
+                                    .elementAtOrNull(
+                                        FFAppState().currentIndex)!;
                                 safeSetState(() {});
+                                _model.colorPicked =
+                                    await actions.coverColorPicker(
+                                  FFAppState().currentId,
+                                  FFAppState().colaColores.elementAtOrNull(
+                                      FFAppState().currentIndex),
+                                );
+                                FFAppState().currentColor =
+                                    (_model.colorPicked!.elementAtOrNull(0))!;
+                                FFAppState().currentDarkColor =
+                                    (_model.colorPicked!.elementAtOrNull(1))!;
+                                safeSetState(() {});
+                                await actions.audioController(
+                                  'play',
+                                  FFAppState().colaRutas.elementAtOrNull(
+                                      FFAppState().currentIndex),
+                                );
+                                if (FFAppState().colaColores.elementAtOrNull(
+                                        FFAppState().currentIndex) ==
+                                    0) {
+                                  await SQLiteManager.instance.updateColor(
+                                    color: functions.colorToInt((_model
+                                        .colorPicked!
+                                        .elementAtOrNull(0))!),
+                                    id: FFAppState().currentId,
+                                  );
+                                  FFAppState().updateColaColoresAtIndex(
+                                    FFAppState().currentIndex,
+                                    (_) => functions.colorToInt((_model
+                                        .colorPicked!
+                                        .elementAtOrNull(0))!),
+                                  );
+                                  safeSetState(() {});
+                                }
                               }
-                            }
 
-                            safeSetState(() {});
-                          },
-                          child: Icon(
-                            Icons.skip_next_rounded,
-                            color: Colors.white,
-                            size: 40.0,
+                              safeSetState(() {});
+                            },
+                            child: Icon(
+                              Icons.skip_next_rounded,
+                              color: Colors.white,
+                              size: 40.0,
+                            ),
                           ),
                         ),
                       ],
@@ -640,7 +650,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
             ],
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 44.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(17.0, 44.0, 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -649,8 +659,8 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
               onTap: () async {
                 Navigator.pop(context);
               },
-              child: Icon(
-                Icons.keyboard_arrow_down_rounded,
+              child: FaIcon(
+                FontAwesomeIcons.angleDown,
                 color: Colors.white,
                 size: 30.0,
               ),
@@ -672,25 +682,23 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Text(
-                      FFAppState().currentAlbum,
+                      valueOrDefault<String>(
+                        FFAppState().currentAlbum,
+                        'Pokémon: Black/White',
+                      ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.golosText(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            color: Colors.white,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                        fontFamily: 'Metropolis 2',
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.normal,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 10.0,
+                          )
+                        ],
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

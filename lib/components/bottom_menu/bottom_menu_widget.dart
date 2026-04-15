@@ -1,11 +1,12 @@
+import '/backend/sqlite/sqlite_manager.dart';
 import '/components/main_player/main_player_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_menu_model.dart';
 export 'bottom_menu_model.dart';
@@ -152,54 +153,35 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                       Text(
                                         valueOrDefault<String>(
                                           FFAppState().currentTitle,
-                                          'titulo',
+                                          'Battle! VS Pokémon Trainer',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              font: GoogleFonts.golosText(
-                                                fontWeight: FontWeight.bold,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
+                                              fontFamily: 'Metropolis 2',
                                               color: Colors.white,
+                                              fontSize: 15.0,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     Text(
                                       valueOrDefault<String>(
                                         FFAppState().currentArtist,
-                                        'artista',
+                                        'Game Freak',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            font: GoogleFonts.golosText(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle: FontStyle.italic,
-                                            ),
+                                            fontFamily: 'Metropolis 2',
                                             color: Colors.white,
                                             letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.normal,
                                           ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
+                                  ].divide(SizedBox(height: 7.0)),
                                 ),
                               ),
                             ),
@@ -295,7 +277,146 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                   ],
                 ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 10.0,
+                  child: custom_widgets.MiniBar(
+                    width: double.infinity,
+                    height: 10.0,
+                    colorActivo: Colors.white,
+                    colorFondo: Color(0x827B7B7B),
+                    onSongEnding: () async {
+                      if (FFAppState().loopMode == 2) {
+                        await actions.audioController(
+                          'play',
+                          FFAppState()
+                              .colaRutas
+                              .elementAtOrNull(FFAppState().currentIndex),
+                        );
+                      } else {
+                        if (FFAppState().currentIndex <
+                            (FFAppState().colaIds.length - 1)) {
+                          FFAppState().currentIndex =
+                              FFAppState().currentIndex + 1;
+                          safeSetState(() {});
+                          FFAppState().currentId = FFAppState()
+                              .colaIds
+                              .elementAtOrNull(FFAppState().currentIndex)!;
+                          FFAppState().currentTitle = FFAppState()
+                              .colaTitulos
+                              .elementAtOrNull(FFAppState().currentIndex)!;
+                          FFAppState().currentArtist = FFAppState()
+                              .colaArtistas
+                              .elementAtOrNull(FFAppState().currentIndex)!;
+                          FFAppState().currentAlbum = FFAppState()
+                              .colaAlbums
+                              .elementAtOrNull(FFAppState().currentIndex)!;
+                          safeSetState(() {});
+                          await Future.delayed(
+                            Duration(
+                              milliseconds: 100,
+                            ),
+                          );
+                          await actions.audioController(
+                            'play',
+                            FFAppState()
+                                .colaRutas
+                                .elementAtOrNull(FFAppState().currentIndex),
+                          );
+                          _model.pickedColor = await actions.coverColorPicker(
+                            FFAppState().currentId,
+                            FFAppState()
+                                .colaColores
+                                .elementAtOrNull(FFAppState().currentIndex),
+                          );
+                          FFAppState().currentColor =
+                              (_model.pickedColor!.elementAtOrNull(0))!;
+                          FFAppState().currentDarkColor =
+                              (_model.pickedColor!.elementAtOrNull(1))!;
+                          safeSetState(() {});
+                          if (FFAppState()
+                                  .colaColores
+                                  .elementAtOrNull(FFAppState().currentIndex) ==
+                              0) {
+                            await SQLiteManager.instance.updateColor(
+                              color: functions.colorToInt(
+                                  (_model.pickedColor!.elementAtOrNull(0))!),
+                              id: FFAppState().currentId,
+                            );
+                            FFAppState().updateColaColoresAtIndex(
+                              FFAppState().currentIndex,
+                              (_) => functions.colorToInt(
+                                  (_model.pickedColor!.elementAtOrNull(0))!),
+                            );
+                            safeSetState(() {});
+                          }
+                        } else {
+                          if (FFAppState().loopMode == 1) {
+                            FFAppState().currentIndex = 0;
+                            safeSetState(() {});
+                            FFAppState().currentId = FFAppState()
+                                .colaIds
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            FFAppState().currentTitle = FFAppState()
+                                .colaTitulos
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            FFAppState().currentArtist = FFAppState()
+                                .colaArtistas
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            FFAppState().currentAlbum = FFAppState()
+                                .colaAlbums
+                                .elementAtOrNull(FFAppState().currentIndex)!;
+                            safeSetState(() {});
+                            await Future.delayed(
+                              Duration(
+                                milliseconds: 100,
+                              ),
+                            );
+                            await actions.audioController(
+                              'play',
+                              FFAppState()
+                                  .colaRutas
+                                  .elementAtOrNull(FFAppState().currentIndex),
+                            );
+                            _model.pickedColor2 =
+                                await actions.coverColorPicker(
+                              FFAppState().currentId,
+                              FFAppState()
+                                  .colaColores
+                                  .elementAtOrNull(FFAppState().currentIndex),
+                            );
+                            FFAppState().currentColor =
+                                (_model.pickedColor2!.elementAtOrNull(0))!;
+                            FFAppState().currentDarkColor =
+                                (_model.pickedColor2!.elementAtOrNull(1))!;
+                            safeSetState(() {});
+                            if (FFAppState().colaColores.elementAtOrNull(
+                                    FFAppState().currentIndex) ==
+                                0) {
+                              await SQLiteManager.instance.updateColor(
+                                color: functions.colorToInt(
+                                    (_model.pickedColor2!.elementAtOrNull(0))!),
+                                id: FFAppState().currentId,
+                              );
+                              FFAppState().updateColaColoresAtIndex(
+                                FFAppState().currentIndex,
+                                (_) => functions.colorToInt(
+                                    (_model.pickedColor2!.elementAtOrNull(0))!),
+                              );
+                              safeSetState(() {});
+                            }
+                          }
+                        }
+                      }
+
+                      safeSetState(() {});
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                 child: Stack(
                   children: [
                     Align(
