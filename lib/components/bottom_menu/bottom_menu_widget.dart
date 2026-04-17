@@ -102,12 +102,12 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
               )),
             ),
             border: Border.all(
-              color: Color(0x848A8A8A),
+              color: Color(0x41A1A1A1),
             ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (FFAppState().currentTitle != '')
@@ -118,7 +118,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                         alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              90.0, 30.0, 70.0, 0.0),
+                              90.0, 32.0, 70.0, 0.0),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -182,7 +182,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                           ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                  ].divide(SizedBox(height: 7.0)),
+                                  ].divide(SizedBox(height: 3.0)),
                                 ),
                               ),
                             ),
@@ -418,179 +418,191 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     ),
                   ),
                 ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(0.0, 1.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            decoration: BoxDecoration(
-                              color: widget.page == 'songs'
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                if (FFAppState().currentPage != 'songs') {
-                                  context.pushNamed(SongsWidget.routeName);
-
-                                  FFAppState().currentPage = 'songs';
-                                  safeSetState(() {});
-                                }
-                              },
-                              child: Icon(
-                                Icons.music_note,
+              Align(
+                alignment: AlignmentDirectional(0.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      0.0,
+                      valueOrDefault<double>(
+                        FFAppState().currentTitle != ''
+                            ? 20.0
+                            : 0.0,
+                        0.0,
+                      ),
+                      0.0,
+                      0.0),
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 1.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: 45.0,
+                              height: 45.0,
+                              decoration: BoxDecoration(
                                 color: widget.page == 'songs'
-                                    ? FFAppState().currentDarkColor
-                                    : Colors.white,
-                                size: 30.0,
+                                    ? Colors.white
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
                               ),
-                            ),
-                          ),
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            decoration: BoxDecoration(
-                              color: widget.page == 'discs'
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                if (FFAppState().currentPage != 'discs') {
-                                  context.pushNamed(DiscsWidget.routeName);
-
-                                  FFAppState().currentPage = 'discs';
-                                  safeSetState(() {});
-                                }
-                              },
-                              child: Icon(
-                                Icons.album,
-                                color: widget.page == 'discs'
-                                    ? FFAppState().currentTextColor
-                                    : Colors.white,
-                                size: 30.0,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            decoration: BoxDecoration(
-                              color: widget.page == 'search'
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                if (FFAppState().currentPage != 'search') {
-                                  context.pushNamed(SearchWidget.routeName);
-
-                                  FFAppState().currentPage = 'search';
-                                  safeSetState(() {});
-                                }
-                              },
-                              child: Icon(
-                                Icons.search,
-                                color: widget.page == 'search'
-                                    ? FFAppState().currentTextColor
-                                    : Colors.white,
-                                size: 30.0,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            decoration: BoxDecoration(
-                              color: widget.page == 'lists'
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  5.0, 0.0, 0.0, 0.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  if (FFAppState().currentPage != 'lists') {
-                                    context.pushNamed(ListsWidget.routeName);
+                                  if (FFAppState().currentPage != 'songs') {
+                                    context.pushNamed(SongsWidget.routeName);
 
-                                    FFAppState().currentPage = 'lists';
+                                    FFAppState().currentPage = 'songs';
                                     safeSetState(() {});
                                   }
                                 },
                                 child: Icon(
-                                  Icons.playlist_play_rounded,
-                                  color: widget.page == 'lists'
-                                      ? FFAppState().currentTextColor
+                                  Icons.music_note,
+                                  color: widget.page == 'songs'
+                                      ? FFAppState().currentDarkColor
                                       : Colors.white,
-                                  size: 35.0,
+                                  size: 30.0,
                                 ),
                               ),
                             ),
-                          ),
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            decoration: BoxDecoration(
-                              color: widget.page == 'artists'
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                if (FFAppState().currentPage != 'artists') {
-                                  context.pushNamed(ArtistsWidget.routeName);
+                            Container(
+                              width: 45.0,
+                              height: 45.0,
+                              decoration: BoxDecoration(
+                                color: widget.page == 'discs'
+                                    ? Colors.white
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  if (FFAppState().currentPage != 'discs') {
+                                    context.pushNamed(DiscsWidget.routeName);
 
-                                  FFAppState().currentPage = 'artists';
-                                  safeSetState(() {});
-                                }
-                              },
-                              child: Icon(
-                                Icons.person_rounded,
-                                color: widget.page == 'artists'
-                                    ? FFAppState().currentTextColor
-                                    : Colors.white,
-                                size: 30.0,
+                                    FFAppState().currentPage = 'discs';
+                                    safeSetState(() {});
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.album,
+                                  color: widget.page == 'discs'
+                                      ? FFAppState().currentTextColor
+                                      : Colors.white,
+                                  size: 30.0,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                            Container(
+                              width: 45.0,
+                              height: 45.0,
+                              decoration: BoxDecoration(
+                                color: widget.page == 'search'
+                                    ? Colors.white
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  if (FFAppState().currentPage != 'search') {
+                                    context.pushNamed(SearchWidget.routeName);
+
+                                    FFAppState().currentPage = 'search';
+                                    safeSetState(() {});
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.search,
+                                  color: widget.page == 'search'
+                                      ? FFAppState().currentTextColor
+                                      : Colors.white,
+                                  size: 30.0,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 45.0,
+                              height: 45.0,
+                              decoration: BoxDecoration(
+                                color: widget.page == 'lists'
+                                    ? Colors.white
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    5.0, 0.0, 0.0, 0.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    if (FFAppState().currentPage != 'lists') {
+                                      context.pushNamed(ListsWidget.routeName);
+
+                                      FFAppState().currentPage = 'lists';
+                                      safeSetState(() {});
+                                    }
+                                  },
+                                  child: Icon(
+                                    Icons.playlist_play_rounded,
+                                    color: widget.page == 'lists'
+                                        ? FFAppState().currentTextColor
+                                        : Colors.white,
+                                    size: 35.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 45.0,
+                              height: 45.0,
+                              decoration: BoxDecoration(
+                                color: widget.page == 'artists'
+                                    ? Colors.white
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  if (FFAppState().currentPage != 'artists') {
+                                    context.pushNamed(ArtistsWidget.routeName);
+
+                                    FFAppState().currentPage = 'artists';
+                                    safeSetState(() {});
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.person_rounded,
+                                  color: widget.page == 'artists'
+                                      ? FFAppState().currentTextColor
+                                      : Colors.white,
+                                  size: 30.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

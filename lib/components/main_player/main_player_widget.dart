@@ -87,9 +87,9 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
             ),
             Colors.black
           ],
-          stops: [0.0, 0.4, 1.0],
-          center: Alignment(0.0, -0.34),
-          radius: 2.0,
+          stops: [0.0, 0.25, 1.0],
+          center: Alignment(0.0, -0.5),
+          radius: 2.5,
         ),
       ),
       child: Stack(
@@ -113,7 +113,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 35.0, 30.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(30.0, 50.0, 30.0, 0.0),
                   child: Text(
                     valueOrDefault<String>(
                       FFAppState().currentTitle,
@@ -650,7 +650,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
             ],
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(17.0, 44.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(17.0, 49.0, 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -680,7 +680,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                   alignment: AlignmentDirectional(0.0, -1.0),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
                     child: Text(
                       valueOrDefault<String>(
                         FFAppState().currentAlbum,

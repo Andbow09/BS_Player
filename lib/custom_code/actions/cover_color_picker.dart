@@ -50,7 +50,7 @@ Future<List<Color>> coverColorPicker(
         for (var pColor in palette.paletteColors) {
           HSLColor hsl = HSLColor.fromColor(pColor.color);
 
-          if (hsl.lightness < 0.05 || hsl.lightness > 0.95) continue;
+          if (hsl.lightness < 0.01 || hsl.lightness > 0.99) continue;
 
           double score = pColor.population.toDouble() * hsl.saturation;
           if (score > maxScore) {
