@@ -203,16 +203,24 @@ class _SearchWidgetState extends State<SearchWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(0.0, 1.0),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
-                  child: wrapWithModel(
-                    model: _model.bottomMenuModel,
-                    updateCallback: () => safeSetState(() {}),
-                    child: BottomMenuWidget(
-                      page: 'search',
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 1.0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 20.0),
+                        child: wrapWithModel(
+                          model: _model.bottomMenuModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: BottomMenuWidget(
+                            page: 'search',
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],

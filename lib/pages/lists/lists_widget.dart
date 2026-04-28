@@ -203,16 +203,25 @@ class _ListsWidgetState extends State<ListsWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(0.0, 1.0),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
-                  child: wrapWithModel(
-                    model: _model.bottomMenuModel,
-                    updateCallback: () => safeSetState(() {}),
-                    child: BottomMenuWidget(
-                      page: 'lists',
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 1.0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 10.0, 20.0),
+                        child: wrapWithModel(
+                          model: _model.bottomMenuModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: BottomMenuWidget(
+                            page: 'lists',
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],

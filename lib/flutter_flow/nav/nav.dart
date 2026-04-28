@@ -71,7 +71,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: DiscWidget.routeName,
           path: DiscWidget.routePath,
-          builder: (context, params) => DiscWidget(),
+          builder: (context, params) => DiscWidget(
+            albumId: params.getParam(
+              'albumId',
+              ParamType.int,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

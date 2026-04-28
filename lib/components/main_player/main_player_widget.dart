@@ -109,43 +109,77 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                   ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(-1.0, 0.0),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 50.0, 30.0, 0.0),
-                  child: Text(
-                    valueOrDefault<String>(
-                      FFAppState().currentTitle,
-                      'Battle! VS Pokémon Trainer',
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                30.0, 0.0, 30.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                FFAppState().currentTitle,
+                                'Battle! VS Pokémon Trainer',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Metropolis 2',
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                30.0, 5.0, 30.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                FFAppState().currentArtist,
+                                'Game Freak',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Metropolis 2',
+                                    color: Color(0xFFD7D7D7),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Metropolis 2',
+                    Stack(
+                      children: [
+                        Icon(
+                          Icons.favorite_border_rounded,
                           color: Colors.white,
-                          fontSize: 20.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w600,
+                          size: 30.0,
                         ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-1.0, 0.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(30.0, 5.0, 30.0, 0.0),
-                  child: Text(
-                    valueOrDefault<String>(
-                      FFAppState().currentArtist,
-                      'Game Freak',
+                        Icon(
+                          Icons.favorite_rounded,
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
+                      ],
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Metropolis 2',
-                          color: Color(0xFFD7D7D7),
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
+                  ],
                 ),
               ),
               Padding(
@@ -628,19 +662,10 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                             size: 35.0,
                           ),
                         ),
-                        Stack(
-                          children: [
-                            Icon(
-                              Icons.favorite_border_rounded,
-                              color: Colors.white,
-                              size: 30.0,
-                            ),
-                            Icon(
-                              Icons.favorite_rounded,
-                              color: Colors.white,
-                              size: 30.0,
-                            ),
-                          ],
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 30.0,
                         ),
                       ],
                     ),

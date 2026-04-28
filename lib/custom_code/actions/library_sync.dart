@@ -72,10 +72,11 @@ Future<bool> librarySync() async {
       // C. Insertar la CANCIÓN (Añadidos 'favorita' y 'color' iniciados a 0)
       String titulo = song.title;
       int duracion = song.duration ?? 0;
+      int? numeroTrack = song.track;
 
       await txn.rawInsert(
-        'INSERT INTO cancion (id, nombre, duracion, ruta_archivo, id_album, favorita, color) VALUES (?, ?, ?, ?, ?, 0, 0)',
-        [idOriginal, titulo, duracion, ruta, idAlbum],
+        'INSERT INTO cancion (id, nombre, duracion, ruta_archivo, id_album, favorita, color, numero_track) VALUES (?, ?, ?, ?, ?, 0, 0, ?)',
+        [idOriginal, titulo, duracion, ruta, idAlbum, numeroTrack],
       );
 
       // D. Gestionar ARTISTAS
