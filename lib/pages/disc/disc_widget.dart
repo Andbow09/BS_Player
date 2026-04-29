@@ -467,7 +467,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                         },
                                         child: Container(
                                           width: double.infinity,
-                                          height: 40.0,
+                                          height: 50.0,
                                           decoration: BoxDecoration(
                                             gradient: RadialGradient(
                                               colors: [
@@ -514,6 +514,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                           fontFamily:
                                                               'Metropolis 2',
                                                           color: Colors.white,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -525,7 +526,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                   child: Icon(
                                                     Icons.play_arrow_rounded,
                                                     color: Colors.white,
-                                                    size: 35.0,
+                                                    size: 40.0,
                                                   ),
                                                 ),
                                               ],
@@ -539,8 +540,8 @@ class _DiscWidgetState extends State<DiscWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 20.0, 0.0, 0.0),
                                     child: Container(
-                                      width: 40.0,
-                                      height: 40.0,
+                                      width: 50.0,
+                                      height: 50.0,
                                       decoration: BoxDecoration(
                                         gradient: RadialGradient(
                                           colors: [
@@ -569,7 +570,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                         child: FaIcon(
                                           FontAwesomeIcons.random,
                                           color: Colors.white,
-                                          size: 20.0,
+                                          size: 25.0,
                                         ),
                                       ),
                                     ),
@@ -620,7 +621,8 @@ class _DiscWidgetState extends State<DiscWidget> {
                                     0.0, 10.0, 0.0, 0.0),
                                 child: FutureBuilder<List<ListSongsAlbumRow>>(
                                   future: SQLiteManager.instance.listSongsAlbum(
-                                    idAlbum: widget.albumId!,
+                                    idAlbum:
+                                        discGetAlbum2RowList.firstOrNull!.id,
                                   ),
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.

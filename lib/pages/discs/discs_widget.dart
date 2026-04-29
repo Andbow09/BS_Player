@@ -60,7 +60,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xFF161616),
+            backgroundColor: Colors.black,
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -83,7 +83,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Color(0xFF161616),
+            backgroundColor: Colors.black,
             body: SafeArea(
               top: true,
               child: Stack(
@@ -95,7 +95,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 55.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 55.0, 0.0, 180.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -186,7 +186,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 30.0,
-                                      mainAxisSpacing: 60.0,
+                                      mainAxisSpacing: 62.0,
                                       childAspectRatio: 1.0,
                                     ),
                                     scrollDirection: Axis.vertical,
@@ -200,6 +200,25 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Navegando a album con id: ${listAlbumsItem.albumId.toString()}',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+
                                           context.pushNamed(
                                             DiscWidget.routeName,
                                             queryParameters: {
@@ -226,34 +245,26 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                                     listAlbumsItem.cancionId,
                                               ),
                                             ),
-                                            Text(
-                                              listAlbumsItem.tituloAlbum,
-                                              textAlign: TextAlign.center,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                              child: Text(
+                                                listAlbumsItem.tituloAlbum,
+                                                textAlign: TextAlign.center,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Metropolis 2',
+                                                          color: Colors.white,
+                                                          fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
                                                         ),
-                                                        color: Colors.white,
-                                                        fontSize: 15.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                              overflow: TextOverflow.ellipsis,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                             Text(
                                               listAlbumsItem.nombreArtista,
@@ -262,30 +273,10 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
+                                                        fontFamily:
+                                                            'Metropolis 2',
                                                         color: Colors.white,
                                                         letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
                                                       ),
                                               overflow: TextOverflow.ellipsis,
                                             ),
