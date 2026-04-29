@@ -218,6 +218,24 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                                       .secondary,
                                             ),
                                           );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Navegando a album con id: ${listAlbumsItem.albumId.toString()}',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
 
                                           context.pushNamed(
                                             DiscWidget.routeName,
