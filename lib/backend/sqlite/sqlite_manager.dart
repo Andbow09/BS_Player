@@ -72,11 +72,11 @@ class SQLiteManager {
       );
 
   Future<List<ConsultaPruebaDiscoRow>> consultaPruebaDisco({
-    int? idAlbum,
+    int? idalbum,
   }) =>
       performConsultaPruebaDisco(
         _database,
-        idAlbum: idAlbum,
+        idalbum: idalbum,
       );
 
   /// END READ QUERY CALLS

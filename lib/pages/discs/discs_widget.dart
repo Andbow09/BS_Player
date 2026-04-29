@@ -222,7 +222,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                           context.pushNamed(
                                             DiscoPruebaWidget.routeName,
                                             queryParameters: {
-                                              'idAlbum': serializeParam(
+                                              'idalbum': serializeParam(
                                                 listAlbumsItem.albumId,
                                                 ParamType.int,
                                               ),

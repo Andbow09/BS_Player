@@ -9,10 +9,10 @@ export 'disco_prueba_model.dart';
 class DiscoPruebaWidget extends StatefulWidget {
   const DiscoPruebaWidget({
     super.key,
-    required this.idAlbum,
+    required this.idalbum,
   });
 
-  final int? idAlbum;
+  final int? idalbum;
 
   static String routeName = 'discoPrueba';
   static String routePath = '/discoPrueba';
@@ -66,7 +66,7 @@ class _DiscoPruebaWidgetState extends State<DiscoPruebaWidget> {
                 children: [
                   Text(
                     valueOrDefault<String>(
-                      widget.idAlbum?.toString(),
+                      widget.idalbum?.toString(),
                       '1',
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -89,123 +89,124 @@ class _DiscoPruebaWidgetState extends State<DiscoPruebaWidget> {
                   ),
                 ],
               ),
-              FutureBuilder<List<ConsultaPruebaDiscoRow>>(
-                future: SQLiteManager.instance.consultaPruebaDisco(
-                  idAlbum: widget.idAlbum!,
-                ),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            FlutterFlowTheme.of(context).primary,
+              if (widget.idalbum != null)
+                FutureBuilder<List<ConsultaPruebaDiscoRow>>(
+                  future: SQLiteManager.instance.consultaPruebaDisco(
+                    idalbum: widget.idalbum!,
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              FlutterFlowTheme.of(context).primary,
+                            ),
                           ),
+                        ),
+                      );
+                    }
+                    final containerConsultaPruebaDiscoRowList = snapshot.data!;
+
+                    return Container(
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 10.0, 0.0, 0.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              valueOrDefault<String>(
+                                containerConsultaPruebaDiscoRowList
+                                    .firstOrNull?.nombre,
+                                'cargando...',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Colors.black,
+                                    fontSize: 22.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                            Text(
+                              valueOrDefault<String>(
+                                containerConsultaPruebaDiscoRowList
+                                    .firstOrNull?.id
+                                    .toString(),
+                                'cargando...',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                            Text(
+                              valueOrDefault<String>(
+                                containerConsultaPruebaDiscoRowList
+                                    .firstOrNull?.fechaLanzamiento,
+                                'cargando...',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ],
                         ),
                       ),
                     );
-                  }
-                  final containerConsultaPruebaDiscoRowList = snapshot.data!;
-
-                  return Container(
-                    decoration: BoxDecoration(),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 0.0, 0.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            valueOrDefault<String>(
-                              containerConsultaPruebaDiscoRowList
-                                  .firstOrNull?.nombre,
-                              'cargando...',
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .override(
-                                  font: GoogleFonts.interTight(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontStyle,
-                                  ),
-                                  color: Colors.black,
-                                  fontSize: 22.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                          Text(
-                            valueOrDefault<String>(
-                              containerConsultaPruebaDiscoRowList
-                                  .firstOrNull?.id
-                                  .toString(),
-                              'cargando...',
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                          Text(
-                            valueOrDefault<String>(
-                              containerConsultaPruebaDiscoRowList
-                                  .firstOrNull?.fechaLanzamiento,
-                              'cargando...',
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+                  },
+                ),
             ],
           ),
         ),

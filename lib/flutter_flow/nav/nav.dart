@@ -82,8 +82,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: DiscoPruebaWidget.routeName,
           path: DiscoPruebaWidget.routePath,
           builder: (context, params) => DiscoPruebaWidget(
-            idAlbum: params.getParam(
-              'idAlbum',
+            idalbum: params.getParam(
+              'idalbum',
               ParamType.int,
             ),
           ),
