@@ -218,6 +218,9 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                                       .secondary,
                                             ),
                                           );
+                                          FFAppState().albumActivo =
+                                              listAlbumsItem.albumId;
+                                          safeSetState(() {});
 
                                           context.pushNamed(
                                             DiscoPruebaWidget.routeName,
