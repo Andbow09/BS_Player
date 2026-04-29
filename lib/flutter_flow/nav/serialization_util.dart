@@ -270,6 +270,8 @@ dynamic deserializeParam<T>(
             return GetAlbum2Row(data);
           case ListSongsAlbumRow:
             return ListSongsAlbumRow(data);
+          case ConsultaPruebaDiscoRow:
+            return ConsultaPruebaDiscoRow(data);
           default:
             return null;
         }

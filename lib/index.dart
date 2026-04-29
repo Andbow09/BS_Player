@@ -5,3 +5,4 @@ export '/pages/search/search_widget.dart' show SearchWidget;
 export '/pages/lists/lists_widget.dart' show ListsWidget;
 export '/pages/artists/artists_widget.dart' show ArtistsWidget;
 export '/pages/disc/disc_widget.dart' show DiscWidget;
+export '/pages/disco_prueba/disco_prueba_widget.dart' show DiscoPruebaWidget;

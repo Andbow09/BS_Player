@@ -77,6 +77,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.int,
             ),
           ),
+        ),
+        FFRoute(
+          name: DiscoPruebaWidget.routeName,
+          path: DiscoPruebaWidget.routePath,
+          builder: (context, params) => DiscoPruebaWidget(
+            discoId: params.getParam(
+              'discoId',
+              ParamType.int,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

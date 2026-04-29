@@ -247,3 +247,29 @@ class ListSongsAlbumRow extends SqliteRow {
 }
 
 /// END LISTSONGSALBUM
+
+/// BEGIN CONSULTAPRUEBADISCO
+Future<List<ConsultaPruebaDiscoRow>> performConsultaPruebaDisco(
+  Database database, {
+  String? idAlbum,
+}) {
+  final query = '''
+SELECT 
+  id, 
+  nombre, 
+  fecha_lanzamiento 
+FROM album 
+WHERE id = idAlbum
+''';
+  return _readQuery(database, query, (d) => ConsultaPruebaDiscoRow(d));
+}
+
+class ConsultaPruebaDiscoRow extends SqliteRow {
+  ConsultaPruebaDiscoRow(Map<String, dynamic> data) : super(data);
+
+  int get id => data['id'] as int;
+  String get nombre => data['nombre'] as String;
+  String get fechaLanzamiento => data['fecha_lanzamiento'] as String;
+}
+
+/// END CONSULTAPRUEBADISCO

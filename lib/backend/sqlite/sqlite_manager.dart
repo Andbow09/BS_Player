@@ -71,6 +71,14 @@ class SQLiteManager {
         idAlbum: idAlbum,
       );
 
+  Future<List<ConsultaPruebaDiscoRow>> consultaPruebaDisco({
+    String? idAlbum,
+  }) =>
+      performConsultaPruebaDisco(
+        _database,
+        idAlbum: idAlbum,
+      );
+
   /// END READ QUERY CALLS
 
   /// START UPDATE QUERY CALLS
