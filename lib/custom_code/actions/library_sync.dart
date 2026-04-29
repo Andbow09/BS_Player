@@ -51,7 +51,7 @@ Future<bool> librarySync() async {
       // Si ya existe, nos la saltamos para no duplicar
       if (cancionExiste.isNotEmpty) continue;
 
-      // B. Gestionar el ÁLBUM
+      // B. Gestionar el ÁLBUM y el EDITOR
       String nombreAlbum = song.album ?? 'Desconocido';
       int idAlbum;
       List<Map> albumRes = await txn.rawQuery(
@@ -62,10 +62,28 @@ Future<bool> librarySync() async {
       if (albumRes.isNotEmpty) {
         idAlbum = albumRes.first['id'] as int;
       } else {
-        // Si no existe, lo creamos
+        // Si no existe, lo creamos con fecha por defecto para evitar campos nulos problemáticos
         idAlbum = await txn.rawInsert(
-          'INSERT INTO album (nombre) VALUES (?)',
-          [nombreAlbum],
+          'INSERT INTO album (nombre, fecha_lanzamiento) VALUES (?, ?)',
+          [nombreAlbum, 'Fecha desconocida'],
+        );
+
+        // ¡NUEVO! Crear un editor por defecto para que los JOIN de la UI no fallen
+        int idEditorDesc;
+        List<Map> edRes = await txn
+            .rawQuery("SELECT id FROM editor WHERE nombre = 'Desconocido'");
+
+        if (edRes.isEmpty) {
+          idEditorDesc = await txn
+              .rawInsert("INSERT INTO editor (nombre) VALUES ('Desconocido')");
+        } else {
+          idEditorDesc = edRes.first['id'] as int;
+        }
+
+        // Crear la relación en la tabla intermedia (ALBUM_EDITOR)
+        await txn.rawInsert(
+          'INSERT OR IGNORE INTO album_editor (id_album, id_editor) VALUES (?, ?)',
+          [idAlbum, idEditorDesc],
         );
       }
 
