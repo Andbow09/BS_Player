@@ -220,7 +220,14 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                           );
 
                                           context.pushNamed(
-                                              DiscoPruebaWidget.routeName);
+                                            DiscoPruebaWidget.routeName,
+                                            queryParameters: {
+                                              'idAlbum': serializeParam(
+                                                listAlbumsItem.albumId,
+                                                ParamType.int,
+                                              ),
+                                            }.withoutNulls,
+                                          );
                                         },
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
