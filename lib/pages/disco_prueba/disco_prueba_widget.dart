@@ -41,87 +41,91 @@ class _DiscoPruebaWidgetState extends State<DiscoPruebaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          actions: [],
-          centerTitle: false,
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Column(
+    return FutureBuilder<List<ConsultaPruebaDiscoRow>>(
+      future: SQLiteManager.instance.consultaPruebaDisco(
+        idAlbum: widget.idAlbum!,
+      ),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Scaffold(
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    FlutterFlowTheme.of(context).primary,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+        final discoPruebaConsultaPruebaDiscoRowList = snapshot.data!;
+
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: false,
+              actions: [],
+              centerTitle: false,
+              elevation: 2.0,
+            ),
+            body: SafeArea(
+              top: true,
+              child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    valueOrDefault<String>(
-                      widget.idAlbum?.toString(),
-                      '1',
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          color: Color(0xFFFF0A0A),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        valueOrDefault<String>(
+                          widget.idAlbum?.toString(),
+                          '1',
                         ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 0.0, 0.0),
-                child: FutureBuilder<List<ConsultaPruebaDiscoRow>>(
-                  future: SQLiteManager.instance.consultaPruebaDisco(),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                              color: Color(0xFFFF0A0A),
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
                             ),
-                          ),
-                        ),
-                      );
-                    }
-                    final columnConsultaPruebaDiscoRowList = snapshot.data!;
-
-                    return Column(
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 0.0, 0.0),
+                    child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children:
-                          List.generate(columnConsultaPruebaDiscoRowList.length,
-                              (columnIndex) {
-                        final columnConsultaPruebaDiscoRow =
-                            columnConsultaPruebaDiscoRowList[columnIndex];
-                        return Text(
+                      children: [
+                        Text(
                           valueOrDefault<String>(
-                            columnConsultaPruebaDiscoRow.nombre,
-                            'nombre',
+                            discoPruebaConsultaPruebaDiscoRowList
+                                .firstOrNull?.nombre,
+                            'cargando...',
                           ),
                           style: FlutterFlowTheme.of(context)
                               .headlineMedium
@@ -144,16 +148,67 @@ class _DiscoPruebaWidgetState extends State<DiscoPruebaWidget> {
                                     .headlineMedium
                                     .fontStyle,
                               ),
-                        );
-                      }),
-                    );
-                  },
-                ),
+                        ),
+                        Text(
+                          valueOrDefault<String>(
+                            discoPruebaConsultaPruebaDiscoRowList
+                                .firstOrNull?.id
+                                .toString(),
+                            'cargando...',
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                        ),
+                        Text(
+                          valueOrDefault<String>(
+                            discoPruebaConsultaPruebaDiscoRowList
+                                .firstOrNull?.fechaLanzamiento,
+                            'cargando...',
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
