@@ -445,6 +445,12 @@ class FFAppState extends ChangeNotifier {
   set loopMode(int value) {
     _loopMode = value;
   }
+
+  int _idAlbumGlobal = 0;
+  int get idAlbumGlobal => _idAlbumGlobal;
+  set idAlbumGlobal(int value) {
+    _idAlbumGlobal = value;
+  }
 }
 
 Color? _colorFromIntValue(int? val) {

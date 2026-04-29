@@ -200,6 +200,10 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          FFAppState().idAlbumGlobal =
+                                              listAlbumsItem.albumId;
+                                          safeSetState(() {});
+
                                           context.pushNamed(
                                             DiscWidget.routeName,
                                             queryParameters: {

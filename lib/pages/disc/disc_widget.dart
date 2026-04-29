@@ -180,10 +180,19 @@ class _DiscWidgetState extends State<DiscWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.white,
-                            size: 24.0,
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.safePop();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios_rounded,
+                              color: Colors.white,
+                              size: 24.0,
+                            ),
                           ),
                           Icon(
                             Icons.more_vert_sharp,
@@ -195,7 +204,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 65.0, 0.0, 200.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 65.0, 0.0, 0.0),
                       child: ScrollConfiguration(
                         behavior: ScrollConfiguration.of(context).copyWith(
                           scrollbars: false,
@@ -235,7 +244,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 15.0, 20.0, 0.0),
+                                      20.0, 25.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -381,7 +390,10 @@ class _DiscWidgetState extends State<DiscWidget> {
                                               _model.listaReproduccionAlbum =
                                                   await SQLiteManager.instance
                                                       .listSongsAlbum(
-                                                idAlbum: widget.idAlbum!,
+                                                idAlbum: getJsonField(
+                                                  _model.datosAlbum,
+                                                  r'''$.album_id''',
+                                                ),
                                               );
                                               FFAppState().colaIds = _model
                                                   .listaReproduccionAlbum!
@@ -660,14 +672,11 @@ class _DiscWidgetState extends State<DiscWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 10.0, 20.0, 0.0),
+                                      20.0, 10.0, 20.0, 180.0),
                                   child: FutureBuilder<List<ListSongsAlbumRow>>(
                                     future:
                                         SQLiteManager.instance.listSongsAlbum(
-                                      idAlbum: getJsonField(
-                                        _model.resultadoSQL,
-                                        r'''$.album_id''',
-                                      ),
+                                      idAlbum: FFAppState().idAlbumGlobal,
                                     ),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
