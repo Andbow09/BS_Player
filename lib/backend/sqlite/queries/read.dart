@@ -250,16 +250,15 @@ class ListSongsAlbumRow extends SqliteRow {
 
 /// BEGIN CONSULTAPRUEBADISCO
 Future<List<ConsultaPruebaDiscoRow>> performConsultaPruebaDisco(
-  Database database, {
-  String? idAlbum,
-}) {
+  Database database,
+) {
   final query = '''
 SELECT 
   id, 
   nombre, 
   fecha_lanzamiento 
 FROM album 
-WHERE id = idAlbum
+LIMIT 1
 ''';
   return _readQuery(database, query, (d) => ConsultaPruebaDiscoRow(d));
 }

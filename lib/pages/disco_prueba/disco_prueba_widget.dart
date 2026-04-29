@@ -7,12 +7,7 @@ import 'disco_prueba_model.dart';
 export 'disco_prueba_model.dart';
 
 class DiscoPruebaWidget extends StatefulWidget {
-  const DiscoPruebaWidget({
-    super.key,
-    required this.discoId,
-  });
-
-  final int? discoId;
+  const DiscoPruebaWidget({super.key});
 
   static String routeName = 'discoPrueba';
   static String routePath = '/discoPrueba';
@@ -42,9 +37,7 @@ class _DiscoPruebaWidgetState extends State<DiscoPruebaWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<ConsultaPruebaDiscoRow>>(
-      future: SQLiteManager.instance.consultaPruebaDisco(
-        idAlbum: widget.discoId?.toString(),
-      ),
+      future: SQLiteManager.instance.consultaPruebaDisco(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
