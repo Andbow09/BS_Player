@@ -63,12 +63,8 @@ class SQLiteManager {
         idAlbum: idAlbum,
       );
 
-  Future<List<ListSongsAlbumRow>> listSongsAlbum({
-    int? idAlbum,
-  }) =>
-      performListSongsAlbum(
+  Future<List<ListSongsAlbumRow>> listSongsAlbum() => performListSongsAlbum(
         _database,
-        idAlbum: idAlbum,
       );
 
   Future<List<ConsultaPruebaDiscoRow>> consultaPruebaDisco({

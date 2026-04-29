@@ -206,9 +206,8 @@ class GetAlbum2Row extends SqliteRow {
 
 /// BEGIN LISTSONGSALBUM
 Future<List<ListSongsAlbumRow>> performListSongsAlbum(
-  Database database, {
-  int? idAlbum,
-}) {
+  Database database,
+) {
   final query = '''
 SELECT
   c.id,
@@ -223,7 +222,7 @@ FROM cancion c
 LEFT JOIN album al ON c.id_album = al.id
 LEFT JOIN cancion_artista ca ON c.id = ca.id_cancion
 LEFT JOIN artista ar ON ca.id_artista = ar.id
-WHERE id_album = idAlbum
+WHERE id_album = 48
 GROUP BY c.id
 ORDER BY
   numero_track IS NULL,

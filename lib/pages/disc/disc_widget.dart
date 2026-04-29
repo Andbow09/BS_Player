@@ -389,12 +389,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                             onTap: () async {
                                               _model.listaReproduccionAlbum =
                                                   await SQLiteManager.instance
-                                                      .listSongsAlbum(
-                                                idAlbum: getJsonField(
-                                                  _model.datosAlbum,
-                                                  r'''$.album_id''',
-                                                ),
-                                              );
+                                                      .listSongsAlbum();
                                               FFAppState().colaIds = _model
                                                   .listaReproduccionAlbum!
                                                   .map((e) => e.id)
@@ -675,9 +670,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                       20.0, 10.0, 20.0, 180.0),
                                   child: FutureBuilder<List<ListSongsAlbumRow>>(
                                     future:
-                                        SQLiteManager.instance.listSongsAlbum(
-                                      idAlbum: FFAppState().idAlbumGlobal,
-                                    ),
+                                        SQLiteManager.instance.listSongsAlbum(),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
                                       if (!snapshot.hasData) {
