@@ -194,8 +194,8 @@ class _DiscWidgetState extends State<DiscWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          35.0, 65.0, 35.0, 200.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 65.0, 0.0, 200.0),
                       child: ScrollConfiguration(
                         behavior: ScrollConfiguration.of(context).copyWith(
                           scrollbars: false,
@@ -216,22 +216,26 @@ class _DiscWidgetState extends State<DiscWidget> {
                               children: [
                                 Align(
                                   alignment: AlignmentDirectional(-1.0, 0.0),
-                                  child: Container(
-                                    width: 323.0,
-                                    height: 303.0,
-                                    child: custom_widgets.BigSongCover(
-                                      width: 323.0,
-                                      height: 303.0,
-                                      cancionId: getJsonField(
-                                        _model.resultadoSQL,
-                                        r'''$.primera_cancion_id''',
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 0.0, 20.0, 0.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 343.0,
+                                      child: custom_widgets.BigSongCover(
+                                        width: double.infinity,
+                                        height: 343.0,
+                                        cancionId: getJsonField(
+                                          _model.resultadoSQL,
+                                          r'''$.primera_cancion_id''',
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 15.0, 0.0, 0.0),
+                                      20.0, 15.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -357,289 +361,313 @@ class _DiscWidgetState extends State<DiscWidget> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 0.0, 20.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              _model.listaReproduccionAlbum =
+                                                  await SQLiteManager.instance
+                                                      .listSongsAlbum(
+                                                idAlbum: widget.idAlbum!,
+                                              );
+                                              FFAppState().colaIds = _model
+                                                  .listaReproduccionAlbum!
+                                                  .map((e) => e.id)
+                                                  .toList()
+                                                  .cast<int>();
+                                              FFAppState().colaTitulos = _model
+                                                  .listaReproduccionAlbum!
+                                                  .map((e) => e.titulo)
+                                                  .toList()
+                                                  .cast<String>();
+                                              FFAppState().colaArtistas = _model
+                                                  .listaReproduccionAlbum!
+                                                  .map((e) => e.artista)
+                                                  .toList()
+                                                  .cast<String>();
+                                              FFAppState().colaRutas = _model
+                                                  .listaReproduccionAlbum!
+                                                  .map((e) => e.ruta)
+                                                  .toList()
+                                                  .cast<String>();
+                                              FFAppState().colaColores = _model
+                                                  .listaReproduccionAlbum!
+                                                  .map((e) => e.color)
+                                                  .toList()
+                                                  .cast<int>();
+                                              FFAppState().colaAlbums = _model
+                                                  .listaReproduccionAlbum!
+                                                  .map((e) => e.album)
+                                                  .toList()
+                                                  .cast<String>();
+                                              FFAppState().currentIndex = 0;
+                                              FFAppState().isPlaying = true;
+                                              FFAppState().currentId = _model
+                                                  .listaReproduccionAlbum!
+                                                  .elementAtOrNull(0)!
+                                                  .id;
+                                              FFAppState().currentTitle = _model
+                                                  .listaReproduccionAlbum!
+                                                  .elementAtOrNull(0)!
+                                                  .titulo;
+                                              FFAppState().currentArtist =
+                                                  _model.listaReproduccionAlbum!
+                                                      .elementAtOrNull(0)!
+                                                      .artista;
+                                              FFAppState().currentAlbum = _model
+                                                  .listaReproduccionAlbum!
+                                                  .elementAtOrNull(0)!
+                                                  .album;
+                                              FFAppState().loopMode = 1;
+                                              safeSetState(() {});
+                                              await actions.audioController(
+                                                'play',
+                                                _model.listaReproduccionAlbum
+                                                    ?.elementAtOrNull(0)
+                                                    ?.ruta,
+                                              );
+                                              _model.colorElegido =
+                                                  await actions
+                                                      .coverColorPicker(
+                                                FFAppState()
+                                                    .colaIds
+                                                    .elementAtOrNull(
+                                                        FFAppState()
+                                                            .currentIndex)!,
+                                                FFAppState()
+                                                    .colaColores
+                                                    .elementAtOrNull(
+                                                        FFAppState()
+                                                            .currentIndex),
+                                              );
+                                              FFAppState().currentColor =
+                                                  (_model.colorElegido!
+                                                      .elementAtOrNull(0))!;
+                                              FFAppState().currentDarkColor =
+                                                  (_model.colorElegido!
+                                                      .elementAtOrNull(1))!;
+                                              safeSetState(() {});
+                                              if (FFAppState()
+                                                      .colaColores
+                                                      .elementAtOrNull(0) ==
+                                                  0) {
+                                                await SQLiteManager.instance
+                                                    .updateColor(
+                                                  color: functions.colorToInt(
+                                                      (_model.colorElegido!
+                                                          .elementAtOrNull(
+                                                              0))!),
+                                                  id: FFAppState()
+                                                      .colaIds
+                                                      .elementAtOrNull(0)!,
+                                                );
+                                                FFAppState()
+                                                    .updateColaColoresAtIndex(
+                                                  FFAppState().currentIndex,
+                                                  (_) => functions.colorToInt(
+                                                      (_model.colorElegido!
+                                                          .elementAtOrNull(
+                                                              0))!),
+                                                );
+                                                safeSetState(() {});
+                                              }
+
+                                              safeSetState(() {});
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 50.0,
+                                              decoration: BoxDecoration(
+                                                gradient: RadialGradient(
+                                                  colors: [
+                                                    valueOrDefault<Color>(
+                                                      _model.paletaAlbum
+                                                          .elementAtOrNull(0),
+                                                      Color(0xFF6C7F87),
+                                                    ),
+                                                    valueOrDefault<Color>(
+                                                      _model.paletaAlbum
+                                                          .elementAtOrNull(1),
+                                                      Color(0xFF253031),
+                                                    ),
+                                                    Colors.black
+                                                  ],
+                                                  stops: [0.0, 0.3, 1.0],
+                                                  center: Alignment(1.0, 1.0),
+                                                  radius: 25.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(24.0),
+                                                shape: BoxShape.rectangle,
+                                                border: Border.all(
+                                                  color: Color(0x40888888),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  2.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'REPRODUCIR',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Metropolis 2',
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0.0, 0.0),
+                                                      child: Icon(
+                                                        Icons
+                                                            .play_arrow_rounded,
+                                                        color: Colors.white,
+                                                        size: 40.0,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            _model.listaReproduccionAlbum =
-                                                await SQLiteManager.instance
-                                                    .listSongsAlbum(
-                                              idAlbum: widget.idAlbum!,
-                                            );
-                                            FFAppState().colaIds = _model
-                                                .listaReproduccionAlbum!
-                                                .map((e) => e.id)
-                                                .toList()
-                                                .cast<int>();
-                                            FFAppState().colaTitulos = _model
-                                                .listaReproduccionAlbum!
-                                                .map((e) => e.titulo)
-                                                .toList()
-                                                .cast<String>();
-                                            FFAppState().colaArtistas = _model
-                                                .listaReproduccionAlbum!
-                                                .map((e) => e.artista)
-                                                .toList()
-                                                .cast<String>();
-                                            FFAppState().colaRutas = _model
-                                                .listaReproduccionAlbum!
-                                                .map((e) => e.ruta)
-                                                .toList()
-                                                .cast<String>();
-                                            FFAppState().colaColores = _model
-                                                .listaReproduccionAlbum!
-                                                .map((e) => e.color)
-                                                .toList()
-                                                .cast<int>();
-                                            FFAppState().colaAlbums = _model
-                                                .listaReproduccionAlbum!
-                                                .map((e) => e.album)
-                                                .toList()
-                                                .cast<String>();
-                                            FFAppState().currentIndex = 0;
-                                            FFAppState().isPlaying = true;
-                                            FFAppState().currentId = _model
-                                                .listaReproduccionAlbum!
-                                                .elementAtOrNull(0)!
-                                                .id;
-                                            FFAppState().currentTitle = _model
-                                                .listaReproduccionAlbum!
-                                                .elementAtOrNull(0)!
-                                                .titulo;
-                                            FFAppState().currentArtist = _model
-                                                .listaReproduccionAlbum!
-                                                .elementAtOrNull(0)!
-                                                .artista;
-                                            FFAppState().currentAlbum = _model
-                                                .listaReproduccionAlbum!
-                                                .elementAtOrNull(0)!
-                                                .album;
-                                            FFAppState().loopMode = 1;
-                                            safeSetState(() {});
-                                            await actions.audioController(
-                                              'play',
-                                              _model.listaReproduccionAlbum
-                                                  ?.elementAtOrNull(0)
-                                                  ?.ruta,
-                                            );
-                                            _model.colorElegido =
-                                                await actions.coverColorPicker(
-                                              FFAppState()
-                                                  .colaIds
-                                                  .elementAtOrNull(FFAppState()
-                                                      .currentIndex)!,
-                                              FFAppState()
-                                                  .colaColores
-                                                  .elementAtOrNull(FFAppState()
-                                                      .currentIndex),
-                                            );
-                                            FFAppState().currentColor = (_model
-                                                .colorElegido!
-                                                .elementAtOrNull(0))!;
-                                            FFAppState().currentDarkColor =
-                                                (_model.colorElegido!
-                                                    .elementAtOrNull(1))!;
-                                            safeSetState(() {});
-                                            if (FFAppState()
-                                                    .colaColores
-                                                    .elementAtOrNull(0) ==
-                                                0) {
-                                              await SQLiteManager.instance
-                                                  .updateColor(
-                                                color: functions.colorToInt(
-                                                    (_model.colorElegido!
-                                                        .elementAtOrNull(0))!),
-                                                id: FFAppState()
-                                                    .colaIds
-                                                    .elementAtOrNull(0)!,
-                                              );
-                                              FFAppState()
-                                                  .updateColaColoresAtIndex(
-                                                FFAppState().currentIndex,
-                                                (_) => functions.colorToInt(
-                                                    (_model.colorElegido!
-                                                        .elementAtOrNull(0))!),
-                                              );
-                                              safeSetState(() {});
-                                            }
-
-                                            safeSetState(() {});
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(
-                                              gradient: RadialGradient(
-                                                colors: [
-                                                  valueOrDefault<Color>(
-                                                    _model.paletaAlbum
-                                                        .elementAtOrNull(0),
-                                                    Color(0xFF6C7F87),
-                                                  ),
-                                                  valueOrDefault<Color>(
-                                                    _model.paletaAlbum
-                                                        .elementAtOrNull(1),
-                                                    Color(0xFF253031),
-                                                  ),
-                                                  Colors.black
-                                                ],
-                                                stops: [0.0, 0.3, 1.0],
-                                                center: Alignment(1.0, 1.0),
-                                                radius: 25.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
-                                              shape: BoxShape.rectangle,
-                                              border: Border.all(
-                                                color: Color(0x40888888),
-                                              ),
+                                        child: Container(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            gradient: RadialGradient(
+                                              colors: [
+                                                valueOrDefault<Color>(
+                                                  _model.paletaAlbum
+                                                      .elementAtOrNull(0),
+                                                  Color(0xFF6C7F87),
+                                                ),
+                                                valueOrDefault<Color>(
+                                                  _model.paletaAlbum
+                                                      .elementAtOrNull(1),
+                                                  Color(0xFF253031),
+                                                ),
+                                                Colors.black
+                                              ],
+                                              stops: [0.0, 0.3, 1.0],
+                                              center: Alignment(1.0, 1.0),
+                                              radius: 25.0,
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 0.0, 0.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 2.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      'REPRODUCIR',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Metropolis 2',
-                                                            color: Colors.white,
-                                                            fontSize: 16.0,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.0, 0.0),
-                                                    child: Icon(
-                                                      Icons.play_arrow_rounded,
-                                                      color: Colors.white,
-                                                      size: 40.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: Color(0x40888888),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Container(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(
-                                          gradient: RadialGradient(
-                                            colors: [
-                                              valueOrDefault<Color>(
-                                                _model.paletaAlbum
-                                                    .elementAtOrNull(0),
-                                                Color(0xFF6C7F87),
-                                              ),
-                                              valueOrDefault<Color>(
-                                                _model.paletaAlbum
-                                                    .elementAtOrNull(1),
-                                                Color(0xFF253031),
-                                              ),
-                                              Colors.black
-                                            ],
-                                            stops: [0.0, 0.3, 1.0],
-                                            center: Alignment(1.0, 1.0),
-                                            radius: 25.0,
-                                          ),
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Color(0x40888888),
-                                          ),
-                                        ),
-                                        child: Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.random,
-                                            color: Colors.white,
-                                            size: 25.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ].divide(SizedBox(width: 10.0)),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Canciones',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Metropolis 2',
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.random,
                                               color: Colors.white,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
+                                              size: 25.0,
                                             ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Duración: ${functions.formatearDuracion(getJsonField(
-                                          _model.datosAlbum,
-                                          r'''$.duracion_total''',
-                                        ))}',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Metropolis 2',
-                                              color: Colors.white,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
+                                    ].divide(SizedBox(width: 10.0)),
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
+                                      20.0, 0.0, 20.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 20.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Canciones',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Metropolis 2',
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 20.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Duración: ${functions.formatearDuracion(getJsonField(
+                                            _model.datosAlbum,
+                                            r'''$.duracion_total''',
+                                          ))}',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Metropolis 2',
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 10.0, 20.0, 0.0),
                                   child: FutureBuilder<List<ListSongsAlbumRow>>(
                                     future:
                                         SQLiteManager.instance.listSongsAlbum(
-                                      idAlbum: widget.idAlbum!,
+                                      idAlbum: getJsonField(
+                                        _model.resultadoSQL,
+                                        r'''$.album_id''',
+                                      ),
                                     ),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
@@ -681,26 +709,32 @@ class _DiscWidgetState extends State<DiscWidget> {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  Text(
-                                                    valueOrDefault<String>(
-                                                      listViewListSongsAlbumRow
-                                                                  .numeroTrack !=
-                                                              null
-                                                          ? listViewListSongsAlbumRow
-                                                              .numeroTrack
-                                                              ?.toString()
-                                                          : '-',
-                                                      '-',
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(5.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Text(
+                                                      valueOrDefault<String>(
+                                                        listViewListSongsAlbumRow
+                                                                    .numeroTrack !=
+                                                                null
+                                                            ? listViewListSongsAlbumRow
+                                                                .numeroTrack
+                                                                ?.toString()
+                                                            : '-',
+                                                        '-',
+                                                      ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Metropolis 2',
+                                                            color: Colors.white,
+                                                            letterSpacing: 0.0,
+                                                          ),
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Metropolis 2',
-                                                          color: Colors.white,
-                                                          letterSpacing: 0.0,
-                                                        ),
                                                   ),
                                                   Expanded(
                                                     child: Row(
