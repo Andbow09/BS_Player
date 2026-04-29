@@ -72,8 +72,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: DiscWidget.routeName,
           path: DiscWidget.routePath,
           builder: (context, params) => DiscWidget(
-            albumId: params.getParam(
-              'albumId',
+            idAlbum: params.getParam(
+              'idAlbum',
               ParamType.int,
             ),
           ),
