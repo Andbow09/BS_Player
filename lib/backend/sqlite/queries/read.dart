@@ -210,15 +210,15 @@ Future<List<ListSongsAlbumRow>> performListSongsAlbum(
   int? idAlbum,
 }) {
   final query = '''
-SELECT 
-    c.id, 
-    c.nombre AS titulo, 
-    c.duracion, 
-    c.ruta_archivo AS ruta, 
-    c.color,
-    c.numero_track,
-    al.nombre AS album,
-    GROUP_CONCAT(ar.nombre, ', ') AS artista
+SELECT
+  c.id,
+  c.nombre AS titulo,
+  IFNULL(c.duracion, 0) AS duracion,
+  c.ruta_archivo AS ruta,
+  IFNULL(c.color, 0) AS color,
+  IFNULL(c.numero_track, 0) AS numero_track,
+  IFNULL(al.nombre, 'Desconocido') AS album,
+  IFNULL(GROUP_CONCAT(ar.nombre, ', '), 'Desconocido') AS artista
 FROM cancion c
 LEFT JOIN album al ON c.id_album = al.id
 LEFT JOIN cancion_artista ca ON c.id = ca.id_cancion
