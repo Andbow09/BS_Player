@@ -20,12 +20,24 @@ class DiscModel extends FlutterFlowModel<DiscWidget> {
 
   bool cargando = true;
 
+  List<dynamic> listaCanciones = [];
+  void addToListaCanciones(dynamic item) => listaCanciones.add(item);
+  void removeFromListaCanciones(dynamic item) => listaCanciones.remove(item);
+  void removeAtIndexFromListaCanciones(int index) =>
+      listaCanciones.removeAt(index);
+  void insertAtIndexInListaCanciones(int index, dynamic item) =>
+      listaCanciones.insert(index, item);
+  void updateListaCancionesAtIndex(int index, Function(dynamic) updateFn) =>
+      listaCanciones[index] = updateFn(listaCanciones[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Custom Action - getDatosAlbum] action in Disc widget.
   dynamic resultadoSQL;
   // Stores action output result for [Custom Action - coverColorPicker] action in Disc widget.
   List<Color>? coloresGenerados;
+  // Stores action output result for [Custom Action - getCancionesAlbum] action in Disc widget.
+  List<dynamic>? listaCancionesAlbum;
   // State field(s) for Column widget.
   ScrollController? columnController;
   // Stores action output result for [Backend Call - SQLite (listSongsAlbum)] action in Container widget.

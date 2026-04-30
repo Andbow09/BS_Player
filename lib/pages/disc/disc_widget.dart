@@ -58,9 +58,17 @@ class _DiscWidgetState extends State<DiscWidget> {
           milliseconds: 50,
         ),
       );
+      _model.listaCancionesAlbum = await actions.getCancionesAlbum(
+        getJsonField(
+          _model.resultadoSQL,
+          r'''$.album_id''',
+        ),
+      );
       _model.datosAlbum = _model.resultadoSQL;
-      _model.cargando = false;
       _model.paletaAlbum = _model.coloresGenerados!.toList().cast<Color>();
+      _model.listaCanciones =
+          _model.listaCancionesAlbum!.toList().cast<dynamic>();
+      _model.cargando = false;
       safeSetState(() {});
     });
   }
@@ -668,39 +676,20 @@ class _DiscWidgetState extends State<DiscWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       20.0, 10.0, 20.0, 180.0),
-                                  child: FutureBuilder<List<ListSongsAlbumRow>>(
-                                    future:
-                                        SQLiteManager.instance.listSongsAlbum(),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      final listViewListSongsAlbumRowList =
-                                          snapshot.data!;
+                                  child: Builder(
+                                    builder: (context) {
+                                      final cancionAlbum =
+                                          _model.listaCanciones.toList();
 
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
-                                        itemCount: listViewListSongsAlbumRowList
-                                            .length,
-                                        itemBuilder: (context, listViewIndex) {
-                                          final listViewListSongsAlbumRow =
-                                              listViewListSongsAlbumRowList[
-                                                  listViewIndex];
+                                        itemCount: cancionAlbum.length,
+                                        itemBuilder:
+                                            (context, cancionAlbumIndex) {
+                                          final cancionAlbumItem =
+                                              cancionAlbum[cancionAlbumIndex];
                                           return Container(
                                             width: double.infinity,
                                             decoration: BoxDecoration(),
@@ -718,12 +707,15 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                 0.0, 0.0),
                                                     child: Text(
                                                       valueOrDefault<String>(
-                                                        listViewListSongsAlbumRow
-                                                                    .numeroTrack !=
+                                                        getJsonField(
+                                                                  cancionAlbumItem,
+                                                                  r'''$.numero_track''',
+                                                                ) !=
                                                                 null
-                                                            ? listViewListSongsAlbumRow
-                                                                .numeroTrack
-                                                                ?.toString()
+                                                            ? getJsonField(
+                                                                cancionAlbumItem,
+                                                                r'''$.numero_track''',
+                                                              ).toString()
                                                             : '-',
                                                         '-',
                                                       ),
@@ -759,8 +751,10 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              listViewListSongsAlbumRow
-                                                                  .titulo,
+                                                              getJsonField(
+                                                                cancionAlbumItem,
+                                                                r'''$.titulo''',
+                                                              ).toString(),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -787,9 +781,16 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                       0.0,
                                                                       0.0),
                                                           child: Text(
-                                                            functions.formatearDuracion(
-                                                                listViewListSongsAlbumRow
-                                                                    .duracion),
+                                                            valueOrDefault<
+                                                                String>(
+                                                              functions
+                                                                  .formatearDuracion(
+                                                                      getJsonField(
+                                                                cancionAlbumItem,
+                                                                r'''$.duracion''',
+                                                              )),
+                                                              'tiempo',
+                                                            ),
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
