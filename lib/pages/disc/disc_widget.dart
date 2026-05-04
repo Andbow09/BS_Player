@@ -395,9 +395,6 @@ class _DiscWidgetState extends State<DiscWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              _model.listaReproduccionAlbum =
-                                                  await SQLiteManager.instance
-                                                      .listSongsAlbum();
                                               FFAppState().colaIds = (_model
                                                       .listaCanciones
                                                       .map((e) => getJsonField(
@@ -669,7 +666,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 0.0, 20.0, 0.0),
+                                      20.0, 15.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -715,17 +712,19 @@ class _DiscWidgetState extends State<DiscWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 10.0, 20.0, 180.0),
+                                      20.0, 15.0, 20.0, 180.0),
                                   child: Builder(
                                     builder: (context) {
                                       final cancionAlbum =
                                           _model.listaCanciones.toList();
 
-                                      return ListView.builder(
+                                      return ListView.separated(
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         itemCount: cancionAlbum.length,
+                                        separatorBuilder: (_, __) =>
+                                            SizedBox(height: 20.0),
                                         itemBuilder:
                                             (context, cancionAlbumIndex) {
                                           final cancionAlbumItem =
@@ -733,68 +732,48 @@ class _DiscWidgetState extends State<DiscWidget> {
                                           return Container(
                                             width: double.infinity,
                                             decoration: BoxDecoration(),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 15.0, 0.0, 10.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      valueOrDefault<String>(
-                                                        getJsonField(
-                                                                  cancionAlbumItem,
-                                                                  r'''$.numero_track''',
-                                                                ) !=
-                                                                null
-                                                            ? getJsonField(
-                                                                cancionAlbumItem,
-                                                                r'''$.numero_track''',
-                                                              ).toString()
-                                                            : '-',
-                                                        '-',
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Metropolis 2',
-                                                            color: Colors.white,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Stack(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              -1.0, 0.0),
                                                       children: [
-                                                        Expanded(
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1.0, 0.0),
                                                           child: Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        20.0,
+                                                                        5.0,
                                                                         0.0,
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              getJsonField(
-                                                                cancionAlbumItem,
-                                                                r'''$.titulo''',
-                                                              ).toString(),
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                getJsonField(
+                                                                          cancionAlbumItem,
+                                                                          r'''$.numero_track''',
+                                                                        ) !=
+                                                                        null
+                                                                    ? getJsonField(
+                                                                        cancionAlbumItem,
+                                                                        r'''$.numero_track''',
+                                                                      ).toString()
+                                                                    : '-',
+                                                                '-',
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign.end,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -806,9 +785,6 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                     letterSpacing:
                                                                         0.0,
                                                                   ),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
                                                             ),
                                                           ),
                                                         ),
@@ -820,35 +796,87 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                       0.0,
                                                                       0.0,
                                                                       0.0),
-                                                          child: Text(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              functions
-                                                                  .formatearDuracion(
-                                                                      getJsonField(
-                                                                cancionAlbumItem,
-                                                                r'''$.duracion''',
-                                                              )),
-                                                              'tiempo',
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Metropolis 2',
-                                                                  color: Colors
-                                                                      .white,
-                                                                  letterSpacing:
-                                                                      0.0,
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          20.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    getJsonField(
+                                                                      cancionAlbumItem,
+                                                                      r'''$.titulo''',
+                                                                    ).toString(),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Metropolis 2',
+                                                                          color:
+                                                                              Colors.white,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                  ),
                                                                 ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            20.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    functions
+                                                                        .formatearDuracion(
+                                                                            getJsonField(
+                                                                      cancionAlbumItem,
+                                                                      r'''$.duracion''',
+                                                                    )),
+                                                                    'tiempo',
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Metropolis 2',
+                                                                        color: Colors
+                                                                            .white,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           );
                                         },

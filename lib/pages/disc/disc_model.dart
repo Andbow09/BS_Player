@@ -1,4 +1,3 @@
-import '/backend/sqlite/sqlite_manager.dart';
 import '/components/bottom_menu/bottom_menu_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'disc_widget.dart' show DiscWidget;
@@ -40,8 +39,6 @@ class DiscModel extends FlutterFlowModel<DiscWidget> {
   List<dynamic>? listaCancionesAlbum;
   // State field(s) for Column widget.
   ScrollController? columnController;
-  // Stores action output result for [Backend Call - SQLite (listSongsAlbum)] action in Container widget.
-  List<ListSongsAlbumRow>? listaReproduccionAlbum;
   // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
   List<Color>? colorElegido;
   // Model for bottomMenu component.
