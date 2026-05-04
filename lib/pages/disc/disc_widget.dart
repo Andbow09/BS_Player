@@ -398,61 +398,101 @@ class _DiscWidgetState extends State<DiscWidget> {
                                               _model.listaReproduccionAlbum =
                                                   await SQLiteManager.instance
                                                       .listSongsAlbum();
-                                              FFAppState().colaIds = _model
-                                                  .listaReproduccionAlbum!
-                                                  .map((e) => e.id)
+                                              FFAppState().colaIds = (_model
+                                                      .listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.id''',
+                                                          ))
+                                                      .toList())
+                                                  .cast<int>()
                                                   .toList()
                                                   .cast<int>();
-                                              FFAppState().colaTitulos = _model
-                                                  .listaReproduccionAlbum!
-                                                  .map((e) => e.titulo)
-                                                  .toList()
-                                                  .cast<String>();
-                                              FFAppState().colaArtistas = _model
-                                                  .listaReproduccionAlbum!
-                                                  .map((e) => e.artista)
-                                                  .toList()
-                                                  .cast<String>();
-                                              FFAppState().colaRutas = _model
-                                                  .listaReproduccionAlbum!
-                                                  .map((e) => e.ruta)
-                                                  .toList()
-                                                  .cast<String>();
-                                              FFAppState().colaColores = _model
-                                                  .listaReproduccionAlbum!
-                                                  .map((e) => e.color)
+                                              FFAppState().colaTitulos =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.titulo''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().colaArtistas =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.artista''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().colaRutas =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.ruta''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().colaColores = (_model
+                                                      .listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.color''',
+                                                          ))
+                                                      .toList())
+                                                  .cast<int>()
                                                   .toList()
                                                   .cast<int>();
-                                              FFAppState().colaAlbums = _model
-                                                  .listaReproduccionAlbum!
-                                                  .map((e) => e.album)
-                                                  .toList()
-                                                  .cast<String>();
+                                              FFAppState().colaAlbums =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.album''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
                                               FFAppState().currentIndex = 0;
                                               FFAppState().isPlaying = true;
-                                              FFAppState().currentId = _model
-                                                  .listaReproduccionAlbum!
-                                                  .elementAtOrNull(0)!
-                                                  .id;
-                                              FFAppState().currentTitle = _model
-                                                  .listaReproduccionAlbum!
-                                                  .elementAtOrNull(0)!
-                                                  .titulo;
+                                              FFAppState().currentId =
+                                                  getJsonField(
+                                                _model.listaCanciones
+                                                    .elementAtOrNull(0),
+                                                r'''$.id''',
+                                              );
+                                              FFAppState().currentTitle =
+                                                  getJsonField(
+                                                _model.listaCanciones
+                                                    .elementAtOrNull(0),
+                                                r'''$.titulo''',
+                                              ).toString();
                                               FFAppState().currentArtist =
-                                                  _model.listaReproduccionAlbum!
-                                                      .elementAtOrNull(0)!
-                                                      .artista;
-                                              FFAppState().currentAlbum = _model
-                                                  .listaReproduccionAlbum!
-                                                  .elementAtOrNull(0)!
-                                                  .album;
+                                                  getJsonField(
+                                                _model.listaCanciones
+                                                    .elementAtOrNull(0),
+                                                r'''$.artista''',
+                                              ).toString();
+                                              FFAppState().currentAlbum =
+                                                  getJsonField(
+                                                _model.listaCanciones
+                                                    .elementAtOrNull(0),
+                                                r'''$.album''',
+                                              ).toString();
                                               FFAppState().loopMode = 1;
                                               safeSetState(() {});
                                               await actions.audioController(
                                                 'play',
-                                                _model.listaReproduccionAlbum
-                                                    ?.elementAtOrNull(0)
-                                                    ?.ruta,
+                                                getJsonField(
+                                                  _model.listaCanciones
+                                                      .elementAtOrNull(0),
+                                                  r'''$.ruta''',
+                                                ).toString(),
                                               );
                                               _model.colorElegido =
                                                   await actions
@@ -696,7 +736,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      0.0, 10.0, 0.0, 5.0),
+                                                      0.0, 15.0, 0.0, 10.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
