@@ -53,7 +53,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
       width: double.infinity,
       height:
           FFAppState().currentTitle != ''
-              ? 160.0
+              ? 175.0
               : 70.0,
       decoration: BoxDecoration(
         gradient: RadialGradient(

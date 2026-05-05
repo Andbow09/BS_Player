@@ -29,6 +29,8 @@ class DiscModel extends FlutterFlowModel<DiscWidget> {
   void updateListaCancionesAtIndex(int index, Function(dynamic) updateFn) =>
       listaCanciones[index] = updateFn(listaCanciones[index]);
 
+  double offsetY = 0.0;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Custom Action - getDatosAlbum] action in Disc widget.
@@ -37,22 +39,28 @@ class DiscModel extends FlutterFlowModel<DiscWidget> {
   List<Color>? coloresGenerados;
   // Stores action output result for [Custom Action - getCancionesAlbum] action in Disc widget.
   List<dynamic>? listaCancionesAlbum;
-  // State field(s) for Column widget.
-  ScrollController? columnController;
+  // State field(s) for infoAlbum widget.
+  ScrollController? infoAlbumScrollController;
   // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
   List<Color>? colorElegido;
+  // Stores action output result for [Custom Action - getRandomCancionesAlbum] action in Container widget.
+  List<dynamic>? cancionesRandom;
+  // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
+  List<Color>? colorElegidoRandom;
+  // Stores action output result for [Custom Action - coverColorPicker] action in Container widget.
+  List<Color>? colorElegidoEspecifico;
   // Model for bottomMenu component.
   late BottomMenuModel bottomMenuModel;
 
   @override
   void initState(BuildContext context) {
-    columnController = ScrollController();
+    infoAlbumScrollController = ScrollController();
     bottomMenuModel = createModel(context, () => BottomMenuModel());
   }
 
   @override
   void dispose() {
-    columnController?.dispose();
+    infoAlbumScrollController?.dispose();
     bottomMenuModel.dispose();
   }
 }

@@ -87,9 +87,9 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
             ),
             Colors.black
           ],
-          stops: [0.0, 0.25, 1.0],
-          center: Alignment(0.0, -0.5),
-          radius: 2.5,
+          stops: [0.0, 0.5, 1.0],
+          center: Alignment(0.0, -1.0),
+          radius: 3.0,
         ),
       ),
       child: Stack(

@@ -99,86 +99,90 @@ class _DiscWidgetState extends State<DiscWidget> {
               if (_model.cargando == false) {
                 return Stack(
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 65.0,
-                      decoration: BoxDecoration(
-                        gradient: RadialGradient(
-                          colors: [
-                            valueOrDefault<Color>(
-                              _model.paletaAlbum.elementAtOrNull(0),
-                              Color(0xFF6C7F87),
-                            ),
-                            valueOrDefault<Color>(
-                              _model.paletaAlbum.elementAtOrNull(1),
-                              Color(0xFF253031),
-                            ),
-                            Colors.black
-                          ],
-                          stops: [0.0, 0.3, 1.0],
-                          center: Alignment(0.0, -1.0),
-                          radius: 15.0,
+                    Opacity(
+                      opacity:
+                          functions.calcularOpacidad(_model.offsetY, 250.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 65.0,
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              valueOrDefault<Color>(
+                                _model.paletaAlbum.elementAtOrNull(0),
+                                Color(0xFF6C7F87),
+                              ),
+                              valueOrDefault<Color>(
+                                _model.paletaAlbum.elementAtOrNull(1),
+                                Color(0xFF253031),
+                              ),
+                              Colors.black
+                            ],
+                            stops: [0.0, 0.3, 1.0],
+                            center: Alignment(0.0, -1.0),
+                            radius: 15.0,
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                45.0, 0.0, 0.0, 0.0),
-                            child: Container(
-                              width: 50.0,
-                              height: 50.0,
-                              child: custom_widgets.MiniSongCover(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  45.0, 0.0, 0.0, 0.0),
+                              child: Container(
                                 width: 50.0,
                                 height: 50.0,
-                                cancionId: getJsonField(
-                                  _model.resultadoSQL,
-                                  r'''$.primera_cancion_id''',
+                                child: custom_widgets.MiniSongCover(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  cancionId: getJsonField(
+                                    _model.resultadoSQL,
+                                    r'''$.primera_cancion_id''',
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 0.0, 0.0, 0.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  getJsonField(
-                                    _model.datosAlbum,
-                                    r'''$.titulo_album''',
-                                  ).toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Metropolis 2',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                Text(
-                                  getJsonField(
-                                    _model.datosAlbum,
-                                    r'''$.nombre_artista''',
-                                  ).toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Metropolis 2',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ],
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    getJsonField(
+                                      _model.datosAlbum,
+                                      r'''$.titulo_album''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Metropolis 2',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                  Text(
+                                    getJsonField(
+                                      _model.datosAlbum,
+                                      r'''$.nombre_artista''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Metropolis 2',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -210,9 +214,12 @@ class _DiscWidgetState extends State<DiscWidget> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 65.0, 0.0, 0.0),
+                    GestureDetector(
+                      onVerticalDragUpdate: (details) async {
+                        _model.offsetY = functions.calcularOffSet(
+                            _model.offsetY, details.delta.dy);
+                        safeSetState(() {});
+                      },
                       child: ScrollConfiguration(
                         behavior: ScrollConfiguration.of(context).copyWith(
                           scrollbars: false,
@@ -224,9 +231,9 @@ class _DiscWidgetState extends State<DiscWidget> {
                           },
                         ),
                         child: Scrollbar(
-                          controller: _model.columnController,
+                          controller: _model.infoAlbumScrollController,
                           child: SingleChildScrollView(
-                            controller: _model.columnController,
+                            controller: _model.infoAlbumScrollController,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,7 +242,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                   alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 0.0, 20.0, 0.0),
+                                        20.0, 90.0, 20.0, 0.0),
                                     child: Container(
                                       width: double.infinity,
                                       height: 343.0,
@@ -623,40 +630,194 @@ class _DiscWidgetState extends State<DiscWidget> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
-                                        child: Container(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(
-                                            gradient: RadialGradient(
-                                              colors: [
-                                                valueOrDefault<Color>(
-                                                  _model.paletaAlbum
-                                                      .elementAtOrNull(0),
-                                                  Color(0xFF6C7F87),
-                                                ),
-                                                valueOrDefault<Color>(
-                                                  _model.paletaAlbum
-                                                      .elementAtOrNull(1),
-                                                  Color(0xFF253031),
-                                                ),
-                                                Colors.black
-                                              ],
-                                              stops: [0.0, 0.3, 1.0],
-                                              center: Alignment(1.0, 1.0),
-                                              radius: 25.0,
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            _model.cancionesRandom =
+                                                await actions
+                                                    .getRandomCancionesAlbum(
+                                              getJsonField(
+                                                _model.resultadoSQL,
+                                                r'''$.album_id''',
+                                              ),
+                                            );
+                                            FFAppState().colaIds = (_model
+                                                    .cancionesRandom!
+                                                    .map((e) => getJsonField(
+                                                          e,
+                                                          r'''$.id''',
+                                                        ))
+                                                    .toList())
+                                                .cast<int>()
+                                                .toList()
+                                                .cast<int>();
+                                            FFAppState().colaTitulos =
+                                                _model.cancionesRandom!
+                                                    .map((e) => getJsonField(
+                                                          e,
+                                                          r'''$.titulo''',
+                                                        ))
+                                                    .toList()
+                                                    .map((e) => e.toString())
+                                                    .toList()
+                                                    .cast<String>();
+                                            FFAppState().colaArtistas =
+                                                _model.cancionesRandom!
+                                                    .map((e) => getJsonField(
+                                                          e,
+                                                          r'''$.artista''',
+                                                        ))
+                                                    .toList()
+                                                    .map((e) => e.toString())
+                                                    .toList()
+                                                    .cast<String>();
+                                            FFAppState().colaRutas =
+                                                _model.cancionesRandom!
+                                                    .map((e) => getJsonField(
+                                                          e,
+                                                          r'''$.ruta''',
+                                                        ))
+                                                    .toList()
+                                                    .map((e) => e.toString())
+                                                    .toList()
+                                                    .cast<String>();
+                                            FFAppState().colaColores = (_model
+                                                    .cancionesRandom!
+                                                    .map((e) => getJsonField(
+                                                          e,
+                                                          r'''$.color''',
+                                                        ))
+                                                    .toList())
+                                                .cast<int>()
+                                                .toList()
+                                                .cast<int>();
+                                            FFAppState().colaAlbums =
+                                                _model.cancionesRandom!
+                                                    .map((e) => getJsonField(
+                                                          e,
+                                                          r'''$.album''',
+                                                        ))
+                                                    .toList()
+                                                    .map((e) => e.toString())
+                                                    .toList()
+                                                    .cast<String>();
+                                            FFAppState().currentIndex = 0;
+                                            FFAppState().isPlaying = true;
+                                            FFAppState().currentId =
+                                                getJsonField(
+                                              _model.cancionesRandom!
+                                                  .elementAtOrNull(0),
+                                              r'''$.id''',
+                                            );
+                                            FFAppState().currentTitle =
+                                                getJsonField(
+                                              _model.cancionesRandom!
+                                                  .elementAtOrNull(0),
+                                              r'''$.titulo''',
+                                            ).toString();
+                                            FFAppState().currentArtist =
+                                                getJsonField(
+                                              _model.cancionesRandom!
+                                                  .elementAtOrNull(0),
+                                              r'''$.artista''',
+                                            ).toString();
+                                            FFAppState().currentAlbum =
+                                                getJsonField(
+                                              _model.cancionesRandom!
+                                                  .elementAtOrNull(0),
+                                              r'''$.album''',
+                                            ).toString();
+                                            FFAppState().loopMode = 1;
+                                            safeSetState(() {});
+                                            await actions.audioController(
+                                              'play',
+                                              getJsonField(
+                                                _model.cancionesRandom
+                                                    ?.elementAtOrNull(0),
+                                                r'''$.ruta''',
+                                              ).toString(),
+                                            );
+                                            _model.colorElegidoRandom =
+                                                await actions.coverColorPicker(
+                                              FFAppState()
+                                                  .colaIds
+                                                  .elementAtOrNull(FFAppState()
+                                                      .currentIndex)!,
+                                              FFAppState()
+                                                  .colaColores
+                                                  .elementAtOrNull(FFAppState()
+                                                      .currentIndex),
+                                            );
+                                            FFAppState().currentColor = (_model
+                                                .colorElegidoRandom!
+                                                .elementAtOrNull(0))!;
+                                            FFAppState().currentDarkColor =
+                                                (_model.colorElegidoRandom!
+                                                    .elementAtOrNull(1))!;
+                                            safeSetState(() {});
+                                            if (FFAppState()
+                                                    .colaColores
+                                                    .elementAtOrNull(0) ==
+                                                0) {
+                                              await SQLiteManager.instance
+                                                  .updateColor(
+                                                color: functions.colorToInt(
+                                                    (_model.colorElegidoRandom!
+                                                        .elementAtOrNull(0))!),
+                                                id: FFAppState()
+                                                    .colaIds
+                                                    .elementAtOrNull(0)!,
+                                              );
+                                              FFAppState()
+                                                  .updateColaColoresAtIndex(
+                                                FFAppState().currentIndex,
+                                                (_) => functions.colorToInt(
+                                                    (_model.colorElegidoRandom!
+                                                        .elementAtOrNull(0))!),
+                                              );
+                                              safeSetState(() {});
+                                            }
+
+                                            safeSetState(() {});
+                                          },
+                                          child: Container(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(
+                                              gradient: RadialGradient(
+                                                colors: [
+                                                  valueOrDefault<Color>(
+                                                    _model.paletaAlbum
+                                                        .elementAtOrNull(0),
+                                                    Color(0xFF6C7F87),
+                                                  ),
+                                                  valueOrDefault<Color>(
+                                                    _model.paletaAlbum
+                                                        .elementAtOrNull(1),
+                                                    Color(0xFF253031),
+                                                  ),
+                                                  Colors.black
+                                                ],
+                                                stops: [0.0, 0.3, 1.0],
+                                                center: Alignment(1.0, 1.0),
+                                                radius: 25.0,
+                                              ),
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: Color(0x40888888),
+                                              ),
                                             ),
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color: Color(0x40888888),
-                                            ),
-                                          ),
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
-                                            child: FaIcon(
-                                              FontAwesomeIcons.random,
-                                              color: Colors.white,
-                                              size: 25.0,
+                                            child: Align(
+                                              alignment: AlignmentDirectional(
+                                                  0.0, 0.0),
+                                              child: FaIcon(
+                                                FontAwesomeIcons.random,
+                                                color: Colors.white,
+                                                size: 25.0,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -720,95 +881,285 @@ class _DiscWidgetState extends State<DiscWidget> {
 
                                       return ListView.separated(
                                         padding: EdgeInsets.zero,
+                                        primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         itemCount: cancionAlbum.length,
                                         separatorBuilder: (_, __) =>
-                                            SizedBox(height: 20.0),
+                                            SizedBox(height: 5.0),
                                         itemBuilder:
                                             (context, cancionAlbumIndex) {
                                           final cancionAlbumItem =
                                               cancionAlbum[cancionAlbumIndex];
-                                          return Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Stack(
+                                          return InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              FFAppState().colaIds = (_model
+                                                      .listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.id''',
+                                                          ))
+                                                      .toList())
+                                                  .cast<int>()
+                                                  .toList()
+                                                  .cast<int>();
+                                              FFAppState().colaTitulos =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.titulo''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().colaArtistas =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.artista''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().colaRutas =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.ruta''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().colaColores = (_model
+                                                      .listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.color''',
+                                                          ))
+                                                      .toList())
+                                                  .cast<int>()
+                                                  .toList()
+                                                  .cast<int>();
+                                              FFAppState().colaAlbums =
+                                                  _model.listaCanciones
+                                                      .map((e) => getJsonField(
+                                                            e,
+                                                            r'''$.album''',
+                                                          ))
+                                                      .toList()
+                                                      .map((e) => e.toString())
+                                                      .toList()
+                                                      .cast<String>();
+                                              FFAppState().currentIndex = 0;
+                                              FFAppState().isPlaying = true;
+                                              FFAppState().currentId =
+                                                  getJsonField(
+                                                cancionAlbumItem,
+                                                r'''$.id''',
+                                              );
+                                              FFAppState().currentTitle =
+                                                  getJsonField(
+                                                cancionAlbumItem,
+                                                r'''$.titulo''',
+                                              ).toString();
+                                              FFAppState().currentArtist =
+                                                  getJsonField(
+                                                cancionAlbumItem,
+                                                r'''$.artista''',
+                                              ).toString();
+                                              FFAppState().currentAlbum =
+                                                  getJsonField(
+                                                cancionAlbumItem,
+                                                r'''$.album''',
+                                              ).toString();
+                                              FFAppState().loopMode = 1;
+                                              safeSetState(() {});
+                                              await actions.audioController(
+                                                'play',
+                                                getJsonField(
+                                                  cancionAlbumItem,
+                                                  r'''$.ruta''',
+                                                ).toString(),
+                                              );
+                                              _model.colorElegidoEspecifico =
+                                                  await actions
+                                                      .coverColorPicker(
+                                                FFAppState()
+                                                    .colaIds
+                                                    .elementAtOrNull(
+                                                        FFAppState()
+                                                            .currentIndex)!,
+                                                FFAppState()
+                                                    .colaColores
+                                                    .elementAtOrNull(
+                                                        FFAppState()
+                                                            .currentIndex),
+                                              );
+                                              FFAppState().currentColor =
+                                                  (_model
+                                                      .colorElegidoEspecifico!
+                                                      .elementAtOrNull(0))!;
+                                              FFAppState().currentDarkColor =
+                                                  (_model
+                                                      .colorElegidoEspecifico!
+                                                      .elementAtOrNull(1))!;
+                                              safeSetState(() {});
+                                              if (FFAppState()
+                                                      .colaColores
+                                                      .elementAtOrNull(0) ==
+                                                  0) {
+                                                await SQLiteManager.instance
+                                                    .updateColor(
+                                                  color: functions.colorToInt(
+                                                      (_model
+                                                          .colorElegidoEspecifico!
+                                                          .elementAtOrNull(
+                                                              0))!),
+                                                  id: FFAppState()
+                                                      .colaIds
+                                                      .elementAtOrNull(0)!,
+                                                );
+                                                FFAppState()
+                                                    .updateColaColoresAtIndex(
+                                                  FFAppState().currentIndex,
+                                                  (_) => functions.colorToInt(
+                                                      (_model
+                                                          .colorElegidoEspecifico!
+                                                          .elementAtOrNull(
+                                                              0))!),
+                                                );
+                                                safeSetState(() {});
+                                              }
+
+                                              safeSetState(() {});
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: Align(
                                                       alignment:
                                                           AlignmentDirectional(
                                                               -1.0, 0.0),
-                                                      children: [
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  -1.0, 0.0),
-                                                          child: Padding(
+                                                      child: Stack(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                -1.0, 0.0),
+                                                        children: [
+                                                          Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    -1.0, 0.0),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                valueOrDefault<
+                                                                    String>(
+                                                                  getJsonField(
+                                                                            cancionAlbumItem,
+                                                                            r'''$.numero_track''',
+                                                                          ) !=
+                                                                          null
+                                                                      ? getJsonField(
+                                                                          cancionAlbumItem,
+                                                                          r'''$.numero_track''',
+                                                                        ).toString()
+                                                                      : '-',
+                                                                  '-',
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .end,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Metropolis 2',
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        5.0,
+                                                                        30.0,
                                                                         0.0,
                                                                         0.0,
                                                                         0.0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                getJsonField(
-                                                                          cancionAlbumItem,
-                                                                          r'''$.numero_track''',
-                                                                        ) !=
-                                                                        null
-                                                                    ? getJsonField(
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Expanded(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            20.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child: Text(
+                                                                      getJsonField(
                                                                         cancionAlbumItem,
-                                                                        r'''$.numero_track''',
-                                                                      ).toString()
-                                                                    : '-',
-                                                                '-',
-                                                              ),
-                                                              textAlign:
-                                                                  TextAlign.end,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Metropolis 2',
-                                                                    color: Colors
-                                                                        .white,
-                                                                    letterSpacing:
-                                                                        0.0,
+                                                                        r'''$.titulo''',
+                                                                      ).toString(),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Metropolis 2',
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize:
+                                                                                16.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                    ),
                                                                   ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      20.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Padding(
+                                                                ),
+                                                                Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           20.0,
@@ -816,10 +1167,16 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                           0.0,
                                                                           0.0),
                                                                   child: Text(
-                                                                    getJsonField(
-                                                                      cancionAlbumItem,
-                                                                      r'''$.titulo''',
-                                                                    ).toString(),
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      functions
+                                                                          .formatearDuracion(
+                                                                              getJsonField(
+                                                                        cancionAlbumItem,
+                                                                        r'''$.duracion''',
+                                                                      )),
+                                                                      'tiempo',
+                                                                    ),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -828,55 +1185,22 @@ class _DiscWidgetState extends State<DiscWidget> {
                                                                               'Metropolis 2',
                                                                           color:
                                                                               Colors.white,
+                                                                          fontSize:
+                                                                              16.0,
                                                                           letterSpacing:
                                                                               0.0,
                                                                         ),
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            20.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child: Text(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    functions
-                                                                        .formatearDuracion(
-                                                                            getJsonField(
-                                                                      cancionAlbumItem,
-                                                                      r'''$.duracion''',
-                                                                    )),
-                                                                    'tiempo',
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Metropolis 2',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           );
                                         },

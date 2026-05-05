@@ -60,3 +60,43 @@ String formatearDuracion(int milisegundos) {
     return "${duration.inMinutes}:$twoDigitSeconds";
   }
 }
+
+String newCustomFunction() {
+  return "hola";
+}
+
+double calcularOffSet(
+  double offSetActual,
+  double deltaY,
+) {
+  // Al arrastrar el dedo hacia arriba (bajar en la lista), el Delta Y es negativo.
+  // Por lo tanto, lo restamos para que nuestro offset crezca en positivo.
+  double nuevoOffset = offSetActual - deltaY;
+
+  // Evitamos que el offset se vuelva negativo si el usuario choca contra el techo de la lista
+  if (nuevoOffset < 0.0) {
+    return 0.0;
+  }
+
+  return nuevoOffset;
+}
+
+double calcularOpacidad(
+  double offsetY,
+  double umbral,
+) {
+  // Evitar divisiones por cero por seguridad
+  if (umbral <= 0.0) return 1.0;
+
+  // Calculamos la proporción matemática
+  double opacidad = offsetY / umbral;
+
+  // Clamping: Aseguramos que el valor nunca rompa la animación
+  if (opacidad < 0.0) {
+    return 0.0;
+  } else if (opacidad > 1.0) {
+    return 1.0;
+  }
+
+  return opacidad;
+}

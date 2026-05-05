@@ -418,7 +418,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                           .transparent,
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              0.0),
+                                                                              12.0),
                                                                     ),
                                                                     child: Row(
                                                                       mainAxisSize:
