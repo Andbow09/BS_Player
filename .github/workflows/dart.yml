@@ -8,13 +8,6 @@ jobs:
     
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-      
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin' # (O la configuración que ya tengas)
-          java-version: '17'
           
     steps:
     - name: Checkout source repo
