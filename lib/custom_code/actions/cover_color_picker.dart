@@ -31,7 +31,7 @@ Future<List<Color>> coverColorPicker(
     final Uint8List? artworkBytes = await audioQuery.queryArtwork(
       cancionId,
       ArtworkType.AUDIO,
-      size: 50, // Mantenemos tamaño pequeño para 0 lag
+      size: 30, // Mantenemos tamaño pequeño para 0 lag
     );
 
     if (artworkBytes != null && artworkBytes.isNotEmpty) {
@@ -80,11 +80,11 @@ List<Color> _generarPaleta(Color base, Color defecto) {
   HSLColor hsl = HSLColor.fromColor(base);
 
   // 1. COLOR PRINCIPAL (Para la MiniBar y la parte superior del Big Player)
-  // Forzamos la luminosidad entre 20% y 38%. Esto asegura 100% que los
+  // Forzamos la luminosidad entre 25% y 45%. Esto asegura 100% que los
   // iconos blancos se vean nítidos y no se vea "exageradamente blanco".
-  // También aseguramos un mínimo de 40% de saturación para que no se vea gris.
-  double safeLightness = hsl.lightness.clamp(0.20, 0.38);
-  double safeSaturation = hsl.saturation.clamp(0.40, 1.0);
+  // También aseguramos un mínimo de 50% de saturación para que no se vea gris.
+  double safeLightness = hsl.lightness.clamp(0.25, 0.45);
+  double safeSaturation = hsl.saturation.clamp(0.50, 1.0);
 
   Color colorPrincipal =
       hsl.withLightness(safeLightness).withSaturation(safeSaturation).toColor();

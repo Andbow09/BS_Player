@@ -99,121 +99,6 @@ class _DiscWidgetState extends State<DiscWidget> {
               if (_model.cargando == false) {
                 return Stack(
                   children: [
-                    Opacity(
-                      opacity:
-                          functions.calcularOpacidad(_model.offsetY, 250.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: 65.0,
-                        decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                            colors: [
-                              valueOrDefault<Color>(
-                                _model.paletaAlbum.elementAtOrNull(0),
-                                Color(0xFF6C7F87),
-                              ),
-                              valueOrDefault<Color>(
-                                _model.paletaAlbum.elementAtOrNull(1),
-                                Color(0xFF253031),
-                              ),
-                              Colors.black
-                            ],
-                            stops: [0.0, 0.3, 1.0],
-                            center: Alignment(0.0, -1.0),
-                            radius: 15.0,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  45.0, 0.0, 0.0, 0.0),
-                              child: Container(
-                                width: 50.0,
-                                height: 50.0,
-                                child: custom_widgets.MiniSongCover(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  cancionId: getJsonField(
-                                    _model.resultadoSQL,
-                                    r'''$.primera_cancion_id''',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 0.0, 0.0, 0.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    getJsonField(
-                                      _model.datosAlbum,
-                                      r'''$.titulo_album''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Metropolis 2',
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
-                                  Text(
-                                    getJsonField(
-                                      _model.datosAlbum,
-                                      r'''$.nombre_artista''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Metropolis 2',
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.safePop();
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios_rounded,
-                              color: Colors.white,
-                              size: 24.0,
-                            ),
-                          ),
-                          Icon(
-                            Icons.more_vert_sharp,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ],
-                      ),
-                    ),
                     GestureDetector(
                       onVerticalDragUpdate: (details) async {
                         _model.offsetY = functions.calcularOffSet(
@@ -235,14 +120,14 @@ class _DiscWidgetState extends State<DiscWidget> {
                           child: SingleChildScrollView(
                             controller: _model.infoAlbumScrollController,
                             child: Column(
-                              mainAxisSize: MainAxisSize.min,
+                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Align(
                                   alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 90.0, 20.0, 0.0),
+                                        20.0, 80.0, 20.0, 0.0),
                                     child: Container(
                                       width: double.infinity,
                                       height: 343.0,
@@ -873,7 +758,7 @@ class _DiscWidgetState extends State<DiscWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 15.0, 20.0, 180.0),
+                                      20.0, 15.0, 20.0, 230.0),
                                   child: Builder(
                                     builder: (context) {
                                       final cancionAlbum =
@@ -1212,6 +1097,121 @@ class _DiscWidgetState extends State<DiscWidget> {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                    Opacity(
+                      opacity:
+                          functions.calcularOpacidad(_model.offsetY, 250.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 65.0,
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              valueOrDefault<Color>(
+                                _model.paletaAlbum.elementAtOrNull(0),
+                                Color(0xFF6C7F87),
+                              ),
+                              valueOrDefault<Color>(
+                                _model.paletaAlbum.elementAtOrNull(1),
+                                Color(0xFF253031),
+                              ),
+                              Colors.black
+                            ],
+                            stops: [0.0, 0.3, 1.0],
+                            center: Alignment(0.0, -1.0),
+                            radius: 15.0,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  45.0, 0.0, 0.0, 0.0),
+                              child: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                child: custom_widgets.MiniSongCover(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  cancionId: getJsonField(
+                                    _model.resultadoSQL,
+                                    r'''$.primera_cancion_id''',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    getJsonField(
+                                      _model.datosAlbum,
+                                      r'''$.titulo_album''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Metropolis 2',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                  Text(
+                                    getJsonField(
+                                      _model.datosAlbum,
+                                      r'''$.nombre_artista''',
+                                    ).toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Metropolis 2',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.safePop();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios_rounded,
+                              color: Colors.white,
+                              size: 24.0,
+                            ),
+                          ),
+                          Icon(
+                            Icons.more_vert_sharp,
+                            color: Colors.white,
+                            size: 24.0,
+                          ),
+                        ],
                       ),
                     ),
                     Align(

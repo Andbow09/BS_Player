@@ -273,3 +273,67 @@ class ConsultaPruebaDiscoRow extends SqliteRow {
 }
 
 /// END CONSULTAPRUEBADISCO
+
+/// BEGIN LEERLISTAS
+Future<List<LeerListasRow>> performLeerListas(
+  Database database,
+) {
+  final query = '''
+SELECT 
+    l.id,
+    l.nombre,
+    l.ruta_imagen,
+    COUNT(lc.id_cancion) AS cantidad_canciones
+FROM lista l
+LEFT JOIN lista_cancion lc ON l.id = lc.id_lista
+GROUP BY l.id
+ORDER BY l.id DESC;
+''';
+  return _readQuery(database, query, (d) => LeerListasRow(d));
+}
+
+class LeerListasRow extends SqliteRow {
+  LeerListasRow(Map<String, dynamic> data) : super(data);
+
+  int get id => data['id'] as int;
+  String get nombre => data['nombre'] as String;
+  String? get rutaImagen => data['ruta_imagen'] as String?;
+  int get cantidadCanciones => data['cantidad_canciones'] as int;
+}
+
+/// END LEERLISTAS
+
+/// BEGIN LEERLISTASDISP
+Future<List<LeerListasDispRow>> performLeerListasDisp(
+  Database database, {
+  int? argIdCancion,
+}) {
+  final query = '''
+SELECT 
+    l.id, 
+    l.nombre, 
+    l.ruta_imagen, 
+    COUNT(lc.id_cancion) AS cantidad_canciones
+FROM lista l
+LEFT JOIN lista_cancion lc ON l.id = lc.id_lista
+WHERE l.id NOT IN (
+    SELECT id_lista 
+    FROM lista_cancion 
+    WHERE id_cancion = argIdCancion
+)
+GROUP BY l.id
+ORDER BY l.id DESC;
+''';
+  return _readQuery(database, query, (d) => LeerListasDispRow(d));
+}
+
+class LeerListasDispRow extends SqliteRow {
+  LeerListasDispRow(Map<String, dynamic> data) : super(data);
+
+  int get id => data['id'] as int;
+  String get nombre => data['nombre'] as String;
+  String? get rutaImagen => data['ruta_imagen'] as String?;
+  int get cantidadCanciones => data['cantidad_canciones'] as int;
+}
+
+/// END LEERLISTASDISP

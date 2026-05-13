@@ -15,8 +15,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import '../actions/audio_controller.dart';
 
-class MiniBar extends StatefulWidget {
-  const MiniBar({
+class miniPlayBar extends StatefulWidget {
+  const miniPlayBar({
     Key? key,
     this.width,
     this.height,
@@ -32,10 +32,10 @@ class MiniBar extends StatefulWidget {
   final Future<dynamic> Function()? onSongEnding;
 
   @override
-  _MiniBarState createState() => _MiniBarState();
+  _miniPlayBarState createState() => _miniPlayBarState();
 }
 
-class _MiniBarState extends State<MiniBar> {
+class _miniPlayBarState extends State<miniPlayBar> {
   // Obtenemos el cerebro del audio que creaste en tu Custom Action
   final _player = ReproductorMaestro().player;
 

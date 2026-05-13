@@ -61,10 +61,6 @@ String formatearDuracion(int milisegundos) {
   }
 }
 
-String newCustomFunction() {
-  return "hola";
-}
-
 double calcularOffSet(
   double offSetActual,
   double deltaY,

@@ -95,7 +95,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 55.0, 0.0, 180.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 55.0, 0.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -162,7 +162,7 @@ class _DiscsWidgetState extends State<DiscsWidget> {
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 20.0, 10.0, 0.0),
+                                10.0, 20.0, 10.0, 230.0),
                             child: Builder(
                               builder: (context) {
                                 final listAlbums =

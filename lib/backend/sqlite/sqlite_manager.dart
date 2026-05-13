@@ -75,6 +75,18 @@ class SQLiteManager {
         idalbum: idalbum,
       );
 
+  Future<List<LeerListasRow>> leerListas() => performLeerListas(
+        _database,
+      );
+
+  Future<List<LeerListasDispRow>> leerListasDisp({
+    int? argIdCancion,
+  }) =>
+      performLeerListasDisp(
+        _database,
+        argIdCancion: argIdCancion,
+      );
+
   /// END READ QUERY CALLS
 
   /// START UPDATE QUERY CALLS
@@ -103,6 +115,26 @@ class SQLiteManager {
         _database,
         color: color,
         id: id,
+      );
+
+  Future createList({
+    String? nombre,
+    String? imagen,
+  }) =>
+      performCreateList(
+        _database,
+        nombre: nombre,
+        imagen: imagen,
+      );
+
+  Future insertCancionLista({
+    int? argIdLista,
+    int? argIdCancion,
+  }) =>
+      performInsertCancionLista(
+        _database,
+        argIdLista: argIdLista,
+        argIdCancion: argIdCancion,
       );
 
   /// END UPDATE QUERY CALLS

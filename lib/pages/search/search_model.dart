@@ -28,6 +28,10 @@ class SearchModel extends FlutterFlowModel<SearchWidget> {
   late TopMenuModel topMenuModel;
   // State field(s) for Column widget.
   ScrollController? columnController;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
   // Model for bottomMenu component.
   late BottomMenuModel bottomMenuModel;
 
@@ -42,6 +46,9 @@ class SearchModel extends FlutterFlowModel<SearchWidget> {
   void dispose() {
     topMenuModel.dispose();
     columnController?.dispose();
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
+
     bottomMenuModel.dispose();
   }
 }

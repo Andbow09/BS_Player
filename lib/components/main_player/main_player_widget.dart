@@ -1,14 +1,20 @@
 import '/backend/sqlite/sqlite_manager.dart';
+import '/components/lista_listas/lista_listas_widget.dart';
 import '/components/playlist/playlist_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
+import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'main_player_model.dart';
 export 'main_player_model.dart';
@@ -162,6 +168,7 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
@@ -665,10 +672,33 @@ class _MainPlayerWidgetState extends State<MainPlayerWidget>
                             size: 35.0,
                           ),
                         ),
-                        Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 30.0,
+                        Builder(
+                          builder: (context) => InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment: AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    child: ListaListasWidget(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                          ),
                         ),
                       ],
                     ),

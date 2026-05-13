@@ -2,11 +2,14 @@ import '/backend/sqlite/sqlite_manager.dart';
 import '/components/main_player/main_player_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_menu_model.dart';
 export 'bottom_menu_model.dart';
@@ -115,7 +118,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     alignment: AlignmentDirectional(-1.0, 0.0),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(90.0, 32.0, 70.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(90.0, 27.0, 70.0, 0.0),
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -190,7 +193,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                     alignment: AlignmentDirectional(1.0, 0.0),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 21.0, 20.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 20.0, 0.0),
                       child: Stack(
                         alignment: AlignmentDirectional(1.0, 0.0),
                         children: [
@@ -241,7 +244,7 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                 if (FFAppState().currentTitle != '')
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(20.0, 15.0, 0.0, 0.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,

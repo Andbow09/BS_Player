@@ -41,11 +41,11 @@ class _CaratulaCancionState extends State<BigSongCover> {
       child: QueryArtworkWidget(
         id: widget.cancionId,
         type: ArtworkType.AUDIO, // Tipo de archivo
-        size: 1750, // <-- EL SECRETO: Le pedimos resolución de 1500x1500
+        size: 1650, // <-- EL SECRETO: Le pedimos resolución de 1500x1500
         artworkQuality: FilterQuality
             .high, // <-- Le pedimos la máxima calidad de renderizado
         artworkBorder:
-            BorderRadius.circular(8.0), // Bordes redondeados automáticos
+            BorderRadius.circular(10.0), // Bordes redondeados automáticos
         // Qué mostrar si la canción no tiene carátula
         nullArtworkWidget: Container(
           width: safeWidth,

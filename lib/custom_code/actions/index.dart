@@ -6,3 +6,5 @@ export 'toggle_shuffle.dart' show toggleShuffle;
 export 'get_datos_album.dart' show getDatosAlbum;
 export 'get_canciones_album.dart' show getCancionesAlbum;
 export 'get_random_canciones_album.dart' show getRandomCancionesAlbum;
+export 'init_background_audio.dart' show initBackgroundAudio;
+export 'guardar_imagen_local.dart' show guardarImagenLocal;

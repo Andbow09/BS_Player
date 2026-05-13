@@ -263,7 +263,7 @@ class _SongsWidgetState extends State<SongsWidget> {
                                                                     0.0,
                                                                     10.0,
                                                                     0.0,
-                                                                    0.0),
+                                                                    200.0),
                                                         child: Builder(
                                                           builder: (context) {
                                                             final listSongs =
